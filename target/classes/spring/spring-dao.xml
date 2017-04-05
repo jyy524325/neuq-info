@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--配置整合mybatis过程-->
+    <!--1、配置相关数据库参数-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!--2、数据库连接池-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!--配置连接池属性-->
+        <property name="driverClass" value="${driver}"/>
+        <property name="jdbcUrl" value="${url}"/>
+        <property name="user" value="${username}"/>
+        <property name="password" value="${password}"/>
+        <!--c3p0连接池私有属性-->
+        <property name="maxPoolSize" value="30"/>
+        <property name="minPoolSize" value="10"/>
+        <!--关闭连接不自动commit-->
+        <property name="autoCommitOnClose" value="false"/>
+        <!--获取连接超时时间-->
+        <property name="checkoutTimeout" value="1000"/>
+        <!--当获取失败重连次数-->
+        <property name="acquireRetryAttempts" value="2"/>
+    </bean>
+    <!--约定大于配置-->
+    <!--3、Mybatis sqlsession配置-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--注入数据库连接池-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--配置Mybatis 全局配置文件-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--Mybatis mapper-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <!--别名-->
+        <property name="typeAliasesPackage" value="com.neuq.info.entity;com.neuq.info.dto"/>
+    </bean>
+    <!--4、配置扫描Dao接口 动态实现DAO接口，注入到Spring容器-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--防止提前初始化sqlsessionFactory-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!--给出需要扫描的包-->
+        <property name="basePackage" value="com.neuq.info.dao"/>
+    </bean>
+    </beans>

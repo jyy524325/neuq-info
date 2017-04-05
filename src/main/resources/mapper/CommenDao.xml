@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neuq.info.dao.CommentDao">
+
+    <resultMap id="commentResultMap" type="Comment">
+        <id property="commentId" column="commentId" />
+        <result property="content" column="content"/>
+        <result property="postId" column="postId"/>
+        <result property="userId" column="userId"/>
+        <result property="likeCount" column="like_count"/>
+        <result property="createTime" column="createTime"/>
+        <result property="avatar" column="avatar"/>
+        <result property="nickname" column="nickname"/>
+    </resultMap>
+
+
+    <insert id="insertComment" parameterType="Comment">
+        INSERT ignore INTO comment (postId,userId,content,avatar,nickname)
+        VALUES (#{postId},#{userId},#{content},#{avatar},#{nickname})
+    </insert>
+    <select id="queryCommentByPostid" parameterType="long" resultMap="commentResultMap">
+      SELECT c.commentId,c.content,c.postId,c.userId,c.like_count,c.create_time,u.avatar,u.nickname
+        FROM comment c
+      INNER JOIN user u ON c.userId =u.userId
+      WHERE c.postId=#{postId}
+    </select>
+    <update id="updateLikeCount">
+        UPDATE comment SET
+        <if test="flag==1">
+            like_count =like_count+1
+        </if>
+        <if test="flag==0">
+            like_count =like_count-1
+        </if>
+        WHERE commentId =#{commentId}
+    </update>
+    </mapper>
