@@ -4,6 +4,7 @@ package com.neuq.info.enums;
  * Created by lihang on 2017/4/4.
  */
 public enum ResultStatus {
+
     SUCCESS(200, "成功"),
     INSERT_FAIL(-1001,"提交失败"),
     //USERNAME_OR_PASSWORD_ERROR(-1001, "用户名或密码错误"),
@@ -40,4 +41,5 @@ public enum ResultStatus {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

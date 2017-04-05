@@ -35,7 +35,7 @@ public class PostServiceTest {
 
     @Test
     public void queryPostByCount() throws Exception {
-        ResultModel resultModel=postService.queryPostByCount(0,10);
+        ResultModel resultModel=postService.queryPostByCount(0,10,1000l);
         System.out.println(resultModel);
     }
 

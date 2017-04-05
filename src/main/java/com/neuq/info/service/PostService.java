@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface PostService {
     ResultModel insertPost(Post post);
-    ResultModel queryPostByCount(int offset , int limit);
+    ResultModel queryPostByCount(int offset , int limit,Long userId);
     ResultModel queryPostByPage(int currentPage);
     int queryAllPostCount();
     ResultModel deletePost(long postId);

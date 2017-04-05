@@ -9,8 +9,10 @@
         VALUES (#{userId},#{title},#{content},#{secret})
     </insert>
     <select id="queryPostByCount" resultType="Post">
-        SELECT <include refid="columns"/>
-        FROM post
+        SELECT postId,p.userId,title,content,p.create_time,secret,comment_count,like_count,avatar,nickname
+        FROM post p
+        INNER JOIN user u ON p.userId =u.userId
+
         <if test="offset!=0">
             WHERE postId > #{offset}
         </if>

@@ -1,10 +1,12 @@
 package com.neuq.info.entity;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.neuq.info.common.format.CustomDateSerializer;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -13,7 +15,10 @@ import java.util.Date;
 /**
  * Created by lihang on 2017/4/2.
  */
+@JsonRootName("post")
 public class Post {
+    private String avatar;
+    private String nickname;
     private long postId;
     private long userId;
     private String title;
@@ -22,8 +27,12 @@ public class Post {
     private int secret;
     private int commentCount;
     private int likeCount;
+    private int isSelf;
+    private int isLike;
 
-    public Post(long postId, long userId, String title, String content, Date createTime, int secret, int commentCount, int likeCount) {
+    public Post(String avatar, String nickname, long postId, long userId, String title, String content, Date createTime, int secret, int commentCount, int likeCount, int isSelf, int isLike) {
+        this.avatar = avatar;
+        this.nickname = nickname;
         this.postId = postId;
         this.userId = userId;
         this.title = title;
@@ -32,10 +41,44 @@ public class Post {
         this.secret = secret;
         this.commentCount = commentCount;
         this.likeCount = likeCount;
+        this.isSelf = isSelf;
+        this.isLike = isLike;
     }
 
     public Post() {
 
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public int getIsLike() {
+        return isLike;
+    }
+
+    public void setIsLike(int isLike) {
+        this.isLike = isLike;
+    }
+
+    public int getIsSelf() {
+        return isSelf;
+    }
+
+    public void setIsSelf(int isSelf) {
+        this.isSelf = isSelf;
     }
 
     public long getPostId() {
@@ -69,6 +112,7 @@ public class Post {
     public void setContent(String content) {
         this.content = content;
     }
+
     @JsonSerialize(using = CustomDateSerializer.class)
     public Date getCreateTime() {
         return createTime;
@@ -105,7 +149,9 @@ public class Post {
     @Override
     public String toString() {
         return "Post{" +
-                "postId=" + postId +
+                "avatar='" + avatar + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", postId=" + postId +
                 ", userId=" + userId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
@@ -113,16 +159,10 @@ public class Post {
                 ", secret=" + secret +
                 ", commentCount=" + commentCount +
                 ", likeCount=" + likeCount +
+                ", isSelf=" + isSelf +
+                ", isLike=" + isLike +
                 '}';
     }
 }
 
-class CustomDateSerializer extends JsonSerializer<Date> {
 
-    @Override
-    public void serialize(Date value, JsonGenerator jsonGenerator, SerializerProvider provider) throws IOException,
-            JsonProcessingException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        jsonGenerator.writeString(sdf.format(value));
-    }
-}

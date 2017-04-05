@@ -1,19 +1,25 @@
 CREATE DATABASE neuq_info;
 use neuq_info;
+CREATE TABLE user_like_post(
+`postId` bigint NOT NULL  COMMENT '文章id',
+`userId` bigint NOT NULL  COMMENT'用户id',
+`create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+PRIMARY KEY (postId,userId)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='点赞表';
 
 CREATE TABLE post(
 `postId` bigint NOT NULL AUTO_INCREMENT COMMENT '文章id',
 `userId` bigint NOT NULL COMMENT '创建者id',
 `title` VARCHAR (30) NOT NULL COMMENT '文章标题',
 `content` VARCHAR (120) NOT NULL COMMENT '文章内容',
-`createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 `secret` tinyint NOT NULL DEFAULT 0 COMMENT '是否匿名 0：匿名 1：非匿名',
-`commentCount` int(4) NOT NULL DEFAULT 0 COMMENT '评论数量',
-`likeCount` int(4) NOT NULL DEFAULT 0 COMMENT '点赞数量',
+`comment_count` int(4) NOT NULL DEFAULT 0 COMMENT '评论数量',
+`like_count` int(4) NOT NULL DEFAULT 0 COMMENT '点赞数量',
 PRIMARY KEY (postId),
-KEY idx_create_time(createTime),
-key idx_like_count(likeCount),
-KEY idx_comment_count(commentCount)
+KEY idx_create_time(create_time),
+key idx_like_count(like_count),
+KEY idx_comment_count(comment_count)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章表';
 
 INSERT INTO post (userId,title,content, secret)
@@ -39,11 +45,11 @@ CREATE TABLE comment(
 `postId` bigint NOT NULL COMMENT '文章id',
 `avatar` VARCHAR(200) NOT NULL COMMENT '头像url',
 `userId` bigint NOT NULL COMMENT '创建者id',
-`likeCount` int(4) NOT NULL DEFAULT 0 COMMENT '点赞数量',
-`createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`like_count` int(4) NOT NULL DEFAULT 0 COMMENT '点赞数量',
+`create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 PRIMARY KEY (commentId),
-KEY idx_create_time(createTime),
-key idx_like_count(likeCount)
+KEY idx_create_time(create_time),
+key idx_like_count(like_count)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='评论表';
 
 INSERT INTO comment(postId,avatar,userId)
@@ -59,7 +65,7 @@ VALUES
 
 CREATE TABLE user(
 `userId` bigint NOT NULL AUTO_INCREMENT COMMENT'用户id',
-`createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 `openid` VARCHAR(100) NOT NULL COMMENT 'openid',
 `avatar` VARCHAR(200) NOT NULL COMMENT '头像url',
 `nickname` VARCHAR (50) NOT NULL COMMENT '用户昵称',
@@ -71,7 +77,7 @@ CREATE TABLE user(
 `jwUser` VARCHAR(100) NOT NULL COMMENT '教务系统用户名',
 `jwPwd` VARCHAR(100) NOT NULL COMMENT '教务系统密码',
 PRIMARY KEY (userId),
-KEY idx_create_time(createTime)
+KEY idx_create_time(create_time)
 )ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 INSERT user(openid,avatar,nickname,gender,city,province,country,unionId,jwUser,jwPwd)

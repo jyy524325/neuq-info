@@ -60,8 +60,7 @@ public class PostDaoTest {
 
     @Test
     public void deletePost() throws Exception {
-       int count= postDao.deletePost(1l);
-        System.out.println(count);
+
     }
 
     @Test
