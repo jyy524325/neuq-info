@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab1f1b11-0774-4201-979e-1336f209bfcc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/info_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/info_war_exploded.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/info.iml" afterPath="$PROJECT_DIR$/info.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/neuq/info/entity/Post.java" afterPath="$PROJECT_DIR$/src/main/java/com/neuq/info/entity/Post.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/neuq/info/enums/ResultStatus.java" afterPath="$PROJECT_DIR$/src/main/java/com/neuq/info/enums/ResultStatus.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/neuq/info/service/PostService.java" afterPath="$PROJECT_DIR$/src/main/java/com/neuq/info/service/PostService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/neuq/info/service/impl/PostServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/neuq/info/service/impl/PostServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/mapper/PostDao.xml" afterPath="$PROJECT_DIR$/src/main/resources/mapper/PostDao.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/spring/spring-web.xml" afterPath="$PROJECT_DIR$/src/main/resources/spring/spring-web.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/sql/schema.sql" afterPath="$PROJECT_DIR$/src/main/sql/schema.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/neuq/info/dao/PostDaoTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/neuq/info/dao/PostDaoTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/neuq/info/service/PostServiceTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/neuq/info/service/PostServiceTest.java" />
     </list>
     <ignored path="info.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,18 +32,7 @@
     <favorites_list name="info" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="5" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -85,7 +60,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/neuq/info/dto/Page.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/neuq/info/dao/PostDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/neuq/info/entity/Comment.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/neuq/info/dao/CommentDao.java" />
@@ -135,6 +109,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/neuq/info/web/WxController.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/neuq/info/dao/PostDaoTest.java" />
         <option value="$PROJECT_DIR$/src/main/resources/spring/spring-web.xml" />
+        <option value="$PROJECT_DIR$/info.iml" />
         <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
@@ -891,8 +866,23 @@
       <workItem from="1492089116462" duration="3879000" />
       <workItem from="1492164834044" duration="7948000" />
       <workItem from="1492424602731" duration="1875000" />
-      <workItem from="1492493090462" duration="468000" />
+      <workItem from="1492493090462" duration="718000" />
     </task>
+    <task id="LOCAL-00001" summary="Create README.md&#10;&#10;add README.md">
+      <created>1492493582255</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1492493582255</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Create README.md&#10;&#10;add README.md">
+      <created>1492493812282</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1492493812282</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -928,11 +918,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79781000" />
+    <option name="totallyTimeSpent" value="80031000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -943,13 +933,13 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32892805" sideWeight="0.503231" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32892805" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32892805" sideWeight="0.49676898" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32892805" sideWeight="0.49676898" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4287812" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32892805" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.273021" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.273021" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32927817" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1008,7 +998,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="4.18 update" />
-    <option name="LAST_COMMIT_MESSAGE" value="4.18 update" />
+    <MESSAGE value="Create README.md&#10;&#10;add README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create README.md&#10;&#10;add README.md" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1450,14 +1441,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/info.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="41" column="25" selection-start-line="41" selection-start-column="25" selection-end-line="41" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/PostDao.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="329">
@@ -1482,10 +1465,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/info.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="51" column="20" selection-start-line="51" selection-start-column="20" selection-end-line="51" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="5" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
+        <state relative-caret-position="15">
+          <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
           <folding />
         </state>
       </provider>
