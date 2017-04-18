@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neuq.info.dao.LikeDao">
+
+    <select id="queryUserLikeByUserId" parameterType="long" resultType="Like">
+    SELECT postId,userId,create_time
+      FROM user_like_post WHERE userId =#{userId}
+    </select>
+
+    <insert id="insertUserLike" parameterType="Like">
+        INSERT ignore INTO user_like_post(postId,userId)
+        VALUES (#{postId},#{userId})
+    </insert>
+
+
+    </mapper>
