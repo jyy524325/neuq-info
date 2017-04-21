@@ -92,7 +92,11 @@ public class Comment {
 
     }
 
-
+    public Comment(long postId, long userId, String content) {
+        this.postId = postId;
+        this.userId = userId;
+        this.content = content;
+    }
 
     @Override
     public String toString() {

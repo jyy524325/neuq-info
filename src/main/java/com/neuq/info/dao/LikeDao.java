@@ -10,4 +10,5 @@ import java.util.List;
 public interface LikeDao {
     public List<Like> queryUserLikeByUserId(long userid);
     public int insertUserLike(Like like);
+    public int deleteUserLike(Like like);
 }

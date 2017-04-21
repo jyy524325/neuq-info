@@ -7,14 +7,18 @@ import com.neuq.info.dto.ResultModel;
 import com.neuq.info.entity.Like;
 import com.neuq.info.entity.Post;
 import com.neuq.info.enums.ResultStatus;
+import com.neuq.info.exception.RepeatLikeException;
+import com.neuq.info.exception.RepeatUnLikeException;
 import com.neuq.info.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static javafx.scene.input.KeyCode.R;
+import static org.bouncycastle.asn1.x500.style.RFC4519Style.l;
 
 /**
  * Created by lihang on 2017/4/4.
@@ -30,7 +34,7 @@ public class PostServiceImpl implements PostService {
         int count =postDao.insertPost(post);
 
         if(count==0){
-            resultModel=new ResultModel(ResultStatus.INSERT_FAIL,count);
+            resultModel=new ResultModel(ResultStatus.FAILURE,count);
         }else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, count);
         }
@@ -55,7 +59,7 @@ public class PostServiceImpl implements PostService {
             }
         }
         if(list.size()==0){
-            resultModel=new ResultModel(ResultStatus.INSERT_FAIL,list);
+            resultModel=new ResultModel(ResultStatus.FAILURE,list);
         }else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, list);
         }
@@ -71,7 +75,7 @@ public class PostServiceImpl implements PostService {
         List<Post> list=postDao.queryPostByPage(page);
 
         if(list.size()==0){
-            resultModel=new ResultModel(ResultStatus.INSERT_FAIL,list);
+            resultModel=new ResultModel(ResultStatus.FAILURE,list);
         }else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, list);
         }
@@ -87,22 +91,30 @@ public class PostServiceImpl implements PostService {
         int count=postDao.deletePost(postId);
 
         if(count==0){
-            resultModel=new ResultModel(ResultStatus.INSERT_FAIL,count);
+            resultModel=new ResultModel(ResultStatus.FAILURE,count);
         }else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, count);
         }
         return resultModel;
     }
-
-    public ResultModel updateLikeCount(long postId, int flag) {
+    @Transactional
+    public ResultModel updateLike(long postId, int flag,long userId) {
         ResultModel resultModel;
+        int count1=0;
+        Like like=new Like(postId,userId);
         int count=postDao.updateLikeCount(postId,flag);
-
-        if(count==0){
-            resultModel=new ResultModel(ResultStatus.INSERT_FAIL,count);
-        }else {
-            resultModel = new ResultModel(ResultStatus.SUCCESS, count);
+        System.out.println("执行更新数量操作");
+        if(flag==1){
+            System.out.println("执行插入操作");
+            count1=likeDao.insertUserLike(like);
+            if(count1==0) throw new RepeatLikeException("重复点赞");
         }
+        else if(flag==0){
+            System.out.println("执行删除操作");
+            count1=likeDao.deleteUserLike(like);
+            if(count1==0) throw new RepeatUnLikeException("重复取消赞");
+        }
+        resultModel = new ResultModel(ResultStatus.SUCCESS, count);
         return resultModel;
     }
 
@@ -111,7 +123,7 @@ public class PostServiceImpl implements PostService {
         int count=postDao.updateCommentCount(postId);
 
         if(count==0){
-            resultModel=new ResultModel(ResultStatus.INSERT_FAIL,count);
+            resultModel=new ResultModel(ResultStatus.FAILURE,count);
         }else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, count);
         }

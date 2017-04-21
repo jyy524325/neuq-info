@@ -36,7 +36,9 @@ public class PostServiceTest {
     @Test
     public void queryPostByCount() throws Exception {
         ResultModel resultModel=postService.queryPostByCount(0,10,1000l);
+        ResultModel resultModel1=postService.queryPostByCount(36,10,1000l);
         System.out.println(resultModel);
+        System.out.println(resultModel1);
     }
 
     @Test
@@ -56,8 +58,9 @@ public class PostServiceTest {
     }
 
     @Test
-    public void updateLikeCount() throws Exception {
-
+    public void updateLike() throws Exception {
+        System.out.println(postService.updateLike(4,1,1000l));
+        System.out.println(postService.updateLike(4,0,1000l));
     }
 
     @Test

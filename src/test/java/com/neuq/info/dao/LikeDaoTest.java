@@ -34,4 +34,5 @@ public class LikeDaoTest {
         System.out.println(likeDao.insertUserLike(like));
     }
 
+
 }

@@ -13,10 +13,9 @@ public class Like {
     public Like() {
     }
 
-    public Like(long postId, long userId, Date createTime) {
+    public Like(long postId, long userId) {
         this.postId = postId;
         this.userId = userId;
-        this.createTime = createTime;
     }
 
     public long getPostId() {

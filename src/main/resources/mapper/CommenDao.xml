@@ -24,7 +24,7 @@
       SELECT c.commentId,c.content,c.postId,c.userId,c.like_count,c.create_time,u.avatar,u.nickname
         FROM comment c
       INNER JOIN user u ON c.userId =u.userId
-      WHERE c.postId=#{postId}
+      WHERE c.postId=#{postId}  ORDER BY create_time DESC
     </select>
     <update id="updateLikeCount">
         UPDATE comment SET

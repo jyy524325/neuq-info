@@ -16,7 +16,7 @@ public interface PostService {
     ResultModel queryPostByPage(int currentPage);
     int queryAllPostCount();
     ResultModel deletePost(long postId);
-    ResultModel updateLikeCount(long postId, int flag);
+    ResultModel updateLike(long postId, int flag,long userId);
     ResultModel updateCommentCount(long postId);
 
 

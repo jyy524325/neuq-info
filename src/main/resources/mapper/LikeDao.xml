@@ -13,6 +13,9 @@
         INSERT ignore INTO user_like_post(postId,userId)
         VALUES (#{postId},#{userId})
     </insert>
+    <update id="deleteUserLike" parameterType="Like">
+        DELETE FROM user_like_post WHERE postId=#{postId} AND userId=#{userId}
+    </update>
 
 
     </mapper>

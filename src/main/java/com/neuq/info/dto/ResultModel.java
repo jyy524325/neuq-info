@@ -1,5 +1,6 @@
 package com.neuq.info.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.neuq.info.enums.ResultStatus;
 
 /**
@@ -19,6 +20,7 @@ public class ResultModel {
     /**
      * 返回内容
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Object content;
 
     public ResultModel(ResultStatus status,Object content) {
@@ -26,7 +28,10 @@ public class ResultModel {
         this.message=status.getMessage();
         this.content = content;
     }
-
+    public ResultModel(ResultStatus status) {
+        this.code=status.getCode();
+        this.message=status.getMessage();
+    }
     public ResultModel(int code, String message, Object content) {
         this.code = code;
         this.message = message;
@@ -53,6 +58,7 @@ public class ResultModel {
         this.message = message;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Object getContent() {
         return content;
     }

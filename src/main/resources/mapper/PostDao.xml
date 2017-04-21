@@ -14,7 +14,7 @@
         INNER JOIN user u ON p.userId =u.userId
 
         <if test="offset!=0">
-            WHERE postId > #{offset}
+            WHERE postId &lt; #{offset}
         </if>
         ORDER BY create_time DESC limit #{limit}
     </select>

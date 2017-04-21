@@ -1,15 +1,19 @@
 package com.neuq.info.enums;
 
+import org.springframework.test.annotation.Repeat;
+
 /**
  * Created by lihang on 2017/4/4.
  */
 public enum ResultStatus {
 
-    SUCCESS(200, "成功"),
-    INSERT_FAIL(-1001,"提交失败"),
+    SUCCESS(200, "yes"),
+    FAILURE(-1001,"failure"),
     //USERNAME_OR_PASSWORD_ERROR(-1001, "用户名或密码错误"),
     USER_NOT_FOUND(-1002, "用户不存在"),
-    USER_NOT_LOGIN(-1003, "用户未登录");
+    USER_NOT_LOGIN(-1003, "用户未登录"),
+    REPEAT_LIKE(-1004,"重复点赞"),
+    REPEAT_UNLIKE(-1005,"重复取消赞");
 
     /**
      * 返回码
