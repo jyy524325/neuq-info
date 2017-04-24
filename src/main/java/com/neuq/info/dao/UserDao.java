@@ -35,14 +35,14 @@ public interface UserDao {
      * @param openid
      * @return
      */
-    User queryUserByOpenid(String openid);
+    User queryUserByOpenId(String openid);
 
     /**
      * 根据unionid查询user
      * @param unionId
      * @return
      */
-    User queryUserByUnionid(String unionId);
+    User queryUserByUnionId(String unionId);
 
     /**
      * 根据性别查询user
@@ -56,4 +56,11 @@ public interface UserDao {
      * @return
      */
     int queryAllUserCount();
+
+    /**
+     * 更新用户信息根据openId
+     * @param user
+     * @return
+     */
+    int updateUser(User user);
 }

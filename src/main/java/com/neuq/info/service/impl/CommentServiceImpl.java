@@ -1,6 +1,7 @@
 package com.neuq.info.service.impl;
 
 import com.neuq.info.dao.CommentDao;
+import com.neuq.info.dao.PostDao;
 import com.neuq.info.dto.ResultModel;
 import com.neuq.info.entity.Comment;
 import com.neuq.info.enums.ResultStatus;
@@ -17,6 +18,8 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentDao commentDao;
+    @Autowired
+    private PostDao postDao;
     public ResultModel queryComment(long postid) {
         List<Comment> list=commentDao.queryCommentByPostid(postid);
         if(list.size()==0){
@@ -28,6 +31,7 @@ public class CommentServiceImpl implements CommentService {
     public ResultModel addComment(String content, long userid, long postid) {
         Comment comment =new Comment(postid,userid,content);
         int result=commentDao.insertComment(comment);
+        postDao.updateCommentCount(postid);
         if(result==0){
             return new ResultModel(ResultStatus.FAILURE);
         }else {

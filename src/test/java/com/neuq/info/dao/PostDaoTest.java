@@ -3,6 +3,8 @@ package com.neuq.info.dao;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neuq.info.dto.Page;
 import com.neuq.info.entity.Post;
+import com.neuq.info.entity.User;
+import javafx.geometry.Pos;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -51,6 +53,16 @@ public class PostDaoTest {
         page.setTotalNumber(postDao.queryAllPostCount());
         List<Post> list= postDao.queryPostByPage(page);
         System.out.println(list);
+    }
+    @Test
+    public void queryPostByUserId() throws Exception {
+       List<Post> list= postDao.queryPostByUserId(1000l);
+        System.out.println(list);
+    }
+    @Test
+    public void queryPostByPostId() throws Exception {
+        Post post= postDao.queryPostByPostId(48l);
+        System.out.println(post);
     }
 
     @Test

@@ -43,7 +43,7 @@ INSERT INTO post (userId,title,content, secret)
 CREATE TABLE comment(
 `commentId` bigint NOT NULL AUTO_INCREMENT COMMENT '评论id',
 `postId` bigint NOT NULL COMMENT '文章id',
-`avatar` VARCHAR(200) NOT NULL COMMENT '头像url',
+`avatarUrl` VARCHAR(200) NOT NULL COMMENT '头像url',
 `userId` bigint NOT NULL COMMENT '创建者id',
 `like_count` int(4) NOT NULL DEFAULT 0 COMMENT '点赞数量',
 `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -52,7 +52,7 @@ KEY idx_create_time(create_time),
 key idx_like_count(like_count)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='评论表';
 
-INSERT INTO comment(postId,avatar,userId)
+INSERT INTO comment(postId,avatarUrl,userId)
 VALUES
 (1,'avater',1000),
 (2,'avater',1000),
@@ -66,9 +66,9 @@ VALUES
 CREATE TABLE user(
 `userId` bigint NOT NULL AUTO_INCREMENT COMMENT'用户id',
 `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-`openid` VARCHAR(100) NOT NULL COMMENT 'openid',
-`avatar` VARCHAR(200) NOT NULL COMMENT '头像url',
-`nickname` VARCHAR (50) NOT NULL COMMENT '用户昵称',
+`openId` VARCHAR(100) NOT NULL COMMENT 'openId',
+`avatarUrl` VARCHAR(200) NOT NULL COMMENT '头像url',
+`nickName` VARCHAR (50) NOT NULL COMMENT '用户昵称',
 `gender` VARCHAR (4) NOT NULL COMMENT '用户性别 性别 0：未知、1：男、2：女',
 `city` VARCHAR (50) NOT NULL COMMENT '用户城市',
 `province` VARCHAR (50) NOT NULL COMMENT '用户省份',
@@ -80,14 +80,14 @@ PRIMARY KEY (userId),
 KEY idx_create_time(create_time)
 )ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
-INSERT user(openid,avatar,nickname,gender,city,province,country,unionId,jwUser,jwPwd)
+INSERT user(openId,avatarUrl,nickName,gender,city,province,country,unionId,jwUser,jwPwd)
 VALUES
-('openid','avatar','小明','1','衡水','河北','中国','unionid','1157103','1157103'),
-('openid','avatar','小红','2','衡水','河北','中国','unionid','1157103','1157103'),
-('openid','avatar','小放','1','衡水','河北','中国','unionid','1157103','1157103'),
-('openid','avatar','小和','2','衡水','河北','中国','unionid','1157103','1157103'),
-('openid','avatar','小饿','1','衡水','河北','中国','unionid','1157103','1157103'),
-('openid','avatar','小的','2','衡水','河北','中国','unionid','1157103','1157103'),
-('openid','avatar','小对','1','衡水','河北','中国','unionid','1157103','1157103');
+('openId','avatarUrl','小明','1','衡水','河北','中国','unionid','1157103','1157103'),
+('openId','avatarUrl','小红','2','衡水','河北','中国','unionid','1157103','1157103'),
+('openId','avatarUrl','小放','1','衡水','河北','中国','unionid','1157103','1157103'),
+('openId','avatarUrl','小和','2','衡水','河北','中国','unionid','1157103','1157103'),
+('openId','avatarUrl','小饿','1','衡水','河北','中国','unionid','1157103','1157103'),
+('openId','avatarUrl','小的','2','衡水','河北','中国','unionid','1157103','1157103'),
+('openId','avatarUrl','小对','1','衡水','河北','中国','unionid','1157103','1157103');
 
 

@@ -27,5 +27,15 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 <!--4、扫描web相关的bean-->
-    <context:component-scan base-package="com.neuq.info.web,com.neuq.info.dao"/>
-    </beans>
+    <context:component-scan base-package="com.neuq.info.web"/>
+
+    <mvc:interceptors>
+        <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
+        <bean class="com.neuq.info.interceptor.AllInterceptor"/>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/wx/getSession"/>
+            <bean class="com.neuq.info.interceptor.SessionInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sun.tools.doclint.Entity.nu;
 import static javafx.scene.input.KeyCode.R;
 import static org.bouncycastle.asn1.x500.style.RFC4519Style.l;
 
@@ -78,6 +79,51 @@ public class PostServiceImpl implements PostService {
             resultModel=new ResultModel(ResultStatus.FAILURE,list);
         }else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, list);
+        }
+        return resultModel;
+    }
+
+    public ResultModel queryPostByUserId(long userId) {
+        ResultModel resultModel;
+        List<Post> list=postDao.queryPostByUserId(userId);
+        List<Like> like= likeDao.queryUserLikeByUserId(userId);
+        List<Long> postIdList=new ArrayList<Long>();
+        for (Like tempLike:like){
+            postIdList.add(tempLike.getPostId());
+        }
+        for (int i=0;i<list.size();i++){
+            if(list.get(i).getUserId()==userId){
+                list.get(i).setIsSelf(1);
+            }
+            if(postIdList.contains(list.get(i).getPostId())){
+                list.get(i).setIsLike(1);
+            }
+        }
+        if(list.size()==0){
+            resultModel=new ResultModel(ResultStatus.FAILURE,list);
+        }else {
+            resultModel = new ResultModel(ResultStatus.SUCCESS, list);
+        }
+        return resultModel;
+    }
+
+    public ResultModel queryPostByPostId(long postId,long userId) {
+        ResultModel resultModel;
+        Post post=postDao.queryPostByPostId(postId)==null?null:postDao.queryPostByPostId(postId);
+        if(post!=null){
+        if(post.getUserId()==userId) post.setIsSelf(1);
+        List<Like> like= likeDao.queryUserLikeByUserId(userId);
+        List<Long> postIdList=new ArrayList<Long>();
+        for (Like tempLike:like){
+            postIdList.add(tempLike.getPostId());
+        }
+        if(postIdList.contains(post.getUserId())){
+            post.setIsLike(1);
+        }
+            resultModel = new ResultModel(ResultStatus.SUCCESS, post);
+        }else {
+            resultModel=new ResultModel(ResultStatus.FAILURE,post);
+
         }
         return resultModel;
     }

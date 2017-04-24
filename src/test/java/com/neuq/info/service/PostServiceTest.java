@@ -64,7 +64,12 @@ public class PostServiceTest {
     }
 
     @Test
-    public void updateCommentCount() throws Exception {
+    public void queryPostByUserId() throws Exception {
+        System.out.println(postService.queryPostByUserId(1023l));
+    }
+    @Test
+    public void queryPostByPostId() throws Exception {
+        System.out.println(postService.queryPostByPostId(48l,1022l));
 
     }
 

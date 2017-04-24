@@ -5,6 +5,7 @@ package com.neuq.info.enums;
  */
 public enum ErrorStatus {
     exist(0,""),
+    SUCCESS(200, "yes"),
     appId_wrong(40001, "不合法的appId"),
     interface_not_exist(40002, "接口不存在"),
     interface_is_called(40003, "Http 接口被禁止调用"),

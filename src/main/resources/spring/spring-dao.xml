@@ -5,7 +5,9 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <!--配置整合mybatis过程-->
     <!--1、配置相关数据库参数-->
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <context:property-placeholder location="classpath:jdbc.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:wx.properties" ignore-unresolvable="true"/>
+
     <!--2、数据库连接池-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <!--配置连接池属性-->
@@ -42,4 +44,6 @@
         <!--给出需要扫描的包-->
         <property name="basePackage" value="com.neuq.info.dao"/>
     </bean>
-    </beans>
+    <context:component-scan base-package="com.neuq.info.dao"/>
+
+</beans>

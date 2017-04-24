@@ -9,7 +9,7 @@
         VALUES (#{userId},#{title},#{content},#{secret})
     </insert>
     <select id="queryPostByCount" resultType="Post">
-        SELECT postId,p.userId,title,content,p.create_time,secret,comment_count,like_count,avatar,nickname
+        SELECT postId,p.userId,title,content,p.create_time,secret,comment_count,like_count,avatarUrl,nickName
         FROM post p
         INNER JOIN user u ON p.userId =u.userId
 
@@ -17,6 +17,20 @@
             WHERE postId &lt; #{offset}
         </if>
         ORDER BY create_time DESC limit #{limit}
+    </select>
+    <select id="queryPostByUserId" resultType="Post" parameterType="Long">
+        SELECT postId,p.userId,title,content,p.create_time,secret,comment_count,like_count,avatarUrl,nickName
+        FROM post p
+        INNER JOIN user u ON p.userId =u.userId
+            WHERE u.userId = #{userId}
+        ORDER BY create_time DESC
+    </select>
+    <select id="queryPostByPostId" resultType="Post" parameterType="Long">
+        SELECT postId,p.userId,title,content,p.create_time,secret,comment_count,like_count,avatarUrl,nickName
+        FROM post p
+        INNER JOIN user u ON p.userId =u.userId
+          WHERE postId =#{postId}
+        ORDER BY create_time DESC
     </select>
     <select id="queryPostByPage" parameterType="Page" resultType="Post">
     SELECT <include refid="columns"/>
@@ -42,6 +56,6 @@
         WHERE postId =#{postId}
     </update>
     <update id="updateCommentCount">
-        UPDATE post SET commentCount =commentCount + 1 WHERE postId=#{postId}
+        UPDATE post SET comment_count =comment_count + 1 WHERE postId=#{postId}
     </update>
     </mapper>

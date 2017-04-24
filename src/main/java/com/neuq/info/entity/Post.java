@@ -1,15 +1,9 @@
 package com.neuq.info.entity;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.neuq.info.common.format.CustomDateSerializer;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -17,7 +11,7 @@ import java.util.Date;
  */
 @JsonRootName("post")
 public class Post {
-    private String avatar;
+    private String avatarUrl;
     private String nickname;
     private long postId;
     private long userId;
@@ -31,7 +25,7 @@ public class Post {
     private int isLike;
 
     public Post(String avatar, String nickname, long postId, long userId, String title, String content, Date createTime, int secret, int commentCount, int likeCount, int isSelf, int isLike) {
-        this.avatar = avatar;
+        this.avatarUrl = avatar;
         this.nickname = nickname;
         this.postId = postId;
         this.userId = userId;
@@ -49,12 +43,12 @@ public class Post {
 
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public String getNickname() {
@@ -149,7 +143,7 @@ public class Post {
     @Override
     public String toString() {
         return "Post{" +
-                "avatar='" + avatar + '\'' +
+                "avatarUrl='" + avatarUrl + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", postId=" + postId +
                 ", userId=" + userId +

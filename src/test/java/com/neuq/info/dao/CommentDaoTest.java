@@ -10,8 +10,6 @@ import javax.annotation.Resource;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by lihang on 2017/4/2.
  */
@@ -26,7 +24,7 @@ public class CommentDaoTest {
         comment.setPostId(2L);
         comment.setUserId(1000L);
         comment.setContent("评论哦");
-        comment.setAvatar("avator");
+        comment.setAvatarUrl("avator");
         comment.setNickname("航了个航");
     commentDao.insertComment(comment);
     }

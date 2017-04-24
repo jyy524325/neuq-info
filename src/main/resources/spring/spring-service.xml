@@ -20,5 +20,28 @@
         默认使用注解来管理事务行为-->
 
     </bean>
+
     <tx:annotation-driven transaction-manager="transactionManager"/>
-    </beans>
+    <bean id="wxConfig" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="appId" value="${wx.appId}"/>
+                <entry key="secret" value="${wx.secret}"/>
+                <entry key="grantType" value="${wx.grantType}"/>
+                <entry key="sessionHost" value="${wx.sessionHost}"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <!--<bean id="wxConfig" class="org.springframework.beans.factory.config.MapFactoryBean">-->
+        <!--<property name="sourceMap">-->
+            <!--<map>-->
+                <!--<entry key="appId" value="${wx.appId}"/>-->
+                <!--<entry key="secret" value="${wx.secret}"/>-->
+                <!--<entry key="grantType" value="${wx.grantType}"/>-->
+                <!--<entry key="sessionHost" value="${wx.sessionHost}"/>-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+</beans>

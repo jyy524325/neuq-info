@@ -2,7 +2,9 @@ package com.neuq.info.web;
 
 import com.neuq.info.common.aes.AES;
 import com.neuq.info.dao.RedisDao;
+import com.neuq.info.entity.User;
 import com.neuq.info.enums.ErrorStatus;
+import com.neuq.info.service.UserService;
 import com.neuq.info.service.WxService;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 
 /**
@@ -29,7 +33,10 @@ public class WxController {
     @Autowired
     private WxService wxService;
     @Autowired
+    private UserService userService;
+    @Autowired
     private RedisDao redisDao;
+
     /**
      * 根据客户端传过来的code从微信服务器获取appid和session_key，然后生成3rdkey返回给客户端，后续请求客户端传3rdkey来维护客户端登录态
      * @param wxCode	小程序登录时获取的code
@@ -37,7 +44,7 @@ public class WxController {
      */
     @RequestMapping(value = "/getSession", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public Map<Integer,Object> createSssion(@RequestParam(required = true,value = "code")String wxCode){
+    public Map<String,Object> createSssion(@RequestParam(required = true,value = "code")String wxCode){
         Map<String,Object> wxSessionMap = wxService.getWxSession(wxCode);
 
         if(null == wxSessionMap){
@@ -52,8 +59,9 @@ public class WxController {
         System.out.println(wxSessionKey);
         Long expires = Long.valueOf(String.valueOf(wxSessionMap.get("expires_in")));
         String thirdSession = wxService.create3rdSession(wxOpenId, wxSessionKey, expires);
-
-        return rtnParam(ErrorStatus.exist, new HashMap().put("sessionId",thirdSession));
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("sessionId",thirdSession);
+        return rtnParam(ErrorStatus.exist, map);
     }
     /**
      * 验证用户信息完整性
@@ -64,7 +72,7 @@ public class WxController {
      */
     @RequestMapping(value = "/checkUserInfo", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public Map<Integer,Object> checkUserInfo(@RequestParam(required = true,value = "rawData")String rawData,
+    public Map<String,Object> checkUserInfo(@RequestParam(required = true,value = "rawData")String rawData,
                                             @RequestParam(required = true,value = "signature")String signature,
                                             @RequestParam(required = true,defaultValue = "sessionId")String sessionId){
         Object wxSessionObj = redisDao.get(sessionId);
@@ -86,49 +94,46 @@ public class WxController {
      * 获取用户openId和unionId数据(如果没绑定微信开放平台，解密数据中不包含unionId)
      * @param encryptedData 加密数据
      * @param iv			加密算法的初始向量
-     * @param sessionId		会话ID
      * @return
      */
     @RequestMapping(value = "/decodeUserInfo", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public Map<Integer,Object> decodeUserInfo(@RequestParam(required = true,value = "encryptedData")String encryptedData,
-                                             @RequestParam(required = true,defaultValue = "iv")String iv,
-                                             @RequestParam(required = true,defaultValue = "sessionId")String sessionId){
-        System.out.println(encryptedData);
-        System.out.println(iv);
-        //从缓存中获取session_key
-        Object wxSessionObj = redisDao.get(sessionId);
-        if(null == wxSessionObj){
-            return rtnParam(ErrorStatus.user_identity_expired, null);
-        }
-        String wxSessionStr = (String)wxSessionObj;
-        String sessionKey = wxSessionStr.split("#")[0];
+    public Map<String,Object> decodeUserInfo(@RequestParam(required = true,value = "encryptedData")String encryptedData,
+                                              @RequestParam(required = true,defaultValue = "iv")String iv, HttpServletRequest request){
+        String sessionKey= (String)request.getAttribute("sessionKey");
+        String openId= (String)request.getAttribute("openId");
+        User user=userService.queryUserByOpenId(openId);
+        encryptedData="5+5J2JprGxxtx/mOdpNTJ1QbvEM8iQcUpNa5DLvU+0mQiH2k1lvHIEK0VCdutaP0vfdPJ6kq4pDBTeHnQ+L0sdt57HlL4sCb+LCFlH6853J0f2fuWu8jBLgxoARcsWfEewddHe0KPn+hGeleojg3FfXdaqSck9yGfXqX8YTbS1kYXppPAC/0c89mAXn0IpWwK6wQDs4z7+JLBd9JiznIqm95D12af6WWVZmE+MNoAFSoZuwAZAgVEx5HvlAmAWNKAOBN3btPMP6XB9Zio3RofK0PeJF8S/rusDd4DJ4Y9B4U6ZAgRQQN7GZLlCVl19RCCQWBpxD2PQJZJjm0F5jrNBPdnK9/i8hTfOenlJVCknnhXLkXdR6kfPE2emhNHTGgfX7Lm2QMqzYSZi3/PpEsAS7x/SLfpuOkF5IZqEAX7Jv871Xwd1djeK2I7jPpDzxxbHQiEPMDIuutMlcu3V/kgDwqQgVDxi0U/uv3gKerPOM=";
+        User user1=userService.decodeUserInfo(encryptedData,iv,sessionKey);
+        System.out.println(user1);
+        int count=0;
+        if(user==null){
+            count=userService.insertUser(user1);
+        }else {
+            count= userService.updateUser(user1);
 
-        try {
-            AES aes = new AES();
-            byte[] resultByte = aes.decrypt(Base64.decodeBase64(encryptedData), Base64.decodeBase64(sessionKey), Base64.decodeBase64(iv));
-            if(null != resultByte && resultByte.length > 0){
-                String userInfo = new String(resultByte, "UTF-8");
-                return rtnParam(ErrorStatus.exist, userInfo);
-            }
-        } catch (InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
-        return rtnParam(ErrorStatus.user_sensitive_data_decryption_failed, null);
+        System.out.println(count);
+        if(count!=0){
+            return rtnParam(ErrorStatus.SUCCESS,null);
+        }else {
+            return rtnParam(ErrorStatus.user_sensitive_data_decryption_failed, null);
+        }
     }
 
-    protected Map<Integer,Object> rtnParam(ErrorStatus errorStatus, Object data) {
+    protected Map<String,Object> rtnParam(ErrorStatus errorStatus, Object data) {
         //正常的业务逻辑
-        Map<Integer,Object> map;
+        Map<String,Object> map;
         if(errorStatus.getCode() == 0){
-            map=new HashMap<Integer,Object>();
-            map.put(errorStatus.getCode(),(data == null)? new Object() : data);
+            map=new HashMap<String,Object>();
+            map.put("code",errorStatus.getCode());
+            map.put("message",errorStatus.getMessage());
+            map.put("content",(data == null)? new Object() : data);
             return map;
         }else{
-            map=new HashMap<Integer,Object>();
-            map.put(errorStatus.getCode(),errorStatus.getMessage());
+            map=new HashMap<String,Object>();
+            map.put("code",errorStatus.getCode());
+            map.put("message",errorStatus.getMessage());
             return map;
         }
     }

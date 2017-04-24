@@ -1,5 +1,6 @@
 package com.neuq.info.dao;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neuq.info.dto.Page;
 import com.neuq.info.entity.User;
 import org.junit.Test;
@@ -10,8 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.annotation.Resource;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by lihang on 2017/4/4.
@@ -24,16 +23,21 @@ public class UserDaoTest {
     @Test
     public void insertUser() throws Exception {
         User user =new User();
-        user.setNickname("lihang");
-        user.setCity("衡水");
-        user.setAvatar("avator");
-        user.setCountry("中国");
-        user.setOpenid("openid");
-        user.setUnionId("unionId");
-        user.setGender("1");
-        user.setJwPwd("111");
-        user.setJwUser("111");
-        user.setProvince("河北");
+        ObjectMapper objectMapper=new ObjectMapper();
+        user=objectMapper.readValue("{\n" +
+                "    \"province\": \"Hebei\",\n" +
+                "    \"openId\": \"oCC_80BgpK_JZy06GIcy3cAUQnNM\",\n" +
+                "    \"language\": \"zh_CN\",\n" +
+                "    \"city\": \"Qinhuangdao\",\n" +
+                "    \"gender\": 1,\n" +
+                "    \"avatarUrl\": \"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKicBVNZ9cq6cLSAyjbDR1rSRnNpkNZNW3x9PSRAxYJFtsykBBuia6RDqrkJS6UA778QbDwCsdjlfrg/0\",\n" +
+                "    \"watermark\": {\n" +
+                "        \"timestamp\": 1492792057,\n" +
+                "        \"appid\": \"wx22c990cbb6b3c918\"\n" +
+                "    },\n" +
+                "    \"country\": \"CN\",\n" +
+                "    \"nickName\": \"生活总要向前看\"\n" +
+                "}",User.class);
         userDao.insertUser(user);
 
 
@@ -56,13 +60,13 @@ public class UserDaoTest {
 
     @Test
     public void queryUserByOpenid() throws Exception {
-        User user =userDao.queryUserByOpenid("111");
+        User user =userDao.queryUserByOpenId("111");
         System.out.println(user);
     }
 
     @Test
     public void queryUserByUnionid() throws Exception {
-        User user =userDao.queryUserByUnionid("111");
+        User user =userDao.queryUserByUnionId("111");
         System.out.println(user);
     }
 
@@ -70,6 +74,27 @@ public class UserDaoTest {
     public void queryAllUserByGender() throws Exception {
         List<User> list =userDao.queryAllUserByGender("1");
         System.out.println(list.size());
+    }
+    @Test
+    public void updateUser() throws Exception {
+        User user =new User();
+        ObjectMapper objectMapper=new ObjectMapper();
+        user=objectMapper.readValue("{\n" +
+                "    \"province\": \"Hebei\",\n" +
+                "    \"openId\": \"oCC_80BgpK_JZy06GIcy3cAUQnNM\",\n" +
+                "    \"language\": \"zh_CN\",\n" +
+                "    \"city\": \"Qinhuangdao\",\n" +
+                "    \"gender\": 1,\n" +
+                "    \"avatarUrl\": \"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKicBVNZ9cq6cLSAyjbDR1rSRnNpkNZNW3x9PSRAxYJFtsykBBuia6RDqrkJS6UA778QbDwCsdjlfrg/0\",\n" +
+                "    \"watermark\": {\n" +
+                "        \"timestamp\": 1492792057,\n" +
+                "        \"appid\": \"wx22c990cbb6b3c918\"\n" +
+                "    },\n" +
+                "    \"country\": \"CN\",\n" +
+                "    \"nickName\": \"生活总要向前看11\"\n" +
+                "}",User.class);
+       int res= userDao.updateUser(user);
+        System.out.println(res);
     }
 
 }

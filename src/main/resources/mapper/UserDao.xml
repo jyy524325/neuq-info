@@ -4,10 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neuq.info.dao.UserDao">
 
-    <sql id="userColumns">openid,avatar,nickname,gender,city,province,country,unionId,jwUser,jwPwd</sql>
+    <sql id="userColumns">openId,avatarUrl,nickName,gender,city,province,country,unionId,jwUser,jwPwd</sql>
     <insert id="insertUser">
         INSERT ignore INTO user (<include refid="userColumns"/>) VALUES
-        (#{openid},#{avatar},#{nickname},#{gender},#{city},#{province},#{country},#{unionId},#{jwUser},#{jwUser})
+        (#{openId},#{avatarUrl},#{nickName},#{gender},#{city},#{province},#{country},#{unionId},#{jwUser},#{jwUser})
     </insert>
     <select id="queryUserById" resultType="User">
         SELECT userId,create_time,<include refid="userColumns"/> FROM user WHERE userId =#{userId}
@@ -16,10 +16,10 @@
         SELECT userId,create_time,<include refid="userColumns"/>
         FROM user limit #{dbIndex},#{dbNumber}
     </select>
-    <select id="queryUserByOpenid" resultType="User">
-        SELECT userId,create_time,<include refid="userColumns"/> FROM user WHERE openid =#{openid}
+    <select id="queryUserByOpenId" resultType="User">
+        SELECT userId,create_time,<include refid="userColumns"/> FROM user WHERE openId =#{openId}
     </select>
-    <select id="queryUserByUnionid" resultType="User">
+    <select id="queryUserByUnionId" resultType="User">
         SELECT userId,create_time,<include refid="userColumns"/> FROM user WHERE unionId =#{unionId}
     </select>
     <select id="queryAllUserByGender" resultType="User">
@@ -28,4 +28,8 @@
     <select id="queryAllUserCount" resultType="int">
         SELECT count(*) FROM user
     </select>
+    <update id="updateUser" parameterType="User">
+        UPDATE user set avatarUrl=#{avatarUrl},nickName=#{nickName},gender=#{gender},city=#{city},province=#{province}
+        ,country=#{country},unionId=#{unionId} WHERE openId=#{openId}
+    </update>
     </mapper>

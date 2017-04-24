@@ -1,5 +1,8 @@
 package com.neuq.info.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.neuq.info.common.format.CustomDateSerializer;
+
 import java.util.Date;
 
 /**
@@ -9,7 +12,7 @@ public class Comment {
     private long commentId;
     private long postId;
     private long userId;
-    private String avatar;
+    private String avatarUrl;
     private int likeCount;
     private Date createTime;
     private String nickname;
@@ -39,12 +42,12 @@ public class Comment {
         this.userId = userId;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public int getLikeCount() {
@@ -54,7 +57,7 @@ public class Comment {
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
-
+    @JsonSerialize(using = CustomDateSerializer.class)
     public Date getCreateTime() {
         return createTime;
     }
@@ -83,7 +86,7 @@ public class Comment {
         this.commentId = commentId;
         this.postId = postId;
         this.userId = userId;
-        this.avatar = avatar;
+        this.avatarUrl = avatar;
         this.likeCount = likeCount;
         this.createTime = createTime;
     }
@@ -104,7 +107,7 @@ public class Comment {
                 "commentId=" + commentId +
                 ", postId=" + postId +
                 ", userId=" + userId +
-                ", avatar='" + avatar + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
                 ", likeCount=" + likeCount +
                 ", createTime=" + createTime +
                 ", nickname='" + nickname + '\'' +

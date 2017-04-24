@@ -11,17 +11,17 @@
         <result property="userId" column="userId"/>
         <result property="likeCount" column="like_count"/>
         <result property="createTime" column="createTime"/>
-        <result property="avatar" column="avatar"/>
-        <result property="nickname" column="nickname"/>
+        <result property="avatarUrl" column="avatarUrl"/>
+        <result property="nickName" column="nickName"/>
     </resultMap>
 
 
     <insert id="insertComment" parameterType="Comment">
-        INSERT ignore INTO comment (postId,userId,content,avatar,nickname)
-        VALUES (#{postId},#{userId},#{content},#{avatar},#{nickname})
+        INSERT ignore INTO comment (postId,userId,content)
+        VALUES (#{postId},#{userId},#{content})
     </insert>
     <select id="queryCommentByPostid" parameterType="long" resultMap="commentResultMap">
-      SELECT c.commentId,c.content,c.postId,c.userId,c.like_count,c.create_time,u.avatar,u.nickname
+      SELECT c.commentId,c.content,c.postId,c.userId,c.like_count,c.create_time,u.avatarUrl,u.nickName
         FROM comment c
       INNER JOIN user u ON c.userId =u.userId
       WHERE c.postId=#{postId}  ORDER BY create_time DESC

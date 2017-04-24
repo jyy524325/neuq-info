@@ -25,7 +25,7 @@ public class CommentServiceTest {
 
     @Test
     public void addComment() throws Exception {
-        commentService.addComment("web 测试",1000,3);
+        commentService.addComment("web 测试",1023,48);
     }
 
 }

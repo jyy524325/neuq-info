@@ -1,6 +1,8 @@
 package com.neuq.info.entity;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lihang on 2017/4/2.
@@ -8,34 +10,46 @@ import java.util.Date;
 public class User {
     private long userId;
     private Date createTime;
-    private String openid;
-    private String avatar;
-    private String nickname ;
+    private String openId;
+    private String avatarUrl;
+    private String nickName;
     private String gender;
     private String city;
+    private String language;
     private String province;
     private String country;
     private String unionId;
     private String jwUser;
     private String jwPwd;
+    private HashMap<String,String> watermark;
 
-    public User(long userId, Date createTime, String openid, String avatar, String nickname, String gender, String city, String province, String country, String unionId, String jwUser, String jwPwd) {
+    public User(long userId, Date createTime, String openId, String avatarUrl, String nickName, String gender, String city, String language, String province, String country, String unionId, String jwUser, String jwPwd, HashMap<String, String> watermark) {
         this.userId = userId;
         this.createTime = createTime;
-        this.openid = openid;
-        this.avatar = avatar;
-        this.nickname = nickname;
+        this.openId = openId;
+        this.avatarUrl = avatarUrl;
+        this.nickName = nickName;
         this.gender = gender;
         this.city = city;
+        this.language = language;
         this.province = province;
         this.country = country;
         this.unionId = unionId;
         this.jwUser = jwUser;
         this.jwPwd = jwPwd;
+        this.watermark = watermark;
     }
 
     public User() {
 
+    }
+
+    public HashMap<String, String> getWatermark() {
+        return watermark;
+    }
+
+    public void setWatermark(HashMap<String, String> watermark) {
+        this.watermark = watermark;
     }
 
     public long getUserId() {
@@ -54,28 +68,28 @@ public class User {
         this.createTime = createTime;
     }
 
-    public String getOpenid() {
-        return openid;
+    public String getOpenId() {
+        return openId;
     }
 
-    public void setOpenid(String openid) {
-        this.openid = openid;
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getGender() {
@@ -134,21 +148,31 @@ public class User {
         this.jwPwd = jwPwd;
     }
 
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "userId=" + userId +
                 ", createTime=" + createTime +
-                ", openid='" + openid + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", nickname='" + nickname + '\'' +
+                ", openId='" + openId + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", nickName='" + nickName + '\'' +
                 ", gender='" + gender + '\'' +
                 ", city='" + city + '\'' +
+                ", language='" + language + '\'' +
                 ", province='" + province + '\'' +
                 ", country='" + country + '\'' +
                 ", unionId='" + unionId + '\'' +
                 ", jwUser='" + jwUser + '\'' +
                 ", jwPwd='" + jwPwd + '\'' +
+                ", watermark=" + watermark +
                 '}';
     }
 }

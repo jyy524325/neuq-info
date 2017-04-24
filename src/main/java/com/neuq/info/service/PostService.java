@@ -14,6 +14,8 @@ public interface PostService {
     ResultModel insertPost(Post post);
     ResultModel queryPostByCount(int offset , int limit,Long userId);
     ResultModel queryPostByPage(int currentPage);
+    ResultModel queryPostByUserId(long userId);
+    ResultModel queryPostByPostId(long postId,long userId);
     int queryAllPostCount();
     ResultModel deletePost(long postId);
     ResultModel updateLike(long postId, int flag,long userId);

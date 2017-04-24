@@ -1,6 +1,7 @@
 package com.neuq.info.dao;
 
 import com.neuq.info.dto.Page;
+import com.neuq.info.dto.ResultModel;
 import com.neuq.info.entity.Post;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,7 +67,9 @@ public interface PostDao {
      */
     int updateCommentCount(long postId);
 
+    List<Post> queryPostByUserId(long userId);
 
+    Post queryPostByPostId(long postId);
 
 
 }
