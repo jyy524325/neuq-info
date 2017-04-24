@@ -104,13 +104,15 @@ public class WxController {
         String openId= (String)request.getAttribute("openId");
         User user=userService.queryUserByOpenId(openId);
         User user1=userService.decodeUserInfo(encryptedData,iv,sessionKey);
+        if(user1==null){
+            return rtnParam(ErrorStatus.user_sensitive_data_decryption_failed, null);
+        }
         System.out.println(user1);
         int count=0;
         if(user==null){
             count=userService.insertUser(user1);
         }else {
             count= userService.updateUser(user1);
-
         }
         System.out.println(count);
         if(count!=0){
