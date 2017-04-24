@@ -17,10 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sun.tools.doclint.Entity.nu;
-import static javafx.scene.input.KeyCode.R;
-import static org.bouncycastle.asn1.x500.style.RFC4519Style.l;
-
 /**
  * Created by lihang on 2017/4/4.
  */

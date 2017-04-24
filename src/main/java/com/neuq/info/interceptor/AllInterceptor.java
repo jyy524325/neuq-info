@@ -2,17 +2,11 @@ package com.neuq.info.interceptor;
 
 import com.neuq.info.dao.RedisDao;
 import com.neuq.info.entity.User;
-import com.neuq.info.enums.ErrorStatus;
 import com.neuq.info.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.request.WebRequestInterceptor;
-
-import java.util.Arrays;
-import java.util.Enumeration;
-
-import static com.sun.tools.doclint.Entity.ge;
 
 /**
  * Created by lihang on 2017/4/24.

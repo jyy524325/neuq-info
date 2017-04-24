@@ -1,11 +1,9 @@
 package com.neuq.info.interceptor;
 
 import com.neuq.info.dao.RedisDao;
-import com.neuq.info.entity.User;
 import com.neuq.info.enums.ErrorStatus;
 import com.neuq.info.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by lihang on 2017/4/19.
