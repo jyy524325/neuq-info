@@ -102,8 +102,6 @@ public class WxController {
                                               @RequestParam(required = true,defaultValue = "iv")String iv, HttpServletRequest request){
         String sessionKey= (String)request.getAttribute("sessionKey");
         String openId= (String)request.getAttribute("openId");
-        System.out.println(sessionKey);
-        System.out.println(openId);
         User user=userService.queryUserByOpenId(openId);
         User user1=userService.decodeUserInfo(encryptedData,iv,sessionKey);
         if(user1==null){
