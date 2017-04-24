@@ -103,7 +103,6 @@ public class WxController {
         String sessionKey= (String)request.getAttribute("sessionKey");
         String openId= (String)request.getAttribute("openId");
         User user=userService.queryUserByOpenId(openId);
-        encryptedData="5+5J2JprGxxtx/mOdpNTJ1QbvEM8iQcUpNa5DLvU+0mQiH2k1lvHIEK0VCdutaP0vfdPJ6kq4pDBTeHnQ+L0sdt57HlL4sCb+LCFlH6853J0f2fuWu8jBLgxoARcsWfEewddHe0KPn+hGeleojg3FfXdaqSck9yGfXqX8YTbS1kYXppPAC/0c89mAXn0IpWwK6wQDs4z7+JLBd9JiznIqm95D12af6WWVZmE+MNoAFSoZuwAZAgVEx5HvlAmAWNKAOBN3btPMP6XB9Zio3RofK0PeJF8S/rusDd4DJ4Y9B4U6ZAgRQQN7GZLlCVl19RCCQWBpxD2PQJZJjm0F5jrNBPdnK9/i8hTfOenlJVCknnhXLkXdR6kfPE2emhNHTGgfX7Lm2QMqzYSZi3/PpEsAS7x/SLfpuOkF5IZqEAX7Jv871Xwd1djeK2I7jPpDzxxbHQiEPMDIuutMlcu3V/kgDwqQgVDxi0U/uv3gKerPOM=";
         User user1=userService.decodeUserInfo(encryptedData,iv,sessionKey);
         System.out.println(user1);
         int count=0;
