@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -78,5 +79,20 @@ public class PostController {
         }
         return resultModel;
     }
-
+    @RequestMapping(method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public ResultModel add(@RequestParam("title") String title,@RequestParam("content") String content,@RequestParam("secret") int secret,
+                            HttpServletRequest request){
+        try {
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        System.out.println(title);
+        //获取列表页
+        Long userId= (Long)request.getAttribute("userId");
+        ResultModel resultModel=postService.insertPost(title,content,secret,userId);
+        return resultModel;
+    }
 }

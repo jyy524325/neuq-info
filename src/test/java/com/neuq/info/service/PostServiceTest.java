@@ -29,7 +29,7 @@ public class PostServiceTest {
         post.setTitle("我也爱你");
         post.setSecret(1);
         post.setUserId(1000L);
-        ResultModel resultModel=postService.insertPost(post);
+        ResultModel resultModel=postService.insertPost("11","11",1,100l);
         System.out.println(resultModel);
     }
 

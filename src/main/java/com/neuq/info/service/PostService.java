@@ -11,7 +11,7 @@ import java.util.List;
  * Created by lihang on 2017/4/4.
  */
 public interface PostService {
-    ResultModel insertPost(Post post);
+    ResultModel insertPost(String title,String content,int secret,long userId);
     ResultModel queryPostByCount(int offset , int limit,Long userId);
     ResultModel queryPostByPage(int currentPage);
     ResultModel queryPostByUserId(long userId);

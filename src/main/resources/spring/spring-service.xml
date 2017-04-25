@@ -22,6 +22,15 @@
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
+    <bean id="secretUrl" class="com.neuq.info.common.constant.SecretUrl">
+        <property name="url">
+            <list>
+                <value>url--1</value>
+                <value>url--2</value>
+                <value>url--3</value>
+            </list>
+        </property>
+    </bean>
     <bean id="wxConfig" class="java.util.HashMap">
         <constructor-arg>
             <map>
@@ -32,6 +41,8 @@
             </map>
         </constructor-arg>
     </bean>
+
+
 
     <!--<bean id="wxConfig" class="org.springframework.beans.factory.config.MapFactoryBean">-->
         <!--<property name="sourceMap">-->

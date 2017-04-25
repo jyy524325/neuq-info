@@ -11,6 +11,7 @@ import java.util.Date;
  */
 @JsonRootName("post")
 public class Post {
+
     private String avatarUrl;
     private String nickname;
     private long postId;
@@ -23,6 +24,7 @@ public class Post {
     private int likeCount;
     private int isSelf;
     private int isLike;
+    private int gender;
 
     public Post(String avatar, String nickname, long postId, long userId, String title, String content, Date createTime, int secret, int commentCount, int likeCount, int isSelf, int isLike) {
         this.avatarUrl = avatar;
@@ -41,6 +43,14 @@ public class Post {
 
     public Post() {
 
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public String getAvatarUrl() {

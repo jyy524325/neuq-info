@@ -9,7 +9,7 @@
         VALUES (#{userId},#{title},#{content},#{secret})
     </insert>
     <select id="queryPostByCount" resultType="Post">
-        SELECT postId,p.userId,title,content,p.create_time,secret,comment_count,like_count,avatarUrl,nickName
+        SELECT postId,p.userId,title,content,p.create_time,secret,comment_count,like_count,avatarUrl,nickName,gender
         FROM post p
         INNER JOIN user u ON p.userId =u.userId
 
@@ -19,14 +19,14 @@
         ORDER BY create_time DESC limit #{limit}
     </select>
     <select id="queryPostByUserId" resultType="Post" parameterType="Long">
-        SELECT postId,p.userId,title,content,p.create_time,secret,comment_count,like_count,avatarUrl,nickName
+        SELECT postId,p.userId,title,content,p.create_time,secret,comment_count,like_count,avatarUrl,nickName,gender
         FROM post p
         INNER JOIN user u ON p.userId =u.userId
             WHERE u.userId = #{userId}
         ORDER BY create_time DESC
     </select>
     <select id="queryPostByPostId" resultType="Post" parameterType="Long">
-        SELECT postId,p.userId,title,content,p.create_time,secret,comment_count,like_count,avatarUrl,nickName
+        SELECT postId,p.userId,title,content,p.create_time,secret,comment_count,like_count,avatarUrl,nickName,gender
         FROM post p
         INNER JOIN user u ON p.userId =u.userId
           WHERE postId =#{postId}

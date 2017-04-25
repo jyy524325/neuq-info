@@ -1,5 +1,6 @@
 package com.neuq.info.service.impl;
 
+import com.neuq.info.common.constant.SecretUrl;
 import com.neuq.info.dao.LikeDao;
 import com.neuq.info.dao.PostDao;
 import com.neuq.info.dto.Page;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by lihang on 2017/4/4.
@@ -26,7 +28,15 @@ public class PostServiceImpl implements PostService {
     private PostDao postDao;
     @Autowired
     private LikeDao likeDao;
-    public ResultModel insertPost(Post post) {
+    @Autowired
+    private SecretUrl secretUrl;
+    public ResultModel insertPost(String title,String content,int secret,long userId) {
+
+        Post post=new Post();
+        post.setSecret(secret);
+        post.setContent(content);
+        post.setTitle(title);
+        post.setUserId(userId);
         ResultModel resultModel;
         int count =postDao.insertPost(post);
 
@@ -53,6 +63,15 @@ public class PostServiceImpl implements PostService {
             }
             if(postIdList.contains(list.get(i).getPostId())){
                 list.get(i).setIsLike(1);
+            }
+            if(list.get(i).getSecret()==1){
+                list.get(i).setAvatarUrl(secretUrl.getUrl().get(new Random().nextInt(secretUrl.getUrl().size())));
+                if(list.get(i).getGender()==1){
+                    list.get(i).setNickname("匿名男同学");
+                }else{
+                    list.get(i).setNickname("匿名女同学");
+
+                }
             }
         }
         if(list.size()==0){
