@@ -6,6 +6,8 @@ import com.neuq.info.exception.LikeException;
 import com.neuq.info.exception.RepeatLikeException;
 import com.neuq.info.exception.RepeatUnLikeException;
 import com.neuq.info.service.PostService;
+import io.swagger.annotations.*;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,14 +26,21 @@ import static javafx.scene.input.KeyCode.R;
  */
 @Controller
 @RequestMapping("/post")
+@Api(value = "post相关API",description = "post相关API")
 public class PostController {
     @Autowired
     private PostService postService;
 
     @RequestMapping(value ="/{offset}/{limit}",method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
+    @ApiOperation(notes = "根据offset和limit获取post", httpMethod = "GET", value = "根据offset和limit获取post")
+    @ApiImplicitParams({
+                         @ApiImplicitParam(name = "offset", value = "上次返回数据的最后一个post的id", required = true,dataType = "long"),
+                         @ApiImplicitParam(name = "limit", value = "本次取多少条post", required = true,dataType = "int"),
+                         @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
+                 })
     @ResponseBody
-    public ResultModel list(Model model, @PathVariable("offset") int offset, @PathVariable("limit") int limit,
+    public ResultModel list(@PathVariable("offset") int offset, @PathVariable("limit") int limit,
                            HttpServletRequest request){
 
         //获取列表页
@@ -42,8 +51,13 @@ public class PostController {
 
     @RequestMapping(value ="/{postId}",method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
+    @ApiOperation(notes = "根据postId获取post", httpMethod = "GET", value = "根据postId获取post")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "postId", value = "postId", required = true,paramType = "path",dataType = "long"),
+            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
+    })
     @ResponseBody
-    public ResultModel post(Model model, @PathVariable("postId") int postId,
+    public ResultModel post(@PathVariable("postId") int postId,
                             HttpServletRequest request){
 
         //获取列表页
@@ -51,7 +65,10 @@ public class PostController {
         ResultModel resultModel=postService.queryPostByPostId(postId,userId);
         return resultModel;
     }
-
+    @ApiOperation(notes = "根据user获取post", httpMethod = "GET", value = "根据user获取post")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
+    })
     @RequestMapping(value ="/user",method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody
@@ -66,9 +83,16 @@ public class PostController {
 
     @RequestMapping(value ="/like/{postid}/{flag}",method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
+    @ApiOperation(notes = "点赞或取消点赞", httpMethod = "GET", value = "点赞或取消点赞")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "postid", value = "postid", required = true,dataType = "long"),
+            @ApiImplicitParam(name = "flag", value = "flag为1是点赞，0为取消赞", required = true,dataType = "int"),
+            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
+    })
     @ResponseBody
-    public ResultModel like(Model model, @PathVariable("postid") long postid,@RequestParam("userId") long userId,@PathVariable("flag") int flag){
+    public ResultModel like(@PathVariable("postid") long postid,@PathVariable("flag") int flag,HttpServletRequest request){
         ResultModel resultModel=null;
+        Long userId= (Long)request.getAttribute("userId");
         try{
             resultModel=postService.updateLike(postid,flag,userId);
         }catch (RepeatLikeException e){
@@ -81,6 +105,13 @@ public class PostController {
     }
     @RequestMapping(method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
+    @ApiOperation(notes = "提交post", httpMethod = "POST", value = "提交post")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "title", value = "标题", required = true,dataType = "string",paramType = "query"),
+            @ApiImplicitParam(name = "content", value = "内容", required = true,dataType = "string",paramType = "query"),
+            @ApiImplicitParam(name = "secret", value = "secret为1是匿名，0为非匿名", required = true,dataType = "int",paramType = "query"),
+            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
+    })
     @ResponseBody
     public ResultModel add(@RequestParam("title") String title,@RequestParam("content") String content,@RequestParam("secret") int secret,
                             HttpServletRequest request){

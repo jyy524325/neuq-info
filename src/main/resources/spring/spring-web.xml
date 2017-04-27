@@ -35,7 +35,12 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/wx/getSession"/>
+            <mvc:exclude-mapping path="/api/**"/>
+            <mvc:exclude-mapping path="/v2/api-docs"/>
+
             <bean class="com.neuq.info.interceptor.SessionInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+    <!--<mvc:resources mapping="*.html" location="/"/>-->
+    <!--<mvc:resources mapping="/**" location="/"/>-->
 </beans>

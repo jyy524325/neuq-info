@@ -41,7 +41,7 @@
             </map>
         </constructor-arg>
     </bean>
-
+    <bean name="swaggerConfig" class="com.neuq.info.common.api.SwaggerConfig"></bean>
 
 
     <!--<bean id="wxConfig" class="org.springframework.beans.factory.config.MapFactoryBean">-->

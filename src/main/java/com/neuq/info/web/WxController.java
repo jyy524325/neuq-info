@@ -6,6 +6,10 @@ import com.neuq.info.entity.User;
 import com.neuq.info.enums.ErrorStatus;
 import com.neuq.info.service.UserService;
 import com.neuq.info.service.WxService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,7 @@ import java.util.Scanner;
  */
 @Controller
 @RequestMapping("/wx")
+@Api(value = "用户登陆态相关API")
 public class WxController {
     @Autowired
     private WxService wxService;
@@ -43,6 +48,11 @@ public class WxController {
      * @return
      */
     @RequestMapping(value = "/getSession", method = RequestMethod.GET, produces = "application/json")
+    @ApiOperation(notes = "根据code获取appid和session_key生成3rdkey", httpMethod = "GET", value = "根据code获取appid和session_key生成3rdkey")
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code",value = "小程序登录时获取的code",paramType = "query",dataType ="string")
+    })
     @ResponseBody
     public Map<String,Object> createSssion(@RequestParam(required = true,value = "code")String wxCode){
         Map<String,Object> wxSessionMap = wxService.getWxSession(wxCode);
@@ -71,6 +81,13 @@ public class WxController {
      * @return
      */
     @RequestMapping(value = "/checkUserInfo", method = RequestMethod.GET, produces = "application/json")
+    @ApiOperation(notes = "此API暂时不用", httpMethod = "GET", value = "此API暂时不用")
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "rawData",value = "小程序登录时获取的code",paramType = "query",dataType ="string"),
+            @ApiImplicitParam(name = "signature",value = "小程序登录时获取的code",paramType = "query",dataType ="string"),
+            @ApiImplicitParam(name = "sessionId",value = "小程序登录时获取的code",paramType = "query",dataType ="string")
+    })
     @ResponseBody
     public Map<String,Object> checkUserInfo(@RequestParam(required = true,value = "rawData")String rawData,
                                             @RequestParam(required = true,value = "signature")String signature,
@@ -96,7 +113,13 @@ public class WxController {
      * @param iv			加密算法的初始向量
      * @return
      */
-    @RequestMapping(value = "/decodeUserInfo", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/decodeUserInfo", method = RequestMethod.POST, produces = "application/json")
+    @ApiOperation(notes = "解析用户数据", httpMethod = "POST", value = "解析用户数据")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "encryptedData",value = "用户假面数据",paramType = "query",dataType ="string"),
+            @ApiImplicitParam(name = "iv",value = "加密算法的初始向量",paramType = "query",dataType ="string"),
+            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
+    })
     @ResponseBody
     public Map<String,Object> decodeUserInfo(@RequestParam(required = true,value = "encryptedData")String encryptedData,
                                               @RequestParam(required = true,defaultValue = "iv")String iv, HttpServletRequest request){

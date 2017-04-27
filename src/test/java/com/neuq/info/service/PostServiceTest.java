@@ -69,7 +69,8 @@ public class PostServiceTest {
     }
     @Test
     public void queryPostByPostId() throws Exception {
-        System.out.println(postService.queryPostByPostId(48l,1022l));
+        System.out.println(postService.queryPostByPostId(81l,1024l));
+
 
     }
 
