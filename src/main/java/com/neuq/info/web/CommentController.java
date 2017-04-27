@@ -49,7 +49,6 @@ public class CommentController {
     @ApiOperation(notes = "根据postId获取评论", httpMethod = "GET", value = "根据postId获取评论")
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "postId",value = "postId",paramType = "query",dataType ="string"),
             @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
 
     })
