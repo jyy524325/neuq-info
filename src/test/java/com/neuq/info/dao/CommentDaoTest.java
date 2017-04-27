@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class CommentDaoTest {
         comment.setUserId(1000L);
         comment.setContent("评论哦");
         comment.setAvatarUrl("avator");
-        comment.setNickname("航了个航");
+        comment.setNickName("航了个航");
     commentDao.insertComment(comment);
     }
 
@@ -39,5 +40,18 @@ public class CommentDaoTest {
     public void updateLikeCount()throws Exception{
         commentDao.updateLikeCount(7,0);
     }
+    @Test
+    public void queryUnReadCommentByPostid()throws Exception{
+        System.out.println(commentDao.queryUnReadCommentByPostid(1002l));
+    }
+    @Test
+    public void updateCommentByIsRead()throws Exception{
+        List<Long> longList =new ArrayList<Long>();
+        longList.add(2l);
+        longList.add(3l);
+        longList.add(4l);
+        System.out.println(commentDao.updateCommentByIsRead(longList));
+    }
+
 
 }

@@ -116,10 +116,11 @@ public class WxController {
     @RequestMapping(value = "/decodeUserInfo", method = RequestMethod.POST, produces = "application/json")
     @ApiOperation(notes = "解析用户数据", httpMethod = "POST", value = "解析用户数据")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "encryptedData",value = "用户假面数据",paramType = "query",dataType ="string"),
+            @ApiImplicitParam(name = "encryptedData",value = "用户加密数据",paramType = "query",dataType ="string"),
             @ApiImplicitParam(name = "iv",value = "加密算法的初始向量",paramType = "query",dataType ="string"),
             @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
     })
+
     @ResponseBody
     public Map<String,Object> decodeUserInfo(@RequestParam(required = true,value = "encryptedData")String encryptedData,
                                               @RequestParam(required = true,defaultValue = "iv")String iv, HttpServletRequest request){

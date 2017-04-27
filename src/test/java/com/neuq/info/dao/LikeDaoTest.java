@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -34,5 +35,16 @@ public class LikeDaoTest {
         System.out.println(likeDao.insertUserLike(like));
     }
 
+    @Test
+    public void queryUnReadLikeByUserId() throws Exception {
+       List<Like> list= likeDao.queryUnReadLikeByUserId(1000l);
+        System.out.println(list);
+    }
+    @Test
+    public void updateLikeByRead() throws Exception {
+        List<Like> list= likeDao.queryUnReadLikeByUserId(1000l);
+        System.out.println(likeDao.updateLikeByRead(list));
+
+    }
 
 }

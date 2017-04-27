@@ -9,13 +9,30 @@ public class Like {
     private long postId;
     private long userId;
     private Date createTime;
-
+    private String avatarUrl;
+    private String nickName;
     public Like() {
     }
 
     public Like(long postId, long userId) {
         this.postId = postId;
         this.userId = userId;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public long getPostId() {

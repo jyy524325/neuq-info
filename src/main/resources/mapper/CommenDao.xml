@@ -36,4 +36,15 @@
         </if>
         WHERE commentId =#{commentId}
     </update>
+    <select id="queryUnReadCommentByPostid" parameterType="long" resultMap="commentResultMap">
+    SELECT c.commentId,c.content,c.postId,c.userId,c.like_count,c.create_time,u.avatarUrl,u.nickName
+    FROM comment c INNER JOIN user u ON c.userId =u.userId WHERE postId IN (
+        SELECT postId from post WHERE userId =#{userId}) AND is_read = 0
+    </select>
+    <update id="updateCommentByIsRead" parameterType="java.util.List">
+        UPDATE comment SET is_read =1 WHERE commentId IN (
+        <foreach collection="list" item="item" separator=",">
+            #{item}
+        </foreach> )
+    </update>
     </mapper>

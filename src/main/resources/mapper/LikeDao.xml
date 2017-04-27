@@ -16,6 +16,18 @@
     <update id="deleteUserLike" parameterType="Like">
         DELETE FROM user_like_post WHERE postId=#{postId} AND userId=#{userId}
     </update>
-
+    <select id="queryUnReadLikeByUserId" parameterType="long" resultType="Like">
+        SELECT postId,userId,create_time
+        FROM user_like_post WHERE postId IN (
+        SELECT postId from post WHERE userId =#{userId}) AND is_read = 0
+    </select>
+    <update id="updateLikeByRead" parameterType="java.util.List">
+        UPDATE user_like_post SET is_read = 1
+        <where>
+            <foreach collection="list" item="item" index="index" separator="or">
+               (userId= #{item.userId} and postId =#{item.postId})
+            </foreach>
+        </where>
+    </update>
 
     </mapper>

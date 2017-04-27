@@ -35,8 +35,8 @@ public class PostController {
             produces = {"application/json;charset=UTF-8"})
     @ApiOperation(notes = "根据offset和limit获取post", httpMethod = "GET", value = "根据offset和limit获取post")
     @ApiImplicitParams({
-                         @ApiImplicitParam(name = "offset", value = "上次返回数据的最后一个post的id", required = true,dataType = "long"),
-                         @ApiImplicitParam(name = "limit", value = "本次取多少条post", required = true,dataType = "int"),
+                         @ApiImplicitParam(name = "offset", value = "上次返回数据的最后一个post的id", required = true,dataType = "long",paramType = "path"),
+                         @ApiImplicitParam(name = "limit", value = "本次取多少条post", required = true,dataType = "int",paramType = "path"),
                          @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
                  })
     @ResponseBody
@@ -85,8 +85,8 @@ public class PostController {
             produces = {"application/json;charset=UTF-8"})
     @ApiOperation(notes = "点赞或取消点赞", httpMethod = "GET", value = "点赞或取消点赞")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "postid", value = "postid", required = true,dataType = "long"),
-            @ApiImplicitParam(name = "flag", value = "flag为1是点赞，0为取消赞", required = true,dataType = "int"),
+            @ApiImplicitParam(name = "postid", value = "postid", required = true,dataType = "long",paramType = "path"),
+            @ApiImplicitParam(name = "flag", value = "flag为1是点赞，0为取消赞", required = true,dataType = "int",paramType = "path"),
             @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
     })
     @ResponseBody

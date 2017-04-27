@@ -13,10 +13,20 @@ public class Comment {
     private long postId;
     private long userId;
     private String avatarUrl;
+    private String nickName;
     private int likeCount;
     private Date createTime;
-    private String nickname;
     private String content;
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+
 
     public long getCommentId() {
         return commentId;
@@ -66,14 +76,6 @@ public class Comment {
         this.createTime = createTime;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public String getContent() {
         return content;
     }
@@ -110,7 +112,7 @@ public class Comment {
                 ", avatarUrl='" + avatarUrl + '\'' +
                 ", likeCount=" + likeCount +
                 ", createTime=" + createTime +
-                ", nickname='" + nickname + '\'' +
+                ", nickname='" + nickName + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }
