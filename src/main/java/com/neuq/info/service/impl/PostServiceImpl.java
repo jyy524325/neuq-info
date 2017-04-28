@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -131,7 +132,7 @@ public class PostServiceImpl implements PostService {
         for (Like tempLike:like){
             postIdList.add(tempLike.getPostId());
         }
-        if(postIdList.contains(post.getUserId())){
+            if(postIdList.contains(post.getPostId())){
             post.setIsLike(1);
         }
         if(post.getSecret()==1){
