@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by lihang on 2017/4/4.
@@ -64,18 +63,18 @@ public class PostServiceImpl implements PostService {
             if(postIdList.contains(list.get(i).getPostId())){
                 list.get(i).setIsLike(1);
             }
-            if(list.get(i).getSecret()==0){
+            if(list.get(i).getSecret()==1){
                 list.get(i).setUserId(-1);
                 list.get(i).setAvatarUrl(secretUrl.getUrl().get((int)list.get(i).getPostId()%secretUrl.getUrl().size()));
                 if(list.get(i).getGender()==1){
-                    list.get(i).setNickname("匿名男同学");
+                    list.get(i).setNickName("匿名男同学");
                 }else{
-                    list.get(i).setNickname("匿名女同学");
+                    list.get(i).setNickName("匿名女同学");
                 }
             }
         }
         if(list.size()==0){
-            resultModel=new ResultModel(ResultStatus.FAILURE,list);
+            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA,list);
         }else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, list);
         }
@@ -115,7 +114,7 @@ public class PostServiceImpl implements PostService {
             }
         }
         if(list.size()==0){
-            resultModel=new ResultModel(ResultStatus.FAILURE,list);
+            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA,list);
         }else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, list);
         }
@@ -133,15 +132,15 @@ public class PostServiceImpl implements PostService {
             postIdList.add(tempLike.getPostId());
         }
         if(postIdList.contains(post.getUserId())){
-            post.setIsLike(-1);
+            post.setIsLike(1);
         }
-        if(post.getSecret()==0){
-            post.setUserId(0);
+        if(post.getSecret()==1){
+            post.setUserId(-1);
             post.setAvatarUrl(secretUrl.getUrl().get((int)post.getPostId()%secretUrl.getUrl().size()));
             if(post.getGender()==1){
-                post.setNickname("匿名男同学");
+                post.setNickName("匿名男同学");
             }else {
-                post.setNickname("匿名女同学");
+                post.setNickName("匿名女同学");
             }
 
         }
@@ -163,7 +162,7 @@ public class PostServiceImpl implements PostService {
         int count=postDao.deletePost(postId);
 
         if(count==0){
-            resultModel=new ResultModel(ResultStatus.FAILURE,count);
+            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA,count);
         }else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, count);
         }

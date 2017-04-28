@@ -23,7 +23,7 @@ public class CommentServiceImpl implements CommentService {
     public ResultModel queryComment(long postid) {
         List<Comment> list=commentDao.queryCommentByPostid(postid);
         if(list.size()==0){
-            return new ResultModel(ResultStatus.FAILURE);
+            return new ResultModel(ResultStatus.NO_MORE_DATA);
         }
         return new ResultModel(ResultStatus.SUCCESS, list);
     }

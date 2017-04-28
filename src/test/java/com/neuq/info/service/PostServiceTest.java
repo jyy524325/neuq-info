@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import static org.junit.Assert.*;
 
@@ -15,8 +16,9 @@ import static org.junit.Assert.*;
  * Created by lihang on 2017/4/4.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @ContextConfiguration({"classpath:spring/spring-service.xml",
-        "classpath:spring/spring-dao.xml"})
+        "classpath:spring/spring-dao.xml", "classpath:spring/spring-web.xml"})
 public class PostServiceTest {
     @Autowired
     private PostService postService;
@@ -36,9 +38,9 @@ public class PostServiceTest {
     @Test
     public void queryPostByCount() throws Exception {
         ResultModel resultModel=postService.queryPostByCount(0,10,1000l);
-        ResultModel resultModel1=postService.queryPostByCount(36,10,1000l);
+//        ResultModel resultModel1=postService.queryPostByCount(36,10,1000l);
+//        System.out.println(resultModel);
         System.out.println(resultModel);
-        System.out.println(resultModel1);
     }
 
     @Test

@@ -13,7 +13,7 @@ import java.util.Date;
 public class Post {
 
     private String avatarUrl;
-    private String nickname;
+    private String nickName;
     private long postId;
     private long userId;
     private String title;
@@ -28,7 +28,7 @@ public class Post {
 
     public Post(String avatar, String nickname, long postId, long userId, String title, String content, Date createTime, int secret, int commentCount, int likeCount, int isSelf, int isLike) {
         this.avatarUrl = avatar;
-        this.nickname = nickname;
+        this.nickName = nickname;
         this.postId = postId;
         this.userId = userId;
         this.title = title;
@@ -61,12 +61,12 @@ public class Post {
         this.avatarUrl = avatarUrl;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public int getIsLike() {
@@ -154,7 +154,7 @@ public class Post {
     public String toString() {
         return "Post{" +
                 "avatarUrl='" + avatarUrl + '\'' +
-                ", nickname='" + nickname + '\'' +
+                ", nickName='" + nickName + '\'' +
                 ", postId=" + postId +
                 ", userId=" + userId +
                 ", title='" + title + '\'' +
