@@ -20,6 +20,8 @@ public interface PostService {
     ResultModel deletePost(long postId);
     ResultModel updateLike(long postId, int flag,long userId);
     ResultModel updateCommentCount(long postId);
+    ResultModel queryPostByFirstPostId(long postId,long userId);
+
 
 
 }

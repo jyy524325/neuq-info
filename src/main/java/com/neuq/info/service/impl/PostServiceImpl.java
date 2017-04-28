@@ -53,31 +53,11 @@ public class PostServiceImpl implements PostService {
         ResultModel resultModel;
         List<Post> list=postDao.queryPostByCount(offset,limit);
         List<Like> like= likeDao.queryUserLikeByUserId(userId);
-        List<Long> postIdList=new ArrayList<Long>();
-        for (Like tempLike:like){
-            postIdList.add(tempLike.getPostId());
-        }
-        for (int i=0;i<list.size();i++){
-            if(list.get(i).getUserId()==userId){
-                list.get(i).setIsSelf(1);
-            }
-            if(postIdList.contains(list.get(i).getPostId())){
-                list.get(i).setIsLike(1);
-            }
-            if(list.get(i).getSecret()==1){
-                list.get(i).setUserId(-1);
-                list.get(i).setAvatarUrl(secretUrl.getUrl().get((int)list.get(i).getPostId()%secretUrl.getUrl().size()));
-                if(list.get(i).getGender()==1){
-                    list.get(i).setNickName("匿名男同学");
-                }else{
-                    list.get(i).setNickName("匿名女同学");
-                }
-            }
-        }
-        if(list.size()==0){
-            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA,list);
+        List<Post> resList =handleSecret(list,like,userId);
+        if(resList.size()==0){
+            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA);
         }else {
-            resultModel = new ResultModel(ResultStatus.SUCCESS, list);
+            resultModel = new ResultModel(ResultStatus.SUCCESS, resList);
         }
         return resultModel;
 
@@ -115,7 +95,7 @@ public class PostServiceImpl implements PostService {
             }
         }
         if(list.size()==0){
-            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA,list);
+            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA);
         }else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, list);
         }
@@ -163,7 +143,7 @@ public class PostServiceImpl implements PostService {
         int count=postDao.deletePost(postId);
 
         if(count==0){
-            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA,count);
+            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA);
         }else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, count);
         }
@@ -201,5 +181,43 @@ public class PostServiceImpl implements PostService {
         }
         return resultModel;
     }
+    public ResultModel queryPostByFirstPostId(long postId,long userId) {
+        ResultModel resultModel;
+        List<Post> list=postDao.queryPostByFirstPostId(postId);
+        List<Like> like= likeDao.queryUserLikeByUserId(userId);
+
+        List<Post> resList =handleSecret(list,like,userId);
+        if(resList.size()==0){
+            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA);
+        }else {
+            resultModel = new ResultModel(ResultStatus.SUCCESS, resList);
+        }
+        return resultModel;
+            }
+        private List<Post> handleSecret(List<Post> list,List<Like> like,long userId) {
+            List<Long> postIdList=new ArrayList<Long>();
+            for (Like tempLike:like){
+                postIdList.add(tempLike.getPostId());
+            }
+            for (int i=0;i<list.size();i++){
+                if(list.get(i).getUserId()==userId){
+                    list.get(i).setIsSelf(1);
+                }
+                if(postIdList.contains(list.get(i).getPostId())){
+                    list.get(i).setIsLike(1);
+                }
+                if(list.get(i).getSecret()==1){
+                    list.get(i).setUserId(-1);
+                    list.get(i).setAvatarUrl(secretUrl.getUrl().get((int)list.get(i).getPostId()%secretUrl.getUrl().size()));
+                    if(list.get(i).getGender()==1){
+                        list.get(i).setNickName("匿名男同学");
+                    }else{
+                        list.get(i).setNickName("匿名女同学");
+                    }
+                }
+            }
+            return list;
+        }
+
 
 }

@@ -87,5 +87,10 @@ public class PostDaoTest {
     public void updateCommentCount() throws Exception {
         postDao.updateCommentCount(2);
     }
+    @Test
+    public void queryPostByFirstPostId() throws Exception {
+        postDao.queryPostByFirstPostId(50l);
+    }
+
 
 }
