@@ -4,29 +4,35 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.neuq.info.common.format.CustomDateSerializer;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by lihang on 2017/4/2.
  */
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class Comment {
+
     private long commentId;
     private long postId;
     private long userId;
-    private String avatarUrl;
-    private String nickName;
     private int likeCount;
     private Date createTime;
     private String content;
+    private int isAuther;
+    private int level;
+    private long pCommentId;
+    private User fromUser;
+    private User toUser;
+    private List<Comment> cComments;
 
-    public String getNickName() {
-        return nickName;
+    public Comment(long postId, String content) {
+        this.postId = postId;
+        this.content = content;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public Comment() {
+
     }
-
-
 
     public long getCommentId() {
         return commentId;
@@ -52,14 +58,6 @@ public class Comment {
         this.userId = userId;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
     public int getLikeCount() {
         return likeCount;
     }
@@ -67,7 +65,7 @@ public class Comment {
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
-    @JsonSerialize(using = CustomDateSerializer.class)
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -84,23 +82,52 @@ public class Comment {
         this.content = content;
     }
 
-    public Comment(long commentId, long postId, long userId, String avatar, int likeCount, Date createTime) {
-        this.commentId = commentId;
-        this.postId = postId;
-        this.userId = userId;
-        this.avatarUrl = avatar;
-        this.likeCount = likeCount;
-        this.createTime = createTime;
+    public int getIsAuther() {
+        return isAuther;
     }
 
-    public Comment() {
-
+    public void setIsAuther(int isAuther) {
+        this.isAuther = isAuther;
     }
 
-    public Comment(long postId, long userId, String content) {
-        this.postId = postId;
-        this.userId = userId;
-        this.content = content;
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public long getpCommentId() {
+        return pCommentId;
+    }
+
+    public void setpCommentId(long pCommentId) {
+        this.pCommentId = pCommentId;
+    }
+
+    public User getFromUser() {
+        return fromUser;
+    }
+
+    public void setFromUser(User fromUser) {
+        this.fromUser = fromUser;
+    }
+
+    public User getToUser() {
+        return toUser;
+    }
+
+    public void setToUser(User toUser) {
+        this.toUser = toUser;
+    }
+
+    public List<Comment> getcComments() {
+        return cComments;
+    }
+
+    public void setcComments(List<Comment> cComments) {
+        this.cComments = cComments;
     }
 
     @Override
@@ -109,11 +136,15 @@ public class Comment {
                 "commentId=" + commentId +
                 ", postId=" + postId +
                 ", userId=" + userId +
-                ", avatarUrl='" + avatarUrl + '\'' +
                 ", likeCount=" + likeCount +
                 ", createTime=" + createTime +
-                ", nickname='" + nickName + '\'' +
                 ", content='" + content + '\'' +
+                ", isAuther=" + isAuther +
+                ", level=" + level +
+                ", pCommentId=" + pCommentId +
+                ", fromUser=" + fromUser +
+                ", toUser=" + toUser +
+                ", cComments=" + cComments +
                 '}';
     }
 }

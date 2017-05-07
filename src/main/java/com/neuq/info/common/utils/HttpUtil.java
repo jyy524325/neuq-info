@@ -137,7 +137,7 @@ public class HttpUtil {
             // 打开和URL之间的连接
             URLConnection conn = realUrl.openConnection();
             // 设置通用的请求属性
-            conn.setRequestProperty("authorization", "Authorization: Basic token=0abf1040cda747f1bd724719fd2c8496");
+//            conn.setRequestProperty("authorization", "Authorization: Basic token=0abf1040cda747f1bd724719fd2c8496");
             conn.setRequestProperty("accept", "*/*");
             conn.setRequestProperty("connection", "Keep-Alive");
             conn.setRequestProperty("user-agent",

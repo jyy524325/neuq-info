@@ -1,5 +1,6 @@
 package com.neuq.info.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,12 +24,16 @@ public class CommentServiceTest {
     private CommentService commentService;
     @Test
     public void queryComment() throws Exception {
-        System.out.println(commentService.queryComment(2l));
+//        System.out.println(commentService.queryComment(1l));
+        ObjectMapper objectMapper =new ObjectMapper();
+        String re=objectMapper.writeValueAsString(commentService.queryComment(3l));
+        System.out.println(re);
     }
 
     @Test
     public void addComment() throws Exception {
-        commentService.addComment("web 测试",1023,48);
+        commentService.addComment("测试",1002,3,1,0,1002);
+//        commentService.addComment("web 测试",1023,48);
     }
 
 }

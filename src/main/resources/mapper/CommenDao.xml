@@ -10,21 +10,37 @@
         <result property="postId" column="postId"/>
         <result property="userId" column="userId"/>
         <result property="likeCount" column="like_count"/>
-        <result property="createTime" column="createTime"/>
+        <result property="createTime" column="create_time"/>
+        <association property="fromUser" javaType="User" resultMap="userResult"/>
+        <association property="toUser" javaType="User" resultMap="userResult" columnPrefix="to_"/>
+    </resultMap>
+
+    <resultMap id="userResult" type="User">
+        <id property="userId" column="userId"/>
         <result property="avatarUrl" column="avatarUrl"/>
         <result property="nickName" column="nickName"/>
     </resultMap>
 
-
-    <insert id="insertComment" parameterType="Comment">
-        INSERT ignore INTO comment (postId,userId,content)
-        VALUES (#{postId},#{userId},#{content})
+    <insert id="insertComment">
+        INSERT ignore INTO comment (postId,content,from_userId,to_userId,`level`,p_commentId)
+        VALUES (#{comment.postId},#{comment.content},#{fromUserId},#{toUserId},#{level},#{pCommentId})
     </insert>
     <select id="queryCommentByPostid" parameterType="long" resultMap="commentResultMap">
-      SELECT c.commentId,c.content,c.postId,c.userId,c.like_count,c.create_time,u.avatarUrl,u.nickName
-        FROM comment c
-      INNER JOIN user u ON c.userId =u.userId
-      WHERE c.postId=#{postId}  ORDER BY create_time DESC
+      SELECT c.commentId,c.content,c.postId,c.like_count,c.create_time,
+      u1.userId,
+      u1.avatarUrl,
+      u1.nickName,
+      u2.userId as to_userId,
+      u2.avatarUrl as to_avatarUrl,
+      u2.nickName  as to_nickName
+      FROM comment c
+      INNER JOIN user u1 ON c.from_userId =u1.userId
+      INNER JOIN user u2 ON c.to_userId =u2.userId
+      WHERE c.postId=#{postId} AND `level` = #{level} AND
+      <if test="pCommentId!=null">
+          p_commentId =#{pCommentId}
+      </if>
+      ORDER BY create_time
     </select>
     <update id="updateLikeCount">
         UPDATE comment SET

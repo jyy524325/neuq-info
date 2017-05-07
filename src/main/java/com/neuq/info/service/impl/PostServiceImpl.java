@@ -112,8 +112,6 @@ public class PostServiceImpl implements PostService {
         for (Like tempLike:like){
             postIdList.add(tempLike.getPostId());
         }
-            System.out.println(postIdList.toString());
-            System.out.println(postIdList.contains(post.getPostId()));
             if(postIdList.contains(post.getPostId())){
             post.setIsLike(1);
         }

@@ -10,10 +10,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,14 +32,22 @@ public class CommentController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "postId",value = "postId",paramType = "query",dataType ="string"),
             @ApiImplicitParam(name = "content",value = "评论内容",paramType = "query",dataType ="string"),
+            @ApiImplicitParam(name = "level",value = "评论类别 1：主评论 2：子评论(楼中楼评论)",paramType = "query",dataType ="string"),
+            @ApiImplicitParam(name = "toUserId",value = "此评论所回复的用户id",paramType = "query",dataType ="string"),
+            @ApiImplicitParam(name = "pCommentId",value = "子评论的父评论id,子评论特有属性，主评论默认为0",paramType = "query",dataType ="string"),
+            @ApiImplicitParam(name = "content",value = "评论内容",paramType = "query",dataType ="string"),
             @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
 
     })
     @ResponseBody
-    public ResultModel addComment(@PathVariable("postId") long postId, HttpServletRequest request){
+    public ResultModel addComment(@PathVariable("postId") long postId, HttpServletRequest request,
+                                  @RequestParam(required = true,value = "level")int level,
+                                  @RequestParam(required = true,value = "toUserId")Long toUserId,
+                                  @RequestParam(required = true,value = "pCommentId")Long pCommentId,
+                                  @RequestParam(required = true,value = "content")String content
+                                  ){
         Long userId= (Long)request.getAttribute("userId");
-        String content=request.getParameter("content");
-        return commentService.addComment(content,userId,postId);
+         return commentService.addComment(content,userId,postId,level,pCommentId,toUserId);
     }
 
     @RequestMapping(value ="/{postid}",method = RequestMethod.GET,

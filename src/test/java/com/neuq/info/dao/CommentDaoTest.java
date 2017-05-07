@@ -11,6 +11,8 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
+import static sun.jvm.hotspot.code.CompressedStream.L;
+
 /**
  * Created by lihang on 2017/4/2.
  */
@@ -21,18 +23,12 @@ public class CommentDaoTest {
     private CommentDao commentDao;
     @Test
     public void insertComment() throws Exception {
-        Comment comment =new Comment();
-        comment.setPostId(2L);
-        comment.setUserId(1000L);
-        comment.setContent("评论哦");
-        comment.setAvatarUrl("avator");
-        comment.setNickName("航了个航");
-    commentDao.insertComment(comment);
+    commentDao.insertComment(new Comment(3,"第一楼子评论1"),1002,1001,1,0);
     }
 
     @Test
     public void queryCommentByPostid() throws Exception {
-             List<Comment>list = commentDao.queryCommentByPostid(1);
+             List<Comment>list = commentDao.queryCommentByPostid(1,1,0);
         System.out.println(list);
 
     }

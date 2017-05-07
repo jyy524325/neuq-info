@@ -14,14 +14,14 @@ public interface CommentDao {
      * @param comment
      * @return
      */
-    int insertComment(Comment comment);
+    int insertComment(@Param("comment")Comment comment,@Param("fromUserId")long fromUserId,@Param("toUserId")long toUserId,@Param("level")int level,@Param("pCommentId")long pCommentId);
 
     /**
      * 根据postId查询评论
      * @param postId
      * @return
      */
-    List<Comment> queryCommentByPostid(long postId);
+    List<Comment> queryCommentByPostid(@Param("postId")long postId,@Param("level")int level,@Param("pCommentId")long pCommentId);
 
     /**
      * 更新评论的喜欢数量
@@ -31,6 +31,7 @@ public interface CommentDao {
     int updateLikeCount(@Param("commentId") long commentId, @Param("flag") int flag);
     List<Comment> queryUnReadCommentByPostid(long userId);
     int updateCommentByIsRead(List<Long> commentIdList);
+
 
 
 }

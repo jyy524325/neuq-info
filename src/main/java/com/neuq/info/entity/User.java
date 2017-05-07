@@ -1,5 +1,7 @@
 package com.neuq.info.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +9,7 @@ import java.util.Map;
 /**
  * Created by lihang on 2017/4/2.
  */
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class User {
     private long userId;
     private Date createTime;
