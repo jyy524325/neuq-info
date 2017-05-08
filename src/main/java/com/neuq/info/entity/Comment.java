@@ -65,7 +65,8 @@ public class Comment {
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
-
+    
+    @JsonSerialize(using = CustomDateSerializer.class)
     public Date getCreateTime() {
         return createTime;
     }
