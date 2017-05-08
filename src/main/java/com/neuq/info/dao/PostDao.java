@@ -70,6 +70,7 @@ public interface PostDao {
     List<Post> queryPostByUserId(long userId);
 
     Post queryPostByPostId(long postId);
+    Post queryPostIdByPostId(long postId);
 
     List<Post> queryPostByFirstPostId(long postId);
 

@@ -30,12 +30,11 @@ public class CommentController {
     @ApiOperation(notes = "根据postId提交评论", httpMethod = "POST", value = "根据postId提交评论")
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "postId",value = "postId",paramType = "query",dataType ="string"),
+            @ApiImplicitParam(name = "postId",value = "postId",paramType = "query",dataType ="long"),
             @ApiImplicitParam(name = "content",value = "评论内容",paramType = "query",dataType ="string"),
-            @ApiImplicitParam(name = "level",value = "评论类别 1：主评论 2：子评论(楼中楼评论)",paramType = "query",dataType ="string"),
-            @ApiImplicitParam(name = "toUserId",value = "此评论所回复的用户id",paramType = "query",dataType ="string"),
-            @ApiImplicitParam(name = "pCommentId",value = "子评论的父评论id,子评论特有属性，主评论默认为0",paramType = "query",dataType ="string"),
-            @ApiImplicitParam(name = "content",value = "评论内容",paramType = "query",dataType ="string"),
+            @ApiImplicitParam(name = "level",value = "评论类别 1：主评论 2：子评论(楼中楼评论)",paramType = "query",dataType ="int"),
+            @ApiImplicitParam(name = "toUserId",value = "此评论所回复的用户id",paramType = "query",dataType ="long"),
+            @ApiImplicitParam(name = "pCommentId",value = "子评论的父评论id,子评论特有属性，主评论默认为0",paramType = "query",dataType ="long"),
             @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
 
     })
@@ -47,6 +46,7 @@ public class CommentController {
                                   @RequestParam(required = true,value = "content")String content
                                   ){
         Long userId= (Long)request.getAttribute("userId");
+
          return commentService.addComment(content,userId,postId,level,pCommentId,toUserId);
     }
 
