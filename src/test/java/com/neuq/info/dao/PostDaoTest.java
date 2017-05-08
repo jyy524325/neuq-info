@@ -91,6 +91,11 @@ public class PostDaoTest {
     public void queryPostByFirstPostId() throws Exception {
         postDao.queryPostByFirstPostId(50l);
     }
+    @Test
+    public void queryUserIdByPostId() throws Exception {
+        System.out.println(postDao.queryUserIdByPostId(50l));
+    }
+
 
 
 }

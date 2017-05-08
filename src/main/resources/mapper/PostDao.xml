@@ -67,4 +67,8 @@
             WHERE postId > #{offset}
         ORDER BY create_time DESC
     </select>
+    <select id="queryUserIdByPostId" resultType="Post" parameterType="Long">
+        SELECT userId FROM post
+        WHERE postId = #{postId}
+    </select>
     </mapper>
