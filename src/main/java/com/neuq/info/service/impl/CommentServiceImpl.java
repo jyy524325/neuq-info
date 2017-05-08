@@ -48,7 +48,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment =new Comment(postid,content);
         if(level==1){
             Post post =postDao.queryUserIdByPostId(postid);
-            pCommentId=post.getUserId();
+            toUserId=post.getUserId();
         }
         int result=commentDao.insertComment(comment,fromUserId,toUserId,level,pCommentId);
         postDao.updateCommentCount(postid);
