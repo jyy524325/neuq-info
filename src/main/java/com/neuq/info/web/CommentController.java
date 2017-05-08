@@ -30,7 +30,7 @@ public class CommentController {
     @ApiOperation(notes = "根据postId提交评论", httpMethod = "POST", value = "根据postId提交评论")
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "postId",value = "postId",paramType = "query",dataType ="long"),
+            @ApiImplicitParam(name = "postId", value = "postId", required = true,dataType = "long",paramType = "path"),
             @ApiImplicitParam(name = "content",value = "评论内容",paramType = "query",dataType ="string"),
             @ApiImplicitParam(name = "level",value = "评论类别 1：主评论 2：子评论(楼中楼评论)",paramType = "query",dataType ="int"),
             @ApiImplicitParam(name = "toUserId",value = "此评论所回复的用户id",paramType = "query",dataType ="long"),
@@ -41,8 +41,8 @@ public class CommentController {
     @ResponseBody
     public ResultModel addComment(@PathVariable("postId") long postId, HttpServletRequest request,
                                   @RequestParam(required = true,value = "level")int level,
-                                  @RequestParam(required = true,value = "toUserId")Long toUserId,
-                                  @RequestParam(required = true,value = "pCommentId")Long pCommentId,
+                                  @RequestParam(required = true,value = "toUserId")long toUserId,
+                                  @RequestParam(required = true,value = "pCommentId")long pCommentId,
                                   @RequestParam(required = true,value = "content")String content
                                   ){
         Long userId= (Long)request.getAttribute("userId");
