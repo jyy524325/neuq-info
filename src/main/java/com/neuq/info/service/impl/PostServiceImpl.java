@@ -195,9 +195,11 @@ public class PostServiceImpl implements PostService {
         return resultModel;
             }
         private List<Post> handleSecret(List<Post> list,List<Like> like,long userId) {
-            List<Long> postIdList=new ArrayList<Long>();
-            for (Like tempLike:like){
-                postIdList.add(tempLike.getPostId());
+            List<Long> postIdList = new ArrayList<Long>();
+            if(like!=null) {
+                for (Like tempLike : like) {
+                    postIdList.add(tempLike.getPostId());
+                }
             }
             for (int i=0;i<list.size();i++){
                 if(list.get(i).getUserId()==userId){
