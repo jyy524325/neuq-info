@@ -23,7 +23,7 @@ public class Comment {
     private long pCommentId;
     private User fromUser;
     private User toUser;
-    private int floar;
+    private int floor;
     private int cCommentsSize;
     private List<Comment> cComments;
 
@@ -44,12 +44,12 @@ public class Comment {
         this.cCommentsSize = cCommentsSize;
     }
 
-    public int getFloar() {
-        return floar;
+    public int getFloor() {
+        return floor;
     }
 
-    public void setFloar(int floar) {
-        this.floar = floar;
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
 
     public long getCommentId() {
@@ -163,7 +163,7 @@ public class Comment {
                 ", pCommentId=" + pCommentId +
                 ", fromUser=" + fromUser +
                 ", toUser=" + toUser +
-                ", floar='" + floar + '\'' +
+                ", floor='" + floor + '\'' +
                 ", cCommentsSize=" + cCommentsSize +
                 ", cComments=" + cComments +
                 '}';

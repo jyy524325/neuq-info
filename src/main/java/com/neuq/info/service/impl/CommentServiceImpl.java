@@ -30,7 +30,7 @@ public class CommentServiceImpl implements CommentService {
             List<Comment> cList=commentDao.queryCommentByPostid(postid,2,pList.get(i).getCommentId());
             pList.get(i).setcComments(cList);
             pList.get(i).setcCommentsSize(cList.size());
-            pList.get(i).setFloar(i+1);
+            pList.get(i).setFloor(i+1);
             if (pList.get(i).getFromUser().getUserId()==post.getUserId()){
                 pList.get(i).setIsAuther(1);
             }
