@@ -23,6 +23,8 @@ public class Comment {
     private long pCommentId;
     private User fromUser;
     private User toUser;
+    private int floar;
+    private int cCommentsSize;
     private List<Comment> cComments;
 
     public Comment(long postId, String content) {
@@ -32,6 +34,22 @@ public class Comment {
 
     public Comment() {
 
+    }
+
+    public int getcCommentsSize() {
+        return cCommentsSize;
+    }
+
+    public void setcCommentsSize(int cCommentsSize) {
+        this.cCommentsSize = cCommentsSize;
+    }
+
+    public int getFloar() {
+        return floar;
+    }
+
+    public void setFloar(int floar) {
+        this.floar = floar;
     }
 
     public long getCommentId() {
@@ -145,6 +163,8 @@ public class Comment {
                 ", pCommentId=" + pCommentId +
                 ", fromUser=" + fromUser +
                 ", toUser=" + toUser +
+                ", floar='" + floar + '\'' +
+                ", cCommentsSize=" + cCommentsSize +
                 ", cComments=" + cComments +
                 '}';
     }

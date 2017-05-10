@@ -25,18 +25,18 @@ public class CommentServiceImpl implements CommentService {
         List<Comment> pList=commentDao.queryCommentByPostid(postid,1,0);
 
         System.out.println(pList.size());
+        Post post =postDao.queryPostByPostId(postid);
         for (int i = 0; i <pList.size() ; i++) {
             List<Comment> cList=commentDao.queryCommentByPostid(postid,2,pList.get(i).getCommentId());
-            System.out.println(cList);
             pList.get(i).setcComments(cList);
-        }
-        Post post =postDao.queryPostByPostId(postid);
-
-        for (int i=0;i<pList.size();i++){
+            pList.get(i).setcCommentsSize(cList.size());
+            pList.get(i).setFloar(i+1);
             if (pList.get(i).getFromUser().getUserId()==post.getUserId()){
                 pList.get(i).setIsAuther(1);
             }
+
         }
+
         if(pList.size()==0){
             return new ResultModel(ResultStatus.NO_MORE_DATA);
         }
