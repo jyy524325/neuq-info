@@ -142,4 +142,22 @@ public class PostController {
         ResultModel resultModel=postService.queryPostByFirstPostId(postId,userId);
         return resultModel;
     }
+
+    @RequestMapping(value ="/delete/{postId}",method = RequestMethod.GET,
+            produces = {"application/json;charset=UTF-8"})
+    @ApiOperation(notes = "根据postId删除post", httpMethod = "GET", value = "根据postId删除post")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "postId", value = "要删除的postId", required = true,dataType = "long",paramType = "path"),
+            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
+    })
+    @ResponseBody
+    public ResultModel deletePost(@PathVariable("postId") long postId, HttpServletRequest request){
+
+        //获取列表页
+        Long userId= (Long)request.getAttribute("userId");
+        ResultModel resultModel=postService.deletePost(postId,userId);
+        return resultModel;
+    }
+
+
 }

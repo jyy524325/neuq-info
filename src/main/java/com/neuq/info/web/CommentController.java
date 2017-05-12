@@ -59,7 +59,23 @@ public class CommentController {
 
     })
     @ResponseBody
-    public ResultModel list(@PathVariable("postid") long postid){
+    public ResultModel delComment(@PathVariable("postid") long postid){
         return commentService.queryComment(postid);
     }
+
+    @RequestMapping(value ="/del/{postid}",method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
+    @ApiOperation(notes = "根据postId删除评论", httpMethod = "POST", value = "根据postId删除评论")
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
+
+    })
+    @ResponseBody
+    public ResultModel list(@PathVariable("postid") long postid,HttpServletRequest request){
+        Long userId= (Long)request.getAttribute("userId");
+        return commentService.delComment(postid,userId);
+    }
+
+
 }

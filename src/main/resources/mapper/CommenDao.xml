@@ -20,11 +20,11 @@
         <result property="avatarUrl" column="avatarUrl"/>
         <result property="nickName" column="nickName"/>
     </resultMap>
-
     <insert id="insertComment">
         INSERT ignore INTO comment (postId,content,from_userId,to_userId,`level`,p_commentId)
         VALUES (#{comment.postId},#{comment.content},#{fromUserId},#{toUserId},#{level},#{pCommentId})
     </insert>
+
     <select id="queryCommentByPostid" parameterType="long" resultMap="commentResultMap">
       SELECT c.commentId,c.content,c.postId,c.like_count,c.create_time,
       u1.userId,
@@ -40,8 +40,8 @@
       <if test="pCommentId!=null">
           p_commentId =#{pCommentId}
       </if>
-      ORDER BY create_time
     </select>
+
     <update id="updateLikeCount">
         UPDATE comment SET
         <if test="flag==1">
@@ -52,15 +52,23 @@
         </if>
         WHERE commentId =#{commentId}
     </update>
+
     <select id="queryUnReadCommentByPostid" parameterType="long" resultMap="commentResultMap">
     SELECT c.commentId,c.content,c.postId,c.userId,c.like_count,c.create_time,u.avatarUrl,u.nickName
     FROM comment c INNER JOIN user u ON c.userId =u.userId WHERE postId IN (
         SELECT postId from post WHERE userId =#{userId}) AND is_read = 0
     </select>
+
     <update id="updateCommentByIsRead" parameterType="java.util.List">
         UPDATE comment SET is_read =1 WHERE commentId IN (
         <foreach collection="list" item="item" separator=",">
             #{item}
         </foreach> )
     </update>
+    <delete id="delComment" parameterType="Long">
+        DELETE FROM comment WHERE commentId= #{commentId}
+    </delete>
+    <select id="queryCommentUserIdByCommentId" parameterType="long" resultType="Long">
+        SELECT from_userId FROM comment WHERE commentId=#{commentId}
+    </select>
     </mapper>

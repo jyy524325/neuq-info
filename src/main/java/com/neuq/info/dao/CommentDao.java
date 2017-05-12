@@ -31,6 +31,8 @@ public interface CommentDao {
     int updateLikeCount(@Param("commentId") long commentId, @Param("flag") int flag);
     List<Comment> queryUnReadCommentByPostid(long userId);
     int updateCommentByIsRead(List<Long> commentIdList);
+    int delComment(long commentId);
+    Long queryCommentUserIdByCommentId(long commentId);
 
 
 

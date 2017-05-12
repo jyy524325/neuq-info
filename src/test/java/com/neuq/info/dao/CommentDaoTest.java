@@ -48,6 +48,10 @@ public class CommentDaoTest {
         longList.add(4l);
         System.out.println(commentDao.updateCommentByIsRead(longList));
     }
+    @Test
+    public void delComment()throws Exception{
+        System.out.println(commentDao.delComment(12l));
+    }
 
 
 }

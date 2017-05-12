@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static org.bouncycastle.asn1.x500.style.RFC4519Style.c;
+
 /**
  * Created by lihang on 2017/4/21.
  */
@@ -32,8 +34,9 @@ public class CommentServiceImpl implements CommentService {
             pList.get(i).setcCommentsSize(cList.size());
             pList.get(i).setFloor(i+1);
             if (pList.get(i).getFromUser().getUserId()==post.getUserId()){
-                pList.get(i).setIsAuther(1);
+                pList.get(i).setIsSelf(1);
             }
+
 
         }
 
@@ -59,4 +62,19 @@ public class CommentServiceImpl implements CommentService {
         }
 
     }
+    public ResultModel delComment(long commentId,long userId) {
+        long fromUserid= commentDao.queryCommentUserIdByCommentId(commentId);
+        if (userId!=fromUserid){
+            return new ResultModel(ResultStatus.NO_PERMISSION);
+        }else {
+            int result = commentDao.delComment(commentId);
+            if (result == 0) {
+                return new ResultModel(ResultStatus.FAILURE);
+            } else {
+                return new ResultModel(ResultStatus.SUCCESS);
+            }
+        }
+    }
+
+
 }

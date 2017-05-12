@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.bouncycastle.asn1.x500.style.RFC4519Style.o;
+
 /**
  * Created by lihang on 2017/4/4.
  */
@@ -138,16 +140,18 @@ public class PostServiceImpl implements PostService {
         return postDao.queryAllPostCount();
     }
 
-    public ResultModel deletePost(long postId) {
-        ResultModel resultModel;
-        int count=postDao.deletePost(postId);
-
-        if(count==0){
-            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA);
+    public ResultModel deletePost(long postId,long userId) {
+        Post post=postDao.queryPostByPostId(postId);
+        if(post.getUserId()!=userId){
+            return new ResultModel(ResultStatus.NO_PERMISSION);
         }else {
-            resultModel = new ResultModel(ResultStatus.SUCCESS, count);
+            int count = postDao.deletePost(postId);
+            if (count == 0) {
+                return new ResultModel(ResultStatus.FAILURE);
+            } else {
+                return new ResultModel(ResultStatus.SUCCESS, count);
+            }
         }
-        return resultModel;
     }
     @Transactional
     public ResultModel updateLike(long postId, int flag,long userId) {
@@ -213,8 +217,10 @@ public class PostServiceImpl implements PostService {
                     list.get(i).setAvatarUrl(secretUrl.getUrl().get((int)list.get(i).getPostId()%secretUrl.getUrl().size()));
                     if(list.get(i).getGender()==1){
                         list.get(i).setNickName("匿名男同学");
-                    }else{
+                    }else if(list.get(i).getGender()==2){
                         list.get(i).setNickName("匿名女同学");
+                    }else {
+                        list.get(i).setNickName("匿名同学");
                     }
                 }
             }

@@ -14,7 +14,8 @@ public enum ResultStatus {
     USER_NOT_FOUND(-1006, "用户不存在"),
     USER_NOT_LOGIN(-1003, "用户未登录"),
     REPEAT_LIKE(-1004,"重复点赞"),
-    REPEAT_UNLIKE(-1005,"重复取消赞");
+    REPEAT_UNLIKE(-1005,"重复取消赞"),
+    NO_PERMISSION(-1006,"当前用户没有操作权限");
 
     /**
      * 返回码

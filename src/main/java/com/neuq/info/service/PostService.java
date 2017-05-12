@@ -17,10 +17,11 @@ public interface PostService {
     ResultModel queryPostByUserId(long userId);
     ResultModel queryPostByPostId(long postId,long userId);
     int queryAllPostCount();
-    ResultModel deletePost(long postId);
+    ResultModel deletePost(long postId,long userId);
     ResultModel updateLike(long postId, int flag,long userId);
     ResultModel updateCommentCount(long postId);
     ResultModel queryPostByFirstPostId(long postId,long userId);
+
 
 
 

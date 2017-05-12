@@ -18,7 +18,6 @@ public class Comment {
     private int likeCount;
     private Date createTime;
     private String content;
-    private int isAuther;
     private int level;
     private long pCommentId;
     private User fromUser;
@@ -26,6 +25,7 @@ public class Comment {
     private int floor;
     private int cCommentsSize;
     private List<Comment> cComments;
+    private int isSelf;
 
     public Comment(long postId, String content) {
         this.postId = postId;
@@ -34,6 +34,14 @@ public class Comment {
 
     public Comment() {
 
+    }
+
+    public int getIsSelf() {
+        return isSelf;
+    }
+
+    public void setIsSelf(int isSelf) {
+        this.isSelf = isSelf;
     }
 
     public int getcCommentsSize() {
@@ -101,13 +109,6 @@ public class Comment {
         this.content = content;
     }
 
-    public int getIsAuther() {
-        return isAuther;
-    }
-
-    public void setIsAuther(int isAuther) {
-        this.isAuther = isAuther;
-    }
 
     public int getLevel() {
         return level;
@@ -158,14 +159,14 @@ public class Comment {
                 ", likeCount=" + likeCount +
                 ", createTime=" + createTime +
                 ", content='" + content + '\'' +
-                ", isAuther=" + isAuther +
                 ", level=" + level +
                 ", pCommentId=" + pCommentId +
                 ", fromUser=" + fromUser +
                 ", toUser=" + toUser +
-                ", floor='" + floor + '\'' +
+                ", floor=" + floor +
                 ", cCommentsSize=" + cCommentsSize +
                 ", cComments=" + cComments +
+                ", isSelf=" + isSelf +
                 '}';
     }
 }

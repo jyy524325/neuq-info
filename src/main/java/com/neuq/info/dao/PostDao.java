@@ -75,6 +75,8 @@ public interface PostDao {
 
     List<Post> queryPostByFirstPostId(long postId);
 
+    int delPost(long postId);
+
 
 
 }
