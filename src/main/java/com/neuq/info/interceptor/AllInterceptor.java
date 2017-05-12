@@ -1,7 +1,9 @@
 package com.neuq.info.interceptor;
 
 import com.neuq.info.dao.RedisDao;
+import com.neuq.info.dto.ResultModel;
 import com.neuq.info.entity.User;
+import com.neuq.info.enums.ResultStatus;
 import com.neuq.info.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -27,12 +29,12 @@ public class AllInterceptor implements WebRequestInterceptor {
                 String sessionKey = wxSessionStr.split("#")[0];
                 String openId = wxSessionStr.split("#")[1];
                 User user = userService.queryUserByOpenId(openId);
+
                 request.setAttribute("sessionKey", sessionKey, WebRequest.SCOPE_REQUEST);
                 request.setAttribute("openId", openId, WebRequest.SCOPE_REQUEST);
                 if (user != null) {
                     request.setAttribute("userId", user.getUserId(), WebRequest.SCOPE_REQUEST);
                 }
-
 
             }
         }

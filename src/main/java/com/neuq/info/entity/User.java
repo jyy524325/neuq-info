@@ -16,7 +16,7 @@ public class User {
     private String openId;
     private String avatarUrl;
     private String nickName;
-    private String gender;
+    private int gender;
     private String city;
     private String language;
     private String province;
@@ -26,7 +26,7 @@ public class User {
     private String jwPwd;
     private HashMap<String, String> watermark;
 
-    public User(long userId, Date createTime, String openId, String avatarUrl, String nickName, String gender, String city, String language, String province, String country, String unionId, String jwUser, String jwPwd, HashMap<String, String> watermark) {
+    public User(long userId, Date createTime, String openId, String avatarUrl, String nickName, int gender, String city, String language, String province, String country, String unionId, String jwUser, String jwPwd, HashMap<String, String> watermark) {
         this.userId = userId;
         this.createTime = createTime;
         this.openId = openId;
@@ -95,11 +95,11 @@ public class User {
         this.nickName = nickName;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -167,7 +167,7 @@ public class User {
                 ", openId='" + openId + '\'' +
                 ", avatarUrl='" + avatarUrl + '\'' +
                 ", nickName='" + nickName + '\'' +
-                ", gender='" + gender + '\'' +
+                ", gender=" + gender +
                 ", city='" + city + '\'' +
                 ", language='" + language + '\'' +
                 ", province='" + province + '\'' +
@@ -178,4 +178,23 @@ public class User {
                 ", watermark=" + watermark +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (gender != user.gender) return false;
+        if (openId != null ? !openId.equals(user.openId) : user.openId != null) return false;
+        if (avatarUrl != null ? !avatarUrl.equals(user.avatarUrl) : user.avatarUrl != null) return false;
+        if (nickName != null ? !nickName.equals(user.nickName) : user.nickName != null) return false;
+        if (city != null ? !city.equals(user.city) : user.city != null) return false;
+        if (language != null ? !language.equals(user.language) : user.language != null) return false;
+        if (province != null ? !province.equals(user.province) : user.province != null) return false;
+        return country != null ? country.equals(user.country) : user.country == null;
+
+    }
+
 }

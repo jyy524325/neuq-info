@@ -45,7 +45,6 @@ public class UserServiceImpl implements UserService {
             byte[] resultByte = aes.decrypt(Base64.decodeBase64(encryptedData), Base64.decodeBase64(sessionKey), Base64.decodeBase64(iv));
             if (null != resultByte && resultByte.length > 0) {
                 String userInfo = new String(resultByte, "UTF-8");
-                System.out.println(userInfo);
                 User user;
                 ObjectMapper objectMapper = new ObjectMapper();
                 try {

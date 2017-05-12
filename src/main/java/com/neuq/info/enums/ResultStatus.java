@@ -17,6 +17,7 @@ public enum ResultStatus {
     REPEAT_UNLIKE(-1005,"重复取消赞"),
     NO_PERMISSION(-1006,"当前用户没有操作权限");
 
+
     /**
      * 返回码
      */
