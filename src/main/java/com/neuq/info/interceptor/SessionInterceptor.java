@@ -49,7 +49,7 @@ public class SessionInterceptor implements HandlerInterceptor {
             }
 
         } else {
-            getResStr(ErrorStatus.sessionid_wrong, response);
+            getResStr(ErrorStatus.user_identity_expired, response);
             return false;
         }
     }
