@@ -5,7 +5,7 @@
 <mapper namespace="com.neuq.info.dao.CommentDao">
 
     <resultMap id="commentResultMap" type="Comment">
-        <id property="commentId" column="commentId" />
+        <id property="commentId" column="commentId"/>
         <result property="content" column="content"/>
         <result property="postId" column="postId"/>
         <result property="userId" column="userId"/>
@@ -26,20 +26,20 @@
     </insert>
 
     <select id="queryCommentByPostid" parameterType="long" resultMap="commentResultMap">
-      SELECT c.commentId,c.content,c.postId,c.like_count,c.create_time,
-      u1.userId,
-      u1.avatarUrl,
-      u1.nickName,
-      u2.userId as to_userId,
-      u2.avatarUrl as to_avatarUrl,
-      u2.nickName  as to_nickName
-      FROM comment c
-      INNER JOIN user u1 ON c.from_userId =u1.userId
-      INNER JOIN user u2 ON c.to_userId =u2.userId
-      WHERE c.postId=#{postId} AND `level` = #{level} AND
-      <if test="pCommentId!=null">
-          p_commentId =#{pCommentId}
-      </if>
+        SELECT c.commentId,c.content,c.postId,c.like_count,c.create_time,
+        u1.userId,
+        u1.avatarUrl,
+        u1.nickName,
+        u2.userId as to_userId,
+        u2.avatarUrl as to_avatarUrl,
+        u2.nickName as to_nickName
+        FROM comment c
+        INNER JOIN user u1 ON c.from_userId =u1.userId
+        INNER JOIN user u2 ON c.to_userId =u2.userId
+        WHERE c.postId=#{postId} AND `level` = #{level} AND
+        <if test="pCommentId!=null">
+            p_commentId =#{pCommentId}
+        </if>
     </select>
 
     <update id="updateLikeCount">
@@ -63,7 +63,8 @@
         UPDATE comment SET is_read =1 WHERE commentId IN (
         <foreach collection="list" item="item" separator=",">
             #{item}
-        </foreach> )
+        </foreach>
+        )
     </update>
     <delete id="delComment" parameterType="Long">
         DELETE FROM comment WHERE commentId= #{commentId}
@@ -71,4 +72,4 @@
     <select id="queryCommentUserIdByCommentId" parameterType="long" resultType="Long">
         SELECT from_userId FROM comment WHERE commentId=#{commentId}
     </select>
-    </mapper>
+</mapper>

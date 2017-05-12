@@ -13,7 +13,7 @@ import static com.neuq.info.common.utils.ProtostuffUtil.deserializer;
  */
 @Repository
 public class RedisDao {
-    public String get(final String key){
+    public String get(final String key) {
         try {
             Jedis jedis = RedisUtil.getJedis();
             try {
@@ -22,33 +22,33 @@ public class RedisDao {
                     String result = ProtostuffUtil.deserializer(bytes, String.class);
                     return result;
                 }
-            }finally {
+            } finally {
                 RedisUtil.returnResource(jedis);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public String put(final String key,long expires, final String value){
+    public String put(final String key, long expires, final String value) {
         try {
             Jedis jedis = RedisUtil.getJedis();
             try {
                 byte[] bytes = ProtostuffUtil.serializer(value);
-                String result = jedis.setex(key.getBytes(), (int)expires, bytes);
+                String result = jedis.setex(key.getBytes(), (int) expires, bytes);
                 return result;
-            }finally {
+            } finally {
                 RedisUtil.returnResource(jedis);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
     public static void main(String[] args) {
-        Jedis jedis= RedisUtil.getJedis();
+        Jedis jedis = RedisUtil.getJedis();
         jedis.get("eRSWjQIaantP20GV0fT1d3zP3FXSy3x9KUvfj7bYSSOxDM8Yibjqdnxfoh2znWyh");
         System.out.println(jedis.get("eRSWjQIaantP20GV0fT1d3zP3FXSy3x9KUvfj7bYSSOxDM8Yibjqdnxfoh2znWyh"));
         RedisUtil.returnResource(jedis);

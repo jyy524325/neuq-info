@@ -11,6 +11,7 @@ public class Like {
     private Date createTime;
     private String avatarUrl;
     private String nickName;
+
     public Like() {
     }
 

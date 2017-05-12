@@ -22,27 +22,28 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration({"classpath:spring/spring-service.xml",
-        "classpath:spring/spring-dao.xml","classpath:spring/spring-web.xml"})
+        "classpath:spring/spring-dao.xml", "classpath:spring/spring-web.xml"})
 public class CommentServiceTest {
     @Resource
     private CommentService commentService;
+
     @Test
     public void queryComment() throws Exception {
 //        System.out.println(commentService.queryComment(1l));
-        ObjectMapper objectMapper =new ObjectMapper();
-        String re=objectMapper.writeValueAsString(commentService.queryComment(3l));
+        ObjectMapper objectMapper = new ObjectMapper();
+        String re = objectMapper.writeValueAsString(commentService.queryComment(3l));
         System.out.println(re);
     }
 
     @Test
     public void addComment() throws Exception {
-        commentService.addComment("测试",1002,3,1,0,1002);
+        commentService.addComment("测试", 1002, 3, 1, 0, 1002);
 //        commentService.addComment("web 测试",1023,48);
     }
 
     @Test
     public void delComment() throws Exception {
-        System.out.println(commentService.delComment(12l,0));
+        System.out.println(commentService.delComment(12l, 0));
     }
 
 

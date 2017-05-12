@@ -34,36 +34,35 @@ public class MessageServiceImpl implements MessageService {
     private CommentDao commentDao;
     @Autowired
     private UserDao userDao;
-    public ResultModel getUnReadMessageCount(long userId) {
-        List<Like> likeList= likeDao.queryUnReadLikeByUserId(userId);
-        List<Comment> commentList =commentDao.queryUnReadCommentByPostid(userId);
 
-        return new ResultModel(ResultStatus.SUCCESS,likeList.size()+commentList.size());
+    public ResultModel getUnReadMessageCount(long userId) {
+        List<Like> likeList = likeDao.queryUnReadLikeByUserId(userId);
+        List<Comment> commentList = commentDao.queryUnReadCommentByPostid(userId);
+        return new ResultModel(ResultStatus.SUCCESS, likeList.size() + commentList.size());
 
     }
 
     public ResultModel getUnReadMessage(long userId) {
-
-        List<Like> likeList= likeDao.queryUnReadLikeByUserId(userId);
-        List<Comment> commentList =commentDao.queryUnReadCommentByPostid(userId);
-        List<UnRead> unReadList =new ArrayList<UnRead>();
-        for(Like like:likeList){
-            User user=userDao.queryUserById(like.getUserId());
+        List<Like> likeList = likeDao.queryUnReadLikeByUserId(userId);
+        List<Comment> commentList = commentDao.queryUnReadCommentByPostid(userId);
+        List<UnRead> unReadList = new ArrayList<UnRead>();
+        for (Like like : likeList) {
+            User user = userDao.queryUserById(like.getUserId());
             like.setAvatarUrl(user.getAvatarUrl());
             like.setNickName(user.getNickName());
-            Post post=postDao.queryPostByPostId(like.getPostId());
-                unReadList.add(new UnReadLike(like,post,like.getCreateTime()));
+            Post post = postDao.queryPostByPostId(like.getPostId());
+            unReadList.add(new UnReadLike(like, post, like.getCreateTime()));
         }
-        for(Comment comment:commentList){
-            Post post=postDao.queryPostByPostId(comment.getPostId());
-            unReadList.add(new UnReadComment(comment,post,comment.getCreateTime()));
+        for (Comment comment : commentList) {
+            Post post = postDao.queryPostByPostId(comment.getPostId());
+            unReadList.add(new UnReadComment(comment, post, comment.getCreateTime()));
         }
         Collections.sort(unReadList);
         ResultModel resultModel;
-        if(unReadList.size()!=0){
-            resultModel=new ResultModel(ResultStatus.SUCCESS,unReadList);
-        }else {
-            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA);
+        if (unReadList.size() != 0) {
+            resultModel = new ResultModel(ResultStatus.SUCCESS, unReadList);
+        } else {
+            resultModel = new ResultModel(ResultStatus.NO_MORE_DATA);
         }
         return resultModel;
     }

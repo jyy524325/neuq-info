@@ -13,26 +13,25 @@ import java.util.List;
 /**
  * Created by lihang on 2017/4/27.
  */
-public class UnRead implements Comparable<UnRead>{
-        @JsonIgnore
-        protected Date date;
-        public Date getDate() {
-            return date;
-        }
+public class UnRead implements Comparable<UnRead> {
+    @JsonIgnore
+    protected Date date;
 
-        public void setDate(Date date) {
-            this.date = date;
-        }
+    public Date getDate() {
+        return date;
+    }
 
-        public int compareTo(UnRead o) {
-            if(this.getDate().getTime()>=o.getDate().getTime()) {
-                return -1;
-            }
-            else {
-                return 1;
-            }
-        }
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
+    public int compareTo(UnRead o) {
+        if (this.getDate().getTime() >= o.getDate().getTime()) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 
 
 }

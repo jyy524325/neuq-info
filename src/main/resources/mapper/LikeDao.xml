@@ -25,9 +25,9 @@
         UPDATE user_like_post SET is_read = 1
         <where>
             <foreach collection="list" item="item" index="index" separator="or">
-               (userId= #{item.userId} and postId =#{item.postId})
+                (userId= #{item.userId} and postId =#{item.postId})
             </foreach>
         </where>
     </update>
 
-    </mapper>
+</mapper>

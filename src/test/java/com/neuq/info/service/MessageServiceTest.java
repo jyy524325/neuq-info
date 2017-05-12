@@ -22,10 +22,11 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration({"classpath:spring/spring-service.xml",
-        "classpath:spring/spring-dao.xml","classpath:spring/spring-web.xml"})
+        "classpath:spring/spring-dao.xml", "classpath:spring/spring-web.xml"})
 public class MessageServiceTest {
     @Resource
     private MessageService messageService;
+
     @Test
     public void getUnReadMessageCount() throws Exception {
 //        ObjectMapper objectMapper =new ObjectMapper();

@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by lihang on 2017/4/2.
  */
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class User {
     private long userId;
     private Date createTime;
@@ -24,7 +24,7 @@ public class User {
     private String unionId;
     private String jwUser;
     private String jwPwd;
-    private HashMap<String,String> watermark;
+    private HashMap<String, String> watermark;
 
     public User(long userId, Date createTime, String openId, String avatarUrl, String nickName, String gender, String city, String language, String province, String country, String unionId, String jwUser, String jwPwd, HashMap<String, String> watermark) {
         this.userId = userId;

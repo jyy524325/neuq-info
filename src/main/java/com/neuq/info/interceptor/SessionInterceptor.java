@@ -20,18 +20,19 @@ public class SessionInterceptor implements HandlerInterceptor {
     private RedisDao redisDao;
     @Autowired
     private UserService userService;
+
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
 
-        String session=request.getHeader("session");
-        if(session!=null&&session!=""){
+        String session = request.getHeader("session");
+        if (session != null && session != "") {
             Object wxSessionObj = redisDao.get(session);
-            if (wxSessionObj==null){
+            if (wxSessionObj == null) {
                 getResStr(ErrorStatus.user_identity_expired, response);
                 return false;
-            }else {
+            } else {
                 return true;
             }
-        }else {
+        } else {
             getResStr(ErrorStatus.user_identity_expired, response);
             return false;
         }
@@ -44,7 +45,8 @@ public class SessionInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
 
     }
-    private void getResStr(ErrorStatus errorStatus,HttpServletResponse response){
+
+    private void getResStr(ErrorStatus errorStatus, HttpServletResponse response) {
         try {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");

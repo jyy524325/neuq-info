@@ -32,49 +32,45 @@ public class PostServiceImpl implements PostService {
     private LikeDao likeDao;
     @Autowired
     private SecretUrl secretUrl;
-    public ResultModel insertPost(String title,String content,int secret,long userId) {
 
-        Post post=new Post();
+    public ResultModel insertPost(String title, String content, int secret, long userId) {
+        Post post = new Post();
         post.setSecret(secret);
         post.setContent(content);
         post.setTitle(title);
         post.setUserId(userId);
         ResultModel resultModel;
-        int count =postDao.insertPost(post);
-
-        if(count==0){
-            resultModel=new ResultModel(ResultStatus.FAILURE,count);
-        }else {
+        int count = postDao.insertPost(post);
+        if (count == 0) {
+            resultModel = new ResultModel(ResultStatus.FAILURE, count);
+        } else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, count);
         }
         return resultModel;
-
     }
 
-    public ResultModel queryPostByCount(int offset ,int limit,Long userId) {
+    public ResultModel queryPostByCount(int offset, int limit, Long userId) {
         ResultModel resultModel;
-        List<Post> list=postDao.queryPostByCount(offset,limit);
-        List<Like> like= likeDao.queryUserLikeByUserId(userId);
-        List<Post> resList =handleSecret(list,like,userId);
-        if(resList.size()==0){
-            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA);
-        }else {
+        List<Post> list = postDao.queryPostByCount(offset, limit);
+        List<Like> like = likeDao.queryUserLikeByUserId(userId);
+        List<Post> resList = handleSecret(list, like, userId);
+        if (resList.size() == 0) {
+            resultModel = new ResultModel(ResultStatus.NO_MORE_DATA);
+        } else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, resList);
         }
         return resultModel;
-
     }
 
     public ResultModel queryPostByPage(int currentPage) {
-        Page page =new Page();
+        Page page = new Page();
         page.setCurrentPage(currentPage);
         page.setTotalNumber(postDao.queryAllPostCount());
         ResultModel resultModel;
-        List<Post> list=postDao.queryPostByPage(page);
-
-        if(list.size()==0){
-            resultModel=new ResultModel(ResultStatus.FAILURE,list);
-        }else {
+        List<Post> list = postDao.queryPostByPage(page);
+        if (list.size() == 0) {
+            resultModel = new ResultModel(ResultStatus.FAILURE, list);
+        } else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, list);
         }
         return resultModel;
@@ -82,56 +78,53 @@ public class PostServiceImpl implements PostService {
 
     public ResultModel queryPostByUserId(long userId) {
         ResultModel resultModel;
-        List<Post> list=postDao.queryPostByUserId(userId);
-        List<Like> like= likeDao.queryUserLikeByUserId(userId);
-        List<Long> postIdList=new ArrayList<Long>();
-        for (Like tempLike:like){
+        List<Post> list = postDao.queryPostByUserId(userId);
+        List<Like> like = likeDao.queryUserLikeByUserId(userId);
+        List<Long> postIdList = new ArrayList<Long>();
+        for (Like tempLike : like) {
             postIdList.add(tempLike.getPostId());
         }
-        for (int i=0;i<list.size();i++){
-            if(list.get(i).getUserId()==userId){
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUserId() == userId) {
                 list.get(i).setIsSelf(1);
             }
-            if(postIdList.contains(list.get(i).getPostId())){
+            if (postIdList.contains(list.get(i).getPostId())) {
                 list.get(i).setIsLike(1);
             }
         }
-        if(list.size()==0){
-            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA);
-        }else {
+        if (list.size() == 0) {
+            resultModel = new ResultModel(ResultStatus.NO_MORE_DATA);
+        } else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, list);
         }
         return resultModel;
     }
 
-    public ResultModel queryPostByPostId(long postId,long userId) {
+    public ResultModel queryPostByPostId(long postId, long userId) {
         ResultModel resultModel;
-        Post post=postDao.queryPostByPostId(postId);
-        if(post!=null){
-        if(post.getUserId()==userId) post.setIsSelf(1);
-        List<Like> like= likeDao.queryUserLikeByUserId(userId);
-        List<Long> postIdList=new ArrayList<Long>();
-        for (Like tempLike:like){
-            postIdList.add(tempLike.getPostId());
-        }
-            if(postIdList.contains(post.getPostId())){
-            post.setIsLike(1);
-        }
-        if(post.getSecret()==1){
-            post.setUserId(-1);
-            post.setAvatarUrl(secretUrl.getUrl().get((int)post.getPostId()%secretUrl.getUrl().size()));
-            if(post.getGender()==1){
-                post.setNickName("匿名男同学");
-            }else {
-                post.setNickName("匿名女同学");
+        Post post = postDao.queryPostByPostId(postId);
+        if (post != null) {
+            if (post.getUserId() == userId) post.setIsSelf(1);
+            List<Like> like = likeDao.queryUserLikeByUserId(userId);
+            List<Long> postIdList = new ArrayList<Long>();
+            for (Like tempLike : like) {
+                postIdList.add(tempLike.getPostId());
             }
-
-        }
-
+            if (postIdList.contains(post.getPostId())) {
+                post.setIsLike(1);
+            }
+            if (post.getSecret() == 1) {
+                post.setUserId(-1);
+                post.setAvatarUrl(secretUrl.getUrl().get((int) post.getPostId() % secretUrl.getUrl().size()));
+                if (post.getGender() == 1) {
+                    post.setNickName("匿名男同学");
+                } else {
+                    post.setNickName("匿名女同学");
+                }
+            }
             resultModel = new ResultModel(ResultStatus.SUCCESS, post);
-        }else {
-            resultModel=new ResultModel(ResultStatus.FAILURE,post);
-
+        } else {
+            resultModel = new ResultModel(ResultStatus.FAILURE, post);
         }
         return resultModel;
     }
@@ -140,11 +133,11 @@ public class PostServiceImpl implements PostService {
         return postDao.queryAllPostCount();
     }
 
-    public ResultModel deletePost(long postId,long userId) {
-        Post post=postDao.queryPostByPostId(postId);
-        if(post.getUserId()!=userId){
+    public ResultModel deletePost(long postId, long userId) {
+        Post post = postDao.queryPostByPostId(postId);
+        if (post.getUserId() != userId) {
             return new ResultModel(ResultStatus.NO_PERMISSION);
-        }else {
+        } else {
             int count = postDao.deletePost(postId);
             if (count == 0) {
                 return new ResultModel(ResultStatus.FAILURE);
@@ -153,22 +146,22 @@ public class PostServiceImpl implements PostService {
             }
         }
     }
+
     @Transactional
-    public ResultModel updateLike(long postId, int flag,long userId) {
+    public ResultModel updateLike(long postId, int flag, long userId) {
         ResultModel resultModel;
-        int count1=0;
-        Like like=new Like(postId,userId);
-        int count=postDao.updateLikeCount(postId,flag);
+        int count1 = 0;
+        Like like = new Like(postId, userId);
+        int count = postDao.updateLikeCount(postId, flag);
         System.out.println("执行更新数量操作");
-        if(flag==1){
+        if (flag == 1) {
             System.out.println("执行插入操作");
-            count1=likeDao.insertUserLike(like);
-            if(count1==0) throw new RepeatLikeException("重复点赞");
-        }
-        else if(flag==0){
+            count1 = likeDao.insertUserLike(like);
+            if (count1 == 0) throw new RepeatLikeException("重复点赞");
+        } else if (flag == 0) {
             System.out.println("执行删除操作");
-            count1=likeDao.deleteUserLike(like);
-            if(count1==0) throw new RepeatUnLikeException("重复取消赞");
+            count1 = likeDao.deleteUserLike(like);
+            if (count1 == 0) throw new RepeatUnLikeException("重复取消赞");
         }
         resultModel = new ResultModel(ResultStatus.SUCCESS, count);
         return resultModel;
@@ -176,56 +169,58 @@ public class PostServiceImpl implements PostService {
 
     public ResultModel updateCommentCount(long postId) {
         ResultModel resultModel;
-        int count=postDao.updateCommentCount(postId);
+        int count = postDao.updateCommentCount(postId);
 
-        if(count==0){
-            resultModel=new ResultModel(ResultStatus.FAILURE,count);
-        }else {
+        if (count == 0) {
+            resultModel = new ResultModel(ResultStatus.FAILURE, count);
+        } else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, count);
         }
         return resultModel;
     }
-    public ResultModel queryPostByFirstPostId(long postId,long userId) {
-        ResultModel resultModel;
-        List<Post> list=postDao.queryPostByFirstPostId(postId);
-        List<Like> like= likeDao.queryUserLikeByUserId(userId);
 
-        List<Post> resList =handleSecret(list,like,userId);
-        if(resList.size()==0){
-            resultModel=new ResultModel(ResultStatus.NO_MORE_DATA);
-        }else {
+    public ResultModel queryPostByFirstPostId(long postId, long userId) {
+        ResultModel resultModel;
+        List<Post> list = postDao.queryPostByFirstPostId(postId);
+        List<Like> like = likeDao.queryUserLikeByUserId(userId);
+
+        List<Post> resList = handleSecret(list, like, userId);
+        if (resList.size() == 0) {
+            resultModel = new ResultModel(ResultStatus.NO_MORE_DATA);
+        } else {
             resultModel = new ResultModel(ResultStatus.SUCCESS, resList);
         }
         return resultModel;
+    }
+
+    private List<Post> handleSecret(List<Post> list, List<Like> like, long userId) {
+        List<Long> postIdList = new ArrayList<Long>();
+        if (like != null) {
+            for (Like tempLike : like) {
+                postIdList.add(tempLike.getPostId());
             }
-        private List<Post> handleSecret(List<Post> list,List<Like> like,long userId) {
-            List<Long> postIdList = new ArrayList<Long>();
-            if(like!=null) {
-                for (Like tempLike : like) {
-                    postIdList.add(tempLike.getPostId());
-                }
-            }
-            for (int i=0;i<list.size();i++){
-                if(list.get(i).getUserId()==userId){
-                    list.get(i).setIsSelf(1);
-                }
-                if(postIdList.contains(list.get(i).getPostId())){
-                    list.get(i).setIsLike(1);
-                }
-                if(list.get(i).getSecret()==1){
-                    list.get(i).setUserId(-1);
-                    list.get(i).setAvatarUrl(secretUrl.getUrl().get((int)list.get(i).getPostId()%secretUrl.getUrl().size()));
-                    if(list.get(i).getGender()==1){
-                        list.get(i).setNickName("匿名男同学");
-                    }else if(list.get(i).getGender()==2){
-                        list.get(i).setNickName("匿名女同学");
-                    }else {
-                        list.get(i).setNickName("匿名同学");
-                    }
-                }
-            }
-            return list;
         }
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUserId() == userId) {
+                list.get(i).setIsSelf(1);
+            }
+            if (postIdList.contains(list.get(i).getPostId())) {
+                list.get(i).setIsLike(1);
+            }
+            if (list.get(i).getSecret() == 1) {
+                list.get(i).setUserId(-1);
+                list.get(i).setAvatarUrl(secretUrl.getUrl().get((int) list.get(i).getPostId() % secretUrl.getUrl().size()));
+                if (list.get(i).getGender() == 1) {
+                    list.get(i).setNickName("匿名男同学");
+                } else if (list.get(i).getGender() == 2) {
+                    list.get(i).setNickName("匿名女同学");
+                } else {
+                    list.get(i).setNickName("匿名同学");
+                }
+            }
+        }
+        return list;
+    }
 
 
 }

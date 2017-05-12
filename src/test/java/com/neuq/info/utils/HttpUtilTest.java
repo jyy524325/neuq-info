@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class HttpUtilTest {
 
-    HttpUtil httpUtil =new HttpUtil();
+    HttpUtil httpUtil = new HttpUtil();
 
     @Test
     public void httpPost() throws Exception {
@@ -30,22 +30,22 @@ public class HttpUtilTest {
                 "        ]\n" +
                 "    }");
         // 看看根节点的类型
-        System.out.println("node JsonNodeType:"+node.getNodeType());
+        System.out.println("node JsonNodeType:" + node.getNodeType());
         // 是不是一个容器
-        System.out.println("node is container Node ? "+node.isContainerNode());
+        System.out.println("node is container Node ? " + node.isContainerNode());
         // 得到所有node节点的子节点名称
         System.out.println("---------得到所有node节点的子节点名称-------------------------");
         Iterator<String> fieldNames = node.fieldNames();
         while (fieldNames.hasNext()) {
             String fieldName = fieldNames.next();
-            System.out.print(fieldName+" ");
+            System.out.print(fieldName + " ");
         }
         System.out.println();
         System.out.println("---------得到所有node节点的子节点名称和值-------------------------");
 
-        Iterator<Map.Entry<String,JsonNode>> all =node.fields();
-        while (all.hasNext()){
-            Map.Entry i=all.next();
+        Iterator<Map.Entry<String, JsonNode>> all = node.fields();
+        while (all.hasNext()) {
+            Map.Entry i = all.next();
             System.out.println(i.getKey());
             System.out.println(i.getValue());
         }
@@ -58,18 +58,18 @@ public class HttpUtilTest {
                 "        \"yzhou\": [\n" +
                 "             36 , 212 , 202 , 207 , 193 , 102  \n" +
                 "        ]\n" +
-                "    }",Map.class);
+                "    }", Map.class);
         System.out.println(map.toString());
         System.out.println((map.get("xzhou")).getClass());
 //        String re=HttpUtil.sendPost("http://www.dragongod.cn/qd/temp/pandect.php","type=pan");
 //        String re= HttpUtil.httpPost("http://www.dragongod.cn/qd/temp/pandect.php","type=pan");
 //        System.out.println(re);
-   }
+    }
 
     @Test
     public void get() throws Exception {
 
-           String re= HttpUtil.sendGet("http://www.dragongod.cn/qd/temp/user_form.php","sort=seri_1");
+        String re = HttpUtil.sendGet("http://www.dragongod.cn/qd/temp/user_form.php", "sort=seri_1");
 //                   httpUtil.httpGet("http://www.dragongod.cn/temp/user_form.php?sort=seri_1");
         System.out.println(re);
     }

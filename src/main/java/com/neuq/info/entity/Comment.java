@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by lihang on 2017/4/2.
  */
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Comment {
 
     private long commentId;
@@ -91,7 +91,7 @@ public class Comment {
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
-    
+
     @JsonSerialize(using = CustomDateSerializer.class)
     public Date getCreateTime() {
         return createTime;

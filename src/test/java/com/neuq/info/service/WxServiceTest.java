@@ -19,15 +19,16 @@ import static org.junit.Assert.*;
 public class WxServiceTest {
     @Autowired
     private WxService wxService;
+
     @Test
     public void getWxSession() throws Exception {
-        Map map=wxService.getWxSession("051EaSgb2QXXlS0SOujb2KVBgb2EaSgN");
+        Map map = wxService.getWxSession("051EaSgb2QXXlS0SOujb2KVBgb2EaSgN");
         System.out.println(map);
     }
 
     @Test
     public void create3rdSession() throws Exception {
-       String s= wxService.create3rdSession("oCC_80BgpK_JZy06GIcy3cAUQnNM","rJp/CUcAPHPkTtYHtQk/WQ==",7200L);
+        String s = wxService.create3rdSession("oCC_80BgpK_JZy06GIcy3cAUQnNM", "rJp/CUcAPHPkTtYHtQk/WQ==", 7200L);
         System.out.println(s);
     }
 

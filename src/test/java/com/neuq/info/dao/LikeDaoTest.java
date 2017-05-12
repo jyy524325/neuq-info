@@ -21,15 +21,16 @@ import static org.junit.Assert.*;
 public class LikeDaoTest {
     @Resource
     private LikeDao likeDao;
+
     @Test
     public void queryUserLikeByUserId() throws Exception {
-        List<Like> result=likeDao.queryUserLikeByUserId(1000L);
+        List<Like> result = likeDao.queryUserLikeByUserId(1000L);
         System.out.println(result.size());
     }
 
     @Test
     public void insertUserLike() throws Exception {
-        Like like=new Like();
+        Like like = new Like();
         like.setPostId(5);
         like.setUserId(1000L);
         System.out.println(likeDao.insertUserLike(like));
@@ -37,12 +38,13 @@ public class LikeDaoTest {
 
     @Test
     public void queryUnReadLikeByUserId() throws Exception {
-       List<Like> list= likeDao.queryUnReadLikeByUserId(1000l);
+        List<Like> list = likeDao.queryUnReadLikeByUserId(1000l);
         System.out.println(list);
     }
+
     @Test
     public void updateLikeByRead() throws Exception {
-        List<Like> list= likeDao.queryUnReadLikeByUserId(1000l);
+        List<Like> list = likeDao.queryUnReadLikeByUserId(1000l);
         System.out.println(likeDao.updateLikeByRead(list));
 
     }

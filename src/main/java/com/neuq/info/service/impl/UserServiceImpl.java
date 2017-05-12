@@ -21,33 +21,35 @@ import java.security.InvalidAlgorithmParameterException;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+
     public User queryUserByOpenId(String openid) {
-        User user=userDao.queryUserByOpenId(openid)==null?null:userDao.queryUserByOpenId(openid);
+        User user = userDao.queryUserByOpenId(openid) == null ? null : userDao.queryUserByOpenId(openid);
         return user;
     }
 
 
     public int updateUser(User user) {
-        int res=userDao.updateUser(user);
+        int res = userDao.updateUser(user);
         return res;
     }
 
     public int insertUser(User user) {
-            int res=userDao.insertUser(user);
-            return res;
+        int res = userDao.insertUser(user);
+        return res;
 
     }
-    public User decodeUserInfo(String encryptedData,String iv,String sessionKey){
+
+    public User decodeUserInfo(String encryptedData, String iv, String sessionKey) {
         try {
             AES aes = new AES();
             byte[] resultByte = aes.decrypt(Base64.decodeBase64(encryptedData), Base64.decodeBase64(sessionKey), Base64.decodeBase64(iv));
-            if(null != resultByte && resultByte.length > 0){
-                String userInfo = new String(resultByte,"UTF-8");
+            if (null != resultByte && resultByte.length > 0) {
+                String userInfo = new String(resultByte, "UTF-8");
                 System.out.println(userInfo);
                 User user;
-                ObjectMapper objectMapper=new ObjectMapper();
+                ObjectMapper objectMapper = new ObjectMapper();
                 try {
-                    user=objectMapper.readValue(userInfo,User.class);
+                    user = objectMapper.readValue(userInfo, User.class);
                     return user;
                 } catch (IOException e) {
                     e.printStackTrace();

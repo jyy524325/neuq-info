@@ -23,15 +23,17 @@ public class ResultModel {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Object content;
 
-    public ResultModel(ResultStatus status,Object content) {
-        this.code=status.getCode();
-        this.message=status.getMessage();
+    public ResultModel(ResultStatus status, Object content) {
+        this.code = status.getCode();
+        this.message = status.getMessage();
         this.content = content;
     }
+
     public ResultModel(ResultStatus status) {
-        this.code=status.getCode();
-        this.message=status.getMessage();
+        this.code = status.getCode();
+        this.message = status.getMessage();
     }
+
     public ResultModel(int code, String message, Object content) {
         this.code = code;
         this.message = message;

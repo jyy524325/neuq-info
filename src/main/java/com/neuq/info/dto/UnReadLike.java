@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Created by lihang on 2017/4/27.
  */
-public class UnReadLike extends UnRead{
+public class UnReadLike extends UnRead {
     private Post post;
     private Like like;
 
@@ -16,30 +16,30 @@ public class UnReadLike extends UnRead{
     public UnReadLike(Like like, Post post, Date date) {
         this.like = like;
         this.post = post;
-        this.date=date;
+        this.date = date;
     }
 
     public Like getLike() {
         return like;
-        }
+    }
 
-public void setLike(Like like) {
+    public void setLike(Like like) {
         this.like = like;
-        }
+    }
 
-public Post getPost() {
+    public Post getPost() {
         return post;
-        }
+    }
 
-public void setPost(Post post) {
+    public void setPost(Post post) {
         this.post = post;
-        }
+    }
 
-@Override
-public String toString() {
+    @Override
+    public String toString() {
         return "UnReadLike{" +
-        "like=" + like +
-        ", post=" + post +
-        '}';
-        }
-        }
+                "like=" + like +
+                ", post=" + post +
+                '}';
+    }
+}

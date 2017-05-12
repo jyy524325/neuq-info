@@ -9,36 +9,37 @@ import java.util.Date;
 /**
  * Created by lihang on 2017/4/27.
  */
-public class UnReadComment extends UnRead{
-        private Post post;
-        private Comment comment;
-        public UnReadComment(Comment comment, Post post, Date date) {
-                this.post = post;
-                this.comment = comment;
-                this.date=date;
-        }
+public class UnReadComment extends UnRead {
+    private Post post;
+    private Comment comment;
 
-        public Post getPost() {
-                return post;
-        }
+    public UnReadComment(Comment comment, Post post, Date date) {
+        this.post = post;
+        this.comment = comment;
+        this.date = date;
+    }
 
-        public void setPost(Post post) {
-                this.post = post;
-        }
+    public Post getPost() {
+        return post;
+    }
 
-        public Comment getComment() {
-                return comment;
-        }
+    public void setPost(Post post) {
+        this.post = post;
+    }
 
-        public void setComment(Comment comment) {
-                this.comment = comment;
-        }
+    public Comment getComment() {
+        return comment;
+    }
 
-        @Override
-        public String toString() {
-                return "UnReadComment{" +
-                        "post=" + post +
-                        ", comment=" + comment +
-                        '}';
-        }
+    public void setComment(Comment comment) {
+        this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return "UnReadComment{" +
+                "post=" + post +
+                ", comment=" + comment +
+                '}';
+    }
 }

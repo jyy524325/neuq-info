@@ -18,10 +18,11 @@ import static org.junit.Assert.*;
 public class UserServiceTest {
     @Autowired
     private UserService userService;
+
     @Test
     public void queryUserByOpenId() throws Exception {
-        User user=userService.queryUserByOpenId("oCC_80BgpK_JZy06GIcy3cAUQnNM");
-        System.out.println(user==null);
+        User user = userService.queryUserByOpenId("oCC_80BgpK_JZy06GIcy3cAUQnNM");
+        System.out.println(user == null);
         System.out.println(user);
     }
 

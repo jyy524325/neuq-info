@@ -24,29 +24,30 @@ import javax.servlet.http.HttpServletRequest;
 public class PersonalController {
     @Autowired
     private MessageService messageService;
-    @RequestMapping(value ="/getUnRead",method = RequestMethod.GET,
+
+    @RequestMapping(value = "/getUnRead", method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     @ApiOperation(notes = "获取未读消息", httpMethod = "GET", value = "获取未读消息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
+            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true, paramType = "header", dataType = "string")
     })
     @ResponseBody
-    public ResultModel getUnRead(HttpServletRequest request){
-        Long userId= (Long)request.getAttribute("userId");
-        ResultModel resultModel=messageService.getUnReadMessage(userId);
+    public ResultModel getUnRead(HttpServletRequest request) {
+        Long userId = (Long) request.getAttribute("userId");
+        ResultModel resultModel = messageService.getUnReadMessage(userId);
         return resultModel;
     }
 
-    @RequestMapping(value ="/getUnReadCount",method = RequestMethod.GET,
+    @RequestMapping(value = "/getUnReadCount", method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     @ApiOperation(notes = "获取未读消息条数", httpMethod = "GET", value = "获取未读消息条数")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
+            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true, paramType = "header", dataType = "string")
     })
     @ResponseBody
-    public ResultModel getUnReadCount(HttpServletRequest request){
-        Long userId= (Long)request.getAttribute("userId");
-        ResultModel resultModel=messageService.getUnReadMessageCount(userId);
+    public ResultModel getUnReadCount(HttpServletRequest request) {
+        Long userId = (Long) request.getAttribute("userId");
+        ResultModel resultModel = messageService.getUnReadMessageCount(userId);
         return resultModel;
     }
 }

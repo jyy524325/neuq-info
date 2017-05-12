@@ -16,6 +16,7 @@ public class AllInterceptor implements WebRequestInterceptor {
     private RedisDao redisDao;
     @Autowired
     private UserService userService;
+
     public void preHandle(WebRequest request) throws Exception {
 
         String session = request.getHeader("session");
@@ -28,7 +29,7 @@ public class AllInterceptor implements WebRequestInterceptor {
                 User user = userService.queryUserByOpenId(openId);
                 request.setAttribute("sessionKey", sessionKey, WebRequest.SCOPE_REQUEST);
                 request.setAttribute("openId", openId, WebRequest.SCOPE_REQUEST);
-                if(user!=null) {
+                if (user != null) {
                     request.setAttribute("userId", user.getUserId(), WebRequest.SCOPE_REQUEST);
                 }
 
@@ -36,6 +37,7 @@ public class AllInterceptor implements WebRequestInterceptor {
             }
         }
     }
+
     public void postHandle(WebRequest webRequest, ModelMap modelMap) throws Exception {
 
     }

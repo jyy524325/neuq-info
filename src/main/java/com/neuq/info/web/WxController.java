@@ -1,6 +1,5 @@
 package com.neuq.info.web;
 
-import com.neuq.info.common.aes.AES;
 import com.neuq.info.dao.RedisDao;
 import com.neuq.info.entity.User;
 import com.neuq.info.enums.ErrorStatus;
@@ -10,7 +9,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,12 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 
 /**
@@ -44,59 +39,62 @@ public class WxController {
 
     /**
      * 根据客户端传过来的code从微信服务器获取appid和session_key，然后生成3rdkey返回给客户端，后续请求客户端传3rdkey来维护客户端登录态
-     * @param wxCode	小程序登录时获取的code
+     *
+     * @param wxCode 小程序登录时获取的code
      * @return
      */
     @RequestMapping(value = "/getSession", method = RequestMethod.GET, produces = "application/json")
     @ApiOperation(notes = "根据code获取appid和session_key生成3rdkey", httpMethod = "GET", value = "根据code获取appid和session_key生成3rdkey")
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "code",value = "小程序登录时获取的code",paramType = "query",dataType ="string")
+            @ApiImplicitParam(name = "code", value = "小程序登录时获取的code", paramType = "query", dataType = "string")
     })
     @ResponseBody
-    public Map<String,Object> createSssion(@RequestParam(required = true,value = "code")String wxCode){
-        Map<String,Object> wxSessionMap = wxService.getWxSession(wxCode);
+    public Map<String, Object> createSssion(@RequestParam(required = true, value = "code") String wxCode) {
+        Map<String, Object> wxSessionMap = wxService.getWxSession(wxCode);
 
-        if(null == wxSessionMap){
+        if (null == wxSessionMap) {
             return rtnParam(ErrorStatus.communication_failure, null);
         }
         //获取异常
-        if(wxSessionMap.containsKey("errcode")){
+        if (wxSessionMap.containsKey("errcode")) {
             return rtnParam(ErrorStatus.failed_get_WeChat_session_key, null);
         }
-        String wxOpenId = (String)wxSessionMap.get("openid");
-        String wxSessionKey = (String)wxSessionMap.get("session_key");
+        String wxOpenId = (String) wxSessionMap.get("openid");
+        String wxSessionKey = (String) wxSessionMap.get("session_key");
         System.out.println(wxSessionKey);
         Long expires = Long.valueOf(String.valueOf(wxSessionMap.get("expires_in")));
         String thirdSession = wxService.create3rdSession(wxOpenId, wxSessionKey, expires);
         Map<String, String> map = new HashMap<String, String>();
-        map.put("sessionId",thirdSession);
+        map.put("sessionId", thirdSession);
         return rtnParam(ErrorStatus.exist, map);
     }
+
     /**
      * 验证用户信息完整性
-     * @param rawData	微信用户基本信息
-     * @param signature	数据签名
-     * @param sessionId	会话ID
+     *
+     * @param rawData   微信用户基本信息
+     * @param signature 数据签名
+     * @param sessionId 会话ID
      * @return
      */
     @RequestMapping(value = "/checkUserInfo", method = RequestMethod.GET, produces = "application/json")
     @ApiOperation(notes = "此API暂时不用", httpMethod = "GET", value = "此API暂时不用")
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "rawData",value = "小程序登录时获取的code",paramType = "query",dataType ="string"),
-            @ApiImplicitParam(name = "signature",value = "小程序登录时获取的code",paramType = "query",dataType ="string"),
-            @ApiImplicitParam(name = "sessionId",value = "小程序登录时获取的code",paramType = "query",dataType ="string")
+            @ApiImplicitParam(name = "rawData", value = "小程序登录时获取的code", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "signature", value = "小程序登录时获取的code", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "sessionId", value = "小程序登录时获取的code", paramType = "query", dataType = "string")
     })
     @ResponseBody
-    public Map<String,Object> checkUserInfo(@RequestParam(required = true,value = "rawData")String rawData,
-                                            @RequestParam(required = true,value = "signature")String signature,
-                                            @RequestParam(required = true,defaultValue = "sessionId")String sessionId){
+    public Map<String, Object> checkUserInfo(@RequestParam(required = true, value = "rawData") String rawData,
+                                             @RequestParam(required = true, value = "signature") String signature,
+                                             @RequestParam(required = true, defaultValue = "sessionId") String sessionId) {
         Object wxSessionObj = redisDao.get(sessionId);
-        if(null == wxSessionObj){
+        if (null == wxSessionObj) {
             return rtnParam(ErrorStatus.user_identity_expired, null);
         }
-        String wxSessionStr = (String)wxSessionObj;
+        String wxSessionStr = (String) wxSessionObj;
         String sessionKey = wxSessionStr.split("#")[0];
         StringBuffer sb = new StringBuffer(rawData);
         sb.append(sessionKey);
@@ -109,56 +107,57 @@ public class WxController {
 
     /**
      * 获取用户openId和unionId数据(如果没绑定微信开放平台，解密数据中不包含unionId)
+     *
      * @param encryptedData 加密数据
-     * @param iv			加密算法的初始向量
+     * @param iv            加密算法的初始向量
      * @return
      */
     @RequestMapping(value = "/decodeUserInfo", method = RequestMethod.POST, produces = "application/json")
     @ApiOperation(notes = "解析用户数据", httpMethod = "POST", value = "解析用户数据")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "encryptedData",value = "用户加密数据",paramType = "query",dataType ="string"),
-            @ApiImplicitParam(name = "iv",value = "加密算法的初始向量",paramType = "query",dataType ="string"),
-            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true,paramType = "header",dataType = "string")
+            @ApiImplicitParam(name = "encryptedData", value = "用户加密数据", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "iv", value = "加密算法的初始向量", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true, paramType = "header", dataType = "string")
     })
 
     @ResponseBody
-    public Map<String,Object> decodeUserInfo(@RequestParam(required = true,value = "encryptedData")String encryptedData,
-                                              @RequestParam(required = true,defaultValue = "iv")String iv, HttpServletRequest request){
-        String sessionKey= (String)request.getAttribute("sessionKey");
-        String openId= (String)request.getAttribute("openId");
-        User user=userService.queryUserByOpenId(openId);
-        User user1=userService.decodeUserInfo(encryptedData,iv,sessionKey);
-        if(user1==null){
+    public Map<String, Object> decodeUserInfo(@RequestParam(required = true, value = "encryptedData") String encryptedData,
+                                              @RequestParam(required = true, defaultValue = "iv") String iv, HttpServletRequest request) {
+        String sessionKey = (String) request.getAttribute("sessionKey");
+        String openId = (String) request.getAttribute("openId");
+        User user = userService.queryUserByOpenId(openId);
+        User user1 = userService.decodeUserInfo(encryptedData, iv, sessionKey);
+        if (user1 == null) {
             return rtnParam(ErrorStatus.user_sensitive_data_decryption_failed, null);
         }
         System.out.println(user1);
-        int count=0;
-        if(user==null){
-            count=userService.insertUser(user1);
-        }else {
-            count= userService.updateUser(user1);
+        int count = 0;
+        if (user == null) {
+            count = userService.insertUser(user1);
+        } else {
+            count = userService.updateUser(user1);
         }
         System.out.println(count);
-        if(count!=0){
-            return rtnParam(ErrorStatus.SUCCESS,null);
-        }else {
+        if (count != 0) {
+            return rtnParam(ErrorStatus.SUCCESS, null);
+        } else {
             return rtnParam(ErrorStatus.user_sensitive_data_decryption_failed, null);
         }
     }
 
-    protected Map<String,Object> rtnParam(ErrorStatus errorStatus, Object data) {
+    protected Map<String, Object> rtnParam(ErrorStatus errorStatus, Object data) {
         //正常的业务逻辑
-        Map<String,Object> map;
-        if(errorStatus.getCode() == 0){
-            map=new HashMap<String,Object>();
-            map.put("code",errorStatus.getCode());
-            map.put("message",errorStatus.getMessage());
-            map.put("content",(data == null)? new Object() : data);
+        Map<String, Object> map;
+        if (errorStatus.getCode() == 0) {
+            map = new HashMap<String, Object>();
+            map.put("code", errorStatus.getCode());
+            map.put("message", errorStatus.getMessage());
+            map.put("content", (data == null) ? new Object() : data);
             return map;
-        }else{
-            map=new HashMap<String,Object>();
-            map.put("code",errorStatus.getCode());
-            map.put("message",errorStatus.getMessage());
+        } else {
+            map = new HashMap<String, Object>();
+            map.put("code", errorStatus.getCode());
+            map.put("message", errorStatus.getMessage());
             return map;
         }
     }

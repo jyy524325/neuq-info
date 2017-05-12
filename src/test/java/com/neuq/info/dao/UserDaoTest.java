@@ -20,11 +20,12 @@ import java.util.List;
 public class UserDaoTest {
     @Resource
     private UserDao userDao;
+
     @Test
     public void insertUser() throws Exception {
-        User user =new User();
-        ObjectMapper objectMapper=new ObjectMapper();
-        user=objectMapper.readValue("{\n" +
+        User user = new User();
+        ObjectMapper objectMapper = new ObjectMapper();
+        user = objectMapper.readValue("{\n" +
                 "    \"province\": \"Hebei\",\n" +
                 "    \"openId\": \"oCC_80BgpK_JZy06GIcy3cAUQnNM\",\n" +
                 "    \"language\": \"zh_CN\",\n" +
@@ -37,7 +38,7 @@ public class UserDaoTest {
                 "    },\n" +
                 "    \"country\": \"CN\",\n" +
                 "    \"nickName\": \"生活总要向前看\"\n" +
-                "}",User.class);
+                "}", User.class);
         userDao.insertUser(user);
 
 
@@ -45,41 +46,42 @@ public class UserDaoTest {
 
     @Test
     public void queryUserById() throws Exception {
-        User user =userDao.queryUserById(1000L);
+        User user = userDao.queryUserById(1000L);
         System.out.println(user);
     }
 
     @Test
     public void queryAllUserByPage() throws Exception {
-        Page page=new Page();
+        Page page = new Page();
         page.setCurrentPage(1);
         page.setTotalNumber(userDao.queryAllUserCount());
-        List<User> list =userDao.queryAllUserByPage(page);
+        List<User> list = userDao.queryAllUserByPage(page);
         System.out.println(list.size());
     }
 
     @Test
     public void queryUserByOpenid() throws Exception {
-        User user =userDao.queryUserByOpenId("111");
+        User user = userDao.queryUserByOpenId("111");
         System.out.println(user);
     }
 
     @Test
     public void queryUserByUnionid() throws Exception {
-        User user =userDao.queryUserByUnionId("111");
+        User user = userDao.queryUserByUnionId("111");
         System.out.println(user);
     }
 
     @Test
     public void queryAllUserByGender() throws Exception {
-        List<User> list =userDao.queryAllUserByGender("1");
+        List<User> list = userDao.queryAllUserByGender("1");
         System.out.println(list.size());
     }
+
     @Test
     public void updateUser() throws Exception {
-        User user =new User();
-        ObjectMapper objectMapper=new ObjectMapper();
-        user=objectMapper.readValue("{\n" +
+        User user = new User();
+        ObjectMapper objectMapper = new ObjectMapper();
+        user = objectMapper.readValue("{\n" +
                 "    \"province\": \"Hebei\",\n" +
                 "    \"openId\": \"oCC_80BgpK_JZy06GIcy3cAUQnNM\",\n" +
                 "    \"language\": \"zh_CN\",\n" +
@@ -92,8 +94,8 @@ public class UserDaoTest {
                 "    },\n" +
                 "    \"country\": \"CN\",\n" +
                 "    \"nickName\": \"生活总要向前看11\"\n" +
-                "}",User.class);
-       int res= userDao.updateUser(user);
+                "}", User.class);
+        int res = userDao.updateUser(user);
         System.out.println(res);
     }
 

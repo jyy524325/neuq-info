@@ -11,6 +11,7 @@ import java.util.List;
 public interface UserDao {
     /**
      * 新增user
+     *
      * @param user
      * @return
      */
@@ -18,6 +19,7 @@ public interface UserDao {
 
     /**
      * 根据用户id查询user
+     *
      * @param userId
      * @return
      */
@@ -25,6 +27,7 @@ public interface UserDao {
 
     /**
      * 分页查询所有user
+     *
      * @param page
      * @return
      */
@@ -32,6 +35,7 @@ public interface UserDao {
 
     /**
      * 根据openid查询user
+     *
      * @param openid
      * @return
      */
@@ -39,6 +43,7 @@ public interface UserDao {
 
     /**
      * 根据unionid查询user
+     *
      * @param unionId
      * @return
      */
@@ -46,6 +51,7 @@ public interface UserDao {
 
     /**
      * 根据性别查询user
+     *
      * @param gender
      * @return
      */
@@ -53,12 +59,14 @@ public interface UserDao {
 
     /**
      * 查询所有数量
+     *
      * @return
      */
     int queryAllUserCount();
 
     /**
      * 更新用户信息根据openId
+     *
      * @param user
      * @return
      */
