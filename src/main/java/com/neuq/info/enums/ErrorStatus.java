@@ -16,7 +16,9 @@ public enum ErrorStatus {
     sessionid_wrong(40009, "sessionId为空"),
     not_select_upload_file (40010, "请选择上传文件"),
     upload_failed (40011, "上传失败"),
-    no_userinfo(40012,"用户信息丢失"),
+    insertuserinfo_wrong(40012,"插入用户信息失败"),
+    updateuserinfo_wrong(40013,"更新用户信息失败"),
+    no_userinfo(40014,"用户信息丢失"),
     communication_failure(50010, "与第三方通讯失败"),
     failed_get_WeChat_session_key(50020, "获取微信session_key失败"),
     user_sensitive_data_decryption_failed(50021, "用户敏感数据解密失败");

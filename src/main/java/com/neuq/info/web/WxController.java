@@ -125,27 +125,23 @@ public class WxController {
                                               @RequestParam(required = true, defaultValue = "iv") String iv, HttpServletRequest request) {
         String sessionKey = (String) request.getAttribute("sessionKey");
         String openId = (String) request.getAttribute("openId");
+        encryptedData="ZzjebaunwVYCkuK+yRMc0ciCiqfX/N3eZ27/SjyqcStXXq6HvbDuZvJAeulySyeaaC6bxq9oP5gCYNy8R+d+RXmtx44nbdJBwJNzo02dkDWzp7uXjc9N2yBrAeFu226I7Zov3rKYG8R3ON6AEpLmqkbyp2xWgIrDDElL0NKmnc3GYmyfUHZpoNRvzUM3ZA2dsWwOM6clg2+sWWDtQsIFnvReQkpHP/wHqOB87ZztRs4nL+b7Wj/wGxGn/dhTPSF6SbEpdQNTO9wRVWSO2eNdORCBMBTIr1rTzAoLMUrYxb8nBFMOuLF3OiScWk3WCtR/OHycr/z/LWHBNXVk8+sPOXDzBHI/QGs14zUKzYNWGiqBiwui7r2tBF3dMI9029k/iMDae1BUpvJBqkojpJ9T9rXDFLsUqjqAePE35U2QhLDZUQJVGEQPSdnNdIO1suQWSK5KLZ9pMBgmFwsP3Eg0r4oXcT45PMPN2Kl7FafBRn8=";
+        iv="SzpZA1Uei0cTZWWWulFa3g==";
         User user = userService.queryUserByOpenId(openId);
         User user1 = userService.decodeUserInfo(encryptedData, iv, sessionKey);
         if (user1 == null) {
             return rtnParam(ErrorStatus.user_sensitive_data_decryption_failed, null);
         }
-        int count = 0;
-        System.out.println(user);
-        System.out.println(user1);
-        System.out.println(user.equals(user1));
-        if (user == null) {
-            count = userService.insertUser(user1);
+//        System.out.println(user);
+//        System.out.println(user1);
+//        System.out.println(user.equals(user1));
+        if ((user == null)&&(userService.insertUser(user1))==0) {
+            return rtnParam(ErrorStatus.insertuserinfo_wrong, null);
         }
-        if(!user.equals(user1)){
-            count = userService.updateUser(user1);
+        if((!user.equals(user1))&&(userService.updateUser(user1)==0)){
+            return rtnParam(ErrorStatus.updateuserinfo_wrong, null);
         }
-        System.out.println(count);
-        if (count != 0) {
-            return rtnParam(ErrorStatus.SUCCESS, null);
-        } else {
-            return rtnParam(ErrorStatus.user_sensitive_data_decryption_failed, null);
-        }
+        return rtnParam(ErrorStatus.SUCCESS, null);
     }
 
     protected Map<String, Object> rtnParam(ErrorStatus errorStatus, Object data) {
