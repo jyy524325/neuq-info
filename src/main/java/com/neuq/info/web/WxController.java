@@ -131,6 +131,9 @@ public class WxController {
             return rtnParam(ErrorStatus.user_sensitive_data_decryption_failed, null);
         }
         int count = 0;
+        System.out.println(user);
+        System.out.println(user1);
+        System.out.println(user.equals(user1));
         if (user == null) {
             count = userService.insertUser(user1);
         }
