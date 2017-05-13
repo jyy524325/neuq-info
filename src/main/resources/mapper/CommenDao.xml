@@ -54,9 +54,17 @@
     </update>
 
     <select id="queryUnReadCommentByPostid" parameterType="long" resultMap="commentResultMap">
-    SELECT c.commentId,c.content,c.postId,c.userId,c.like_count,c.create_time,u.avatarUrl,u.nickName
-    FROM comment c INNER JOIN user u ON c.userId =u.userId WHERE postId IN (
-        SELECT postId from post WHERE userId =#{userId}) AND is_read = 0
+        SELECT c.commentId,c.content,c.postId,c.like_count,c.create_time,
+        u1.userId,
+        u1.avatarUrl,
+        u1.nickName,
+        u2.userId as to_userId,
+        u2.avatarUrl as to_avatarUrl,
+        u2.nickName as to_nickName
+        FROM comment c
+        INNER JOIN user u1 ON c.from_userId =u1.userId
+        INNER JOIN user u2 ON c.to_userId =u2.userId
+        WHERE c.from_userId =#{userId} AND is_read = 0
     </select>
 
     <update id="updateCommentByIsRead" parameterType="java.util.List">

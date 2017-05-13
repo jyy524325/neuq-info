@@ -9,8 +9,9 @@ public class Like {
     private long postId;
     private long userId;
     private Date createTime;
-    private String avatarUrl;
-    private String nickName;
+    private User toUser;
+    private User fromUser;
+    private String content;
 
     public Like() {
     }
@@ -18,22 +19,6 @@ public class Like {
     public Like(long postId, long userId) {
         this.postId = postId;
         this.userId = userId;
-    }
-
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
     }
 
     public long getPostId() {
@@ -58,5 +43,41 @@ public class Like {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public User getToUser() {
+        return toUser;
+    }
+
+    public void setToUser(User toUser) {
+        this.toUser = toUser;
+    }
+
+    public User getFromUser() {
+        return fromUser;
+    }
+
+    public void setFromUser(User fromUser) {
+        this.fromUser = fromUser;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Like{" +
+                "postId=" + postId +
+                ", userId=" + userId +
+                ", createTime=" + createTime +
+                ", toUser=" + toUser +
+                ", fromUser=" + fromUser +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

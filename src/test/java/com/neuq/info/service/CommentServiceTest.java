@@ -46,5 +46,10 @@ public class CommentServiceTest {
         System.out.println(commentService.delComment(12l, 0));
     }
 
+    @Test
+    public void queryUnReadCommentByPostid() throws Exception {
+        System.out.println();
+    }
+
 
 }

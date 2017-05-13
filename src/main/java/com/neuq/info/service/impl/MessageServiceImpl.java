@@ -48,8 +48,6 @@ public class MessageServiceImpl implements MessageService {
         List<UnRead> unReadList = new ArrayList<UnRead>();
         for (Like like : likeList) {
             User user = userDao.queryUserById(like.getUserId());
-            like.setAvatarUrl(user.getAvatarUrl());
-            like.setNickName(user.getNickName());
             Post post = postDao.queryPostByPostId(like.getPostId());
             unReadList.add(new UnReadLike(like, post, like.getCreateTime()));
         }

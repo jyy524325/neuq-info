@@ -133,9 +133,9 @@ public class PostController {
         return resultModel;
     }
 
-    @RequestMapping(value = "/delete/{postId}", method = RequestMethod.GET,
+    @RequestMapping(value = "/delete/{postId}", method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
-    @ApiOperation(notes = "根据postId删除post", httpMethod = "GET", value = "根据postId删除post")
+    @ApiOperation(notes = "根据postId删除post", httpMethod = "POST", value = "根据postId删除post")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "postId", value = "要删除的postId", required = true, dataType = "long", paramType = "path"),
             @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true, paramType = "header", dataType = "string")

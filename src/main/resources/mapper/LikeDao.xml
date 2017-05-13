@@ -3,7 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neuq.info.dao.LikeDao">
+    <resultMap id="likeResultMap" type="Like">
+        <id property="postId" column="postId"/>
+        <result property="userId" column="userId"/>
+        <result property="createTime" column="create_time"/>
+        <result property="content" column="content"/>
+        <association property="fromUser" javaType="User" resultMap="userResult"/>
+        <association property="toUser" javaType="User" resultMap="userResult" columnPrefix="author_"/>
+    </resultMap>
 
+    <resultMap id="userResult" type="User">
+        <id property="userId" column="userId"/>
+        <result property="avatarUrl" column="avatarUrl"/>
+        <result property="nickName" column="nickName"/>
+    </resultMap>
     <select id="queryUserLikeByUserId" parameterType="long" resultType="Like">
     SELECT postId,userId,create_time
       FROM user_like_post WHERE userId =#{userId}
@@ -16,10 +29,21 @@
     <update id="deleteUserLike" parameterType="Like">
         DELETE FROM user_like_post WHERE postId=#{postId} AND userId=#{userId}
     </update>
-    <select id="queryUnReadLikeByUserId" parameterType="long" resultType="Like">
-        SELECT postId,userId,create_time
-        FROM user_like_post WHERE postId IN (
-        SELECT postId from post WHERE userId =#{userId}) AND is_read = 0
+    <select id="queryUnReadLikeByUserId" parameterType="long" resultMap="likeResultMap">
+        SELECT ul.postId,ul.userId,ul.create_time,
+        post.content,
+        u.userId as userId,
+        u.nickName as nickName,
+        u.avatarUrl as avatarUrl,
+        u1.userId as author_userId,
+        u1.avatarUrl as author_avatarUrl ,
+        u1.nickName as author_nickName,
+        post.postId
+        FROM user_like_post ul
+        inner join post ON post.postId = ul.postId
+        inner join `user` u ON ul.userId = u.userId
+        inner join `user` u1 ON post.userId = u1.userId
+        WHERE ul.is_read = 0 AND post.userId =#{userId}
     </select>
     <update id="updateLikeByRead" parameterType="java.util.List">
         UPDATE user_like_post SET is_read = 1
