@@ -27,8 +27,8 @@ public class CommentServiceImpl implements CommentService {
         for (int i = 0; i < pList.size(); i++) {
             List<Comment> cList = commentDao.queryCommentByPostid(postid, 2, pList.get(i).getCommentId());
             for (int j=0;j<cList.size();j++){
-                if (cList.get(i).getFromUser().getUserId() == userId) {
-                    cList.get(i).setIsSelf(1);
+                if (cList.get(j).getFromUser().getUserId() == userId) {
+                    cList.get(j).setIsSelf(1);
                 }
             }
             pList.get(i).setcComments(cList);
