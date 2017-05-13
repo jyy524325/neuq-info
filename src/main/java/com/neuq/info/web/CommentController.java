@@ -56,8 +56,10 @@ public class CommentController {
 
     })
     @ResponseBody
-    public ResultModel delComment(@PathVariable("postid") long postid) {
-        return commentService.queryComment(postid);
+    public ResultModel delComment(@PathVariable("postid") long postid,HttpServletRequest request) {
+        Long userId = (Long) request.getAttribute("userId");
+
+        return commentService.queryComment(postid,userId);
     }
 
 

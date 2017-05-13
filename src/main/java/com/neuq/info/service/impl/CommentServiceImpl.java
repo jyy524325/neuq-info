@@ -22,20 +22,16 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private PostDao postDao;
 
-    public ResultModel queryComment(long postid) {
+    public ResultModel queryComment(long postid,long userId) {
         List<Comment> pList = commentDao.queryCommentByPostid(postid, 1, 0);
-
-        Post post = postDao.queryPostByPostId(postid);
         for (int i = 0; i < pList.size(); i++) {
             List<Comment> cList = commentDao.queryCommentByPostid(postid, 2, pList.get(i).getCommentId());
             pList.get(i).setcComments(cList);
             pList.get(i).setcCommentsSize(cList.size());
             pList.get(i).setFloor(i + 1);
-            if (pList.get(i).getFromUser().getUserId() == post.getUserId()) {
+            if (pList.get(i).getFromUser().getUserId() == userId) {
                 pList.get(i).setIsSelf(1);
             }
-
-
         }
 
         if (pList.size() == 0) {
