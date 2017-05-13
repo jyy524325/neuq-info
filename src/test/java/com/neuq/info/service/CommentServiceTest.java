@@ -31,7 +31,7 @@ public class CommentServiceTest {
     public void queryComment() throws Exception {
 //        System.out.println(commentService.queryComment(1l));
         ObjectMapper objectMapper = new ObjectMapper();
-        String re = objectMapper.writeValueAsString(commentService.queryComment(3l));
+        String re = objectMapper.writeValueAsString(commentService.queryComment(3l,1002));
         System.out.println(re);
     }
 
