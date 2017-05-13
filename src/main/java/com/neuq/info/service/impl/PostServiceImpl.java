@@ -1,6 +1,7 @@
 package com.neuq.info.service.impl;
 
 import com.neuq.info.common.constant.SecretUrl;
+import com.neuq.info.dao.CommentDao;
 import com.neuq.info.dao.LikeDao;
 import com.neuq.info.dao.PostDao;
 import com.neuq.info.dto.Page;
@@ -32,6 +33,8 @@ public class PostServiceImpl implements PostService {
     private LikeDao likeDao;
     @Autowired
     private SecretUrl secretUrl;
+    @Autowired
+    private CommentDao commentDao;
 
     public ResultModel insertPost(String title, String content, int secret, long userId) {
         Post post = new Post();
@@ -134,10 +137,12 @@ public class PostServiceImpl implements PostService {
     }
 
     public ResultModel deletePost(long postId, long userId) {
+
         Post post = postDao.queryPostByPostId(postId);
         if (post.getUserId() != userId) {
             return new ResultModel(ResultStatus.NO_PERMISSION);
         } else {
+            commentDao.delCommentByPostId(postId);
             int count = postDao.deletePost(postId);
             if (count == 0) {
                 return new ResultModel(ResultStatus.FAILURE);
@@ -167,9 +172,9 @@ public class PostServiceImpl implements PostService {
         return resultModel;
     }
 
-    public ResultModel updateCommentCount(long postId) {
+    public ResultModel updateCommentCount(long postId,int flag) {
         ResultModel resultModel;
-        int count = postDao.updateCommentCount(postId);
+        int count = postDao.updateCommentCount(postId,flag);
 
         if (count == 0) {
             resultModel = new ResultModel(ResultStatus.FAILURE, count);

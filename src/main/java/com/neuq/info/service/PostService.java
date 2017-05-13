@@ -19,7 +19,7 @@ public interface PostService {
     int queryAllPostCount();
     ResultModel deletePost(long postId,long userId);
     ResultModel updateLike(long postId, int flag,long userId);
-    ResultModel updateCommentCount(long postId);
+    ResultModel updateCommentCount(long postId,int flag);
     ResultModel queryPostByFirstPostId(long postId,long userId);
 
 

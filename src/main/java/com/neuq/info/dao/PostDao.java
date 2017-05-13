@@ -74,7 +74,7 @@ public interface PostDao {
      * @param postId
      * @return
      */
-    int updateCommentCount(long postId);
+    int updateCommentCount(@Param("postId")long postId,@Param("flag")int flag);
 
     /**
      * 根据userId查询post

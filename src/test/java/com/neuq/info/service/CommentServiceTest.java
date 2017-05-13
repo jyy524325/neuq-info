@@ -43,7 +43,7 @@ public class CommentServiceTest {
 
     @Test
     public void delComment() throws Exception {
-        System.out.println(commentService.delComment(12l, 0));
+        System.out.println(commentService.delComment(62l, 1024));
     }
 
     @Test

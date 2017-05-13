@@ -25,7 +25,6 @@ public class CommentServiceImpl implements CommentService {
     public ResultModel queryComment(long postid) {
         List<Comment> pList = commentDao.queryCommentByPostid(postid, 1, 0);
 
-        System.out.println(pList.size());
         Post post = postDao.queryPostByPostId(postid);
         for (int i = 0; i < pList.size(); i++) {
             List<Comment> cList = commentDao.queryCommentByPostid(postid, 2, pList.get(i).getCommentId());
@@ -51,9 +50,10 @@ public class CommentServiceImpl implements CommentService {
         if (level == 1) {
             Post post = postDao.queryUserIdByPostId(postid);
             toUserId = post.getUserId();
+            postDao.updateCommentCount(postid,1);
         }
         int result = commentDao.insertComment(comment, fromUserId, toUserId, level, pCommentId);
-        postDao.updateCommentCount(postid);
+
         if (result == 0) {
             return new ResultModel(ResultStatus.FAILURE);
         } else {
@@ -67,6 +67,11 @@ public class CommentServiceImpl implements CommentService {
         if (userId != fromUserid) {
             return new ResultModel(ResultStatus.NO_PERMISSION);
         } else {
+            Comment comment=commentDao.queryCommentByCommentId(commentId);
+            if(comment.getLevel()==1){
+                postDao.updateCommentCount(comment.getPostId(),0);
+            }
+            commentDao.delCComment(comment.getCommentId());
             int result = commentDao.delComment(commentId);
             if (result == 0) {
                 return new ResultModel(ResultStatus.FAILURE);

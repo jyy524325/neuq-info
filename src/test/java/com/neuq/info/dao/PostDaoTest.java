@@ -87,7 +87,7 @@ public class PostDaoTest {
 
     @Test
     public void updateCommentCount() throws Exception {
-        postDao.updateCommentCount(2);
+        postDao.updateCommentCount(2,0);
     }
 
     @Test

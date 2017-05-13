@@ -53,13 +53,32 @@ public interface CommentDao {
      * @return
      */
     int delComment(long commentId);
+    /**
+     * 根据p_commentId删除comment
+     * @param p_commentId
+     * @return
+     */
+    int delCComment(long p_commentId);
 
+    /**
+     * 根据commentId删除单条comment
+     * @param postId
+     * @return
+     */
+    int delCommentByPostId(long postId);
     /**
      * 根据commentId查询comment的userId
      * @param commentId
      * @return
      */
     Long queryCommentUserIdByCommentId(long commentId);
+
+    /**
+     * 根据commnetId查comment
+     * @param commentId
+     * @return
+     */
+    Comment queryCommentByCommentId(long commentId);
 
 
 }

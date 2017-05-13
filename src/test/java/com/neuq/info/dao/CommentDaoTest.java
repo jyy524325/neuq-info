@@ -57,6 +57,11 @@ public class CommentDaoTest {
     public void delComment() throws Exception {
         System.out.println(commentDao.delComment(12l));
     }
+    @Test
+    public void queryCommentByCommentId() throws Exception {
+        System.out.println(commentDao.queryCommentByCommentId(2));
+    }
+
 
 
 }

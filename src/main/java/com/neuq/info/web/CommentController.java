@@ -61,7 +61,7 @@ public class CommentController {
     }
 
 
-    @RequestMapping(value = "/delete/{postId}", method = RequestMethod.POST,
+    @RequestMapping(value = "/delete/{commentId}", method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ApiOperation(notes = "根据postId删除评论", httpMethod = "POST", value = "根据postId删除评论")
 
@@ -70,9 +70,9 @@ public class CommentController {
 
     })
     @ResponseBody
-    public ResultModel list(@PathVariable("postId") long postId, HttpServletRequest request) {
+    public ResultModel list(@PathVariable("commentId") long commentId, HttpServletRequest request) {
         Long userId = (Long) request.getAttribute("userId");
-        return commentService.delComment(postId, userId);
+        return commentService.delComment(commentId, userId);
     }
 
 

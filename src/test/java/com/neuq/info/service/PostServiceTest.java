@@ -57,7 +57,7 @@ public class PostServiceTest {
 
     @Test
     public void deletePost() throws Exception {
-
+        postService.deletePost(4,1000);
     }
 
     @Test

@@ -55,8 +55,16 @@
         </if>
         WHERE postId =#{postId}
     </update>
+
     <update id="updateCommentCount">
-        UPDATE post SET comment_count =comment_count + 1 WHERE postId=#{postId}
+        UPDATE post SET
+        <if test="flag==1">
+            comment_count =comment_count+1
+        </if>
+        <if test="flag==0">
+            comment_count =comment_count-1
+        </if>
+     WHERE postId=#{postId}
     </update>
 
     <select id="queryPostByFirstPostId" resultType="Post">
