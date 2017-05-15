@@ -35,6 +35,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/wx/getSession"/>
+            <mvc:exclude-mapping path="/wx/decodeUserInfo"/>
             <mvc:exclude-mapping path="/api/**"/>
             <mvc:exclude-mapping path="/v2/api-docs"/>
 
