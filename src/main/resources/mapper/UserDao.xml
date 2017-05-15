@@ -7,7 +7,7 @@
     <sql id="userColumns">openId,avatarUrl,nickName,gender,city,province,country,`language`,unionId,jwUser,jwPwd</sql>
     <insert id="insertUser">
         INSERT ignore INTO user (<include refid="userColumns"/>) VALUES
-        (#{openId},#{avatarUrl},#{nickName},#{gender},#{city},#{province},#{country},#{unionId},#{jwUser},#{jwUser})
+        (#{openId},#{avatarUrl},#{nickName},#{gender},#{city},#{province},#{country},#{language},#{unionId},#{jwUser},#{jwUser})
     </insert>
     <select id="queryUserById" resultType="User">
         SELECT userId,create_time,<include refid="userColumns"/> FROM user WHERE userId =#{userId}
