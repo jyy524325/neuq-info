@@ -5,6 +5,8 @@ import com.neuq.info.dao.UserDao;
 import com.neuq.info.entity.User;
 import com.neuq.info.enums.ErrorStatus;
 import com.neuq.info.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -19,6 +21,7 @@ import java.io.PrintWriter;
  * Created by lihang on 2017/4/19.
  */
 public class SessionInterceptor implements HandlerInterceptor {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private RedisDao redisDao;
     @Autowired
@@ -27,26 +30,29 @@ public class SessionInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
 
         String session = request.getHeader("session");
+        logger.info("请求的session为[{}]",session);
         if (session != null && session != "") {
             Object wxSessionObj = redisDao.get(session);
             if (wxSessionObj == null) {
+                logger.info("{}已过期",session);
                 getResStr(ErrorStatus.user_identity_expired, response);
                 return false;
             } else {
                 String wxSessionStr = (String) wxSessionObj;
-                String sessionKey = wxSessionStr.split("#")[0];
                 String openId = wxSessionStr.split("#")[1];
                 User user = userDao.queryUserByOpenId(openId);
+                logger.info("此次请求的用户id为{},openid为{}",user.getUserId(),user.getOpenId());
                 if (user != null) {
                     request.setAttribute("userId", user.getUserId());
                     return true;
                 } else {
+                    logger.info("没有id为{}的用户",user.getUserId());
                     getResStr(ErrorStatus.no_userinfo, response);
                     return false;
                 }
             }
-
         } else {
+            logger.warn("请求数据中session参数为空");
             getResStr(ErrorStatus.user_identity_expired, response);
             return false;
         }
