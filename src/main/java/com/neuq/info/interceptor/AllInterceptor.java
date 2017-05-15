@@ -16,8 +16,6 @@ import org.springframework.web.context.request.WebRequestInterceptor;
 public class AllInterceptor implements WebRequestInterceptor {
     @Autowired
     private RedisDao redisDao;
-    @Autowired
-    private UserService userService;
 
     public void preHandle(WebRequest request) throws Exception {
 
