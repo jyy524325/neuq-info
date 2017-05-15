@@ -28,14 +28,8 @@ public class AllInterceptor implements WebRequestInterceptor {
                 String wxSessionStr = (String) wxSessionObj;
                 String sessionKey = wxSessionStr.split("#")[0];
                 String openId = wxSessionStr.split("#")[1];
-                User user = userService.queryUserByOpenId(openId);
-
                 request.setAttribute("sessionKey", sessionKey, WebRequest.SCOPE_REQUEST);
                 request.setAttribute("openId", openId, WebRequest.SCOPE_REQUEST);
-                if (user != null) {
-                    request.setAttribute("userId", user.getUserId(), WebRequest.SCOPE_REQUEST);
-                }
-
             }
         }
     }

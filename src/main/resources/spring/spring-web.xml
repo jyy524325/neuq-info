@@ -31,14 +31,13 @@
 
     <mvc:interceptors>
         <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
-        <!--<bean class="com.neuq.info.interceptor.AllInterceptor"/>-->
+        <bean class="com.neuq.info.interceptor.AllInterceptor"/>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/wx/getSession"/>
             <mvc:exclude-mapping path="/wx/decodeUserInfo"/>
             <mvc:exclude-mapping path="/api/**"/>
             <mvc:exclude-mapping path="/v2/api-docs"/>
-
             <bean class="com.neuq.info.interceptor.SessionInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

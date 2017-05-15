@@ -38,8 +38,6 @@ public class SessionInterceptor implements HandlerInterceptor {
                 String openId = wxSessionStr.split("#")[1];
                 User user = userDao.queryUserByOpenId(openId);
                 if (user != null) {
-                    request.setAttribute("sessionKey", sessionKey);
-                    request.setAttribute("openId", openId);
                     request.setAttribute("userId", user.getUserId());
                     return true;
                 } else {
