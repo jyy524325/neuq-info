@@ -125,6 +125,7 @@ public class WxController {
                                               @RequestParam(required = true, defaultValue = "iv") String iv, HttpServletRequest request) {
         String sessionKey = (String) request.getAttribute("sessionKey");
         String openId = (String) request.getAttribute("openId");
+
         User user = userService.queryUserByOpenId(openId);
         User user1 = userService.decodeUserInfo(encryptedData, iv, sessionKey);
         if (user1 == null) {
@@ -133,11 +134,16 @@ public class WxController {
 //        System.out.println(user);
 //        System.out.println(user1);
 //        System.out.println(user.equals(user1));
-        if ((user == null)&&(userService.insertUser(user1))==0) {
-            return rtnParam(ErrorStatus.insertuserinfo_wrong, null);
-        }
-        if((!user.equals(user1))&&(userService.updateUser(user1)==0)){
-            return rtnParam(ErrorStatus.updateuserinfo_wrong, null);
+        if(user==null){
+            if(userService.insertUser(user1)==0){
+                return rtnParam(ErrorStatus.insertuserinfo_wrong, null);
+            }
+        }else {
+            if(user.equals(user1)){
+                if(userService.updateUser(user1)==0){
+                    return rtnParam(ErrorStatus.updateuserinfo_wrong, null);
+                }
+            }
         }
         return rtnParam(ErrorStatus.SUCCESS, null);
     }
