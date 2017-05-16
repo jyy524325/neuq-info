@@ -46,7 +46,6 @@ public class SessionInterceptor implements HandlerInterceptor {
                     request.setAttribute("userId", user.getUserId());
                     return true;
                 } else {
-                    logger.info("没有id为{}的用户",user.getUserId());
                     getResStr(ErrorStatus.no_userinfo, response);
                     return false;
                 }
