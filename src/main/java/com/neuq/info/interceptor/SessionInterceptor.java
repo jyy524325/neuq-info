@@ -41,8 +41,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                 String wxSessionStr = (String) wxSessionObj;
                 String openId = wxSessionStr.split("#")[1];
                 User user = userDao.queryUserByOpenId(openId);
-                logger.info("此次请求的用户id为{},openid为{}",user.getUserId(),user.getOpenId());
                 if (user != null) {
+                    logger.info("此次请求的用户id为{},openid为{}",user.getUserId(),user.getOpenId());
                     request.setAttribute("userId", user.getUserId());
                     return true;
                 } else {
