@@ -40,8 +40,8 @@ public class CommentDaoTest {
     }
 
     @Test
-    public void queryUnReadCommentByPostid() throws Exception {
-        System.out.println(commentDao.queryUnReadCommentByPostid(1002l));
+    public void queryUnReadCommentByUserId() throws Exception {
+        System.out.println(commentDao.queryUnReadCommentByUserId(1001l));
     }
 
     @Test
@@ -61,6 +61,12 @@ public class CommentDaoTest {
     public void queryCommentByCommentId() throws Exception {
         System.out.println(commentDao.queryCommentByCommentId(2));
     }
+    @Test
+    public void queryUnReadCountCommentByUserId() throws Exception {
+        System.out.println(commentDao.queryUnReadCountCommentByUserId(1001l));
+    }
+
+
 
 
 

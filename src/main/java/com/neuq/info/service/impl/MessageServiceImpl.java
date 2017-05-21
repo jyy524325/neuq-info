@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.bouncycastle.asn1.x500.style.RFC4519Style.c;
+import static org.bouncycastle.asn1.x500.style.RFC4519Style.seeAlso;
+
 /**
  * Created by lihang on 2017/4/27.
  */
@@ -36,18 +39,17 @@ public class MessageServiceImpl implements MessageService {
     private UserDao userDao;
 
     public ResultModel getUnReadMessageCount(long userId) {
-        List<Like> likeList = likeDao.queryUnReadLikeByUserId(userId);
-        List<Comment> commentList = commentDao.queryUnReadCommentByPostid(userId);
-        return new ResultModel(ResultStatus.SUCCESS, likeList.size() + commentList.size());
-
+        int likeCount=likeDao.queryUnReadLikeCountByUserId(userId);
+        int commentCount=commentDao.queryUnReadCountCommentByUserId(userId);
+        return new ResultModel(ResultStatus.SUCCESS,  likeCount+ commentCount);
     }
 
     public ResultModel getUnReadMessage(long userId) {
         List<Like> likeList = likeDao.queryUnReadLikeByUserId(userId);
-        List<Comment> commentList = commentDao.queryUnReadCommentByPostid(userId);
+        List<Comment> commentList = commentDao.queryUnReadCommentByUserId(userId);
         List<UnRead> unReadList = new ArrayList<UnRead>();
+        List<Long> commentIdList=new ArrayList<Long>();
         for (Like like : likeList) {
-            User user = userDao.queryUserById(like.getUserId());
             Post post = postDao.queryPostByPostId(like.getPostId());
             unReadList.add(new UnReadLike(like, post, like.getCreateTime()));
         }
@@ -56,6 +58,17 @@ public class MessageServiceImpl implements MessageService {
             unReadList.add(new UnReadComment(comment, post, comment.getCreateTime()));
         }
         Collections.sort(unReadList);
+
+        for (Comment comment:commentList) {
+            commentIdList.add(comment.getCommentId());
+        }
+        if(commentIdList.size()!=0){
+            commentDao.updateCommentByIsRead(commentIdList);
+        }
+        if(likeList.size()!=0){
+            likeDao.updateLikeByRead(likeList);
+        }
+
         ResultModel resultModel;
         if (unReadList.size() != 0) {
             resultModel = new ResultModel(ResultStatus.SUCCESS, unReadList);

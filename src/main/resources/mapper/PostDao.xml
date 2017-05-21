@@ -79,4 +79,5 @@
         SELECT userId FROM post
         WHERE postId = #{postId}
     </select>
+
     </mapper>

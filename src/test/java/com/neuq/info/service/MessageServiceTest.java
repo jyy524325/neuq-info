@@ -29,13 +29,14 @@ public class MessageServiceTest {
 
     @Test
     public void getUnReadMessageCount() throws Exception {
-//        ObjectMapper objectMapper =new ObjectMapper();
-//        List<UnRead> unReadList=messageService.getUnReadMessage(1002l);
+        ObjectMapper objectMapper =new ObjectMapper();
+        System.out.println(objectMapper.writeValueAsString( messageService.getUnReadMessage(1002l)));
 //        String res=objectMapper.writeValueAsString(unReadList);
 //        System.out.println(res);
 //        for(UnRead unRead:unReadList){
 //            System.out.println(unRead.getDate().getTime());
 //        }
+
     }
 
     @Test

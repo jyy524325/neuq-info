@@ -74,6 +74,23 @@ public class PostController {
     }
 
 
+    @ApiOperation(notes = "根据user获取like", httpMethod = "GET", value = "根据user获取like")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "session", value = "登陆后返回的3rd_session", required = true, paramType = "header", dataType = "string")
+    })
+    @RequestMapping(value = "/like", method = RequestMethod.GET,
+            produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public ResultModel queryLikeByUserId(HttpServletRequest request) {
+
+        Long userId = (Long) request.getAttribute("userId");
+        ResultModel resultModel = postService.queryPostByUserId(userId);
+        return resultModel;
+    }
+
+
+
+
     @RequestMapping(value = "/like/{postid}/{flag}", method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     @ApiOperation(notes = "点赞或取消点赞", httpMethod = "GET", value = "点赞或取消点赞")
@@ -95,6 +112,7 @@ public class PostController {
         }
         return resultModel;
     }
+
 
     @RequestMapping(method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
@@ -144,7 +162,7 @@ public class PostController {
     public ResultModel deletePost(@PathVariable("postId") long postId, HttpServletRequest request) {
 
         Long userId = (Long) request.getAttribute("userId");
-        ResultModel resultModel = postService.deletePost(postId, userId);
+        ResultModel resultModel = postService.queryLikeByUserId(userId);
         return resultModel;
     }
 

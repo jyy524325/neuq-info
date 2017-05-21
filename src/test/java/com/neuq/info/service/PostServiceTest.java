@@ -68,14 +68,17 @@ public class PostServiceTest {
 
     @Test
     public void queryPostByUserId() throws Exception {
-        System.out.println(postService.queryPostByUserId(1023l));
+        System.out.println(postService.queryPostByUserId(1024l));
     }
 
     @Test
     public void queryPostByPostId() throws Exception {
         System.out.println(postService.queryPostByPostId(81l, 1024l));
-
-
     }
+    @Test
+    public void queryLikeByUserId() throws Exception {
+        System.out.println(postService.queryLikeByUserId(1024l));
+    }
+
 
 }

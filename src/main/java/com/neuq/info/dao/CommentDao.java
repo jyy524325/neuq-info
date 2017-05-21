@@ -38,7 +38,14 @@ public interface CommentDao {
      * @param userId
      * @return
      */
-    List<Comment> queryUnReadCommentByPostid(long userId);
+    List<Comment> queryUnReadCommentByUserId(long userId);
+
+    /**
+     * 根据userId查询未读评论
+     * @param userId
+     * @return
+     */
+    int queryUnReadCountCommentByUserId(long userId);
 
     /**
      * 根据commentId更新评论已读

@@ -39,6 +39,13 @@ public interface LikeDao {
      * @return
      */
     List<Like> queryUnReadLikeByUserId(long userId);
+    /**
+     * 根据userId查询用户未读点赞消息数量
+     *
+     * @param userId
+     * @return
+     */
+    int queryUnReadLikeCountByUserId(long userId);
 
     /**
      * 更新用户未读点赞为已读
@@ -47,6 +54,5 @@ public interface LikeDao {
      * @return
      */
     int updateLikeByRead(List<Like> likeList);
-
 
 }

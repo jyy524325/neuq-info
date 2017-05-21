@@ -21,6 +21,7 @@ public interface PostService {
     ResultModel updateLike(long postId, int flag,long userId);
     ResultModel updateCommentCount(long postId,int flag);
     ResultModel queryPostByFirstPostId(long postId,long userId);
+    ResultModel queryLikeByUserId(long userId);
 
 
 

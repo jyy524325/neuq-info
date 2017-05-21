@@ -46,7 +46,10 @@ public class LikeDaoTest {
     public void updateLikeByRead() throws Exception {
         List<Like> list = likeDao.queryUnReadLikeByUserId(1000l);
         System.out.println(likeDao.updateLikeByRead(list));
-
+    }
+    @Test
+    public void queryUnReadLikeCountByUserId() throws Exception {
+        System.out.println(likeDao.queryUnReadLikeCountByUserId(1000));
     }
 
 }

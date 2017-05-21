@@ -88,9 +88,6 @@ public class PostServiceImpl implements PostService {
             postIdList.add(tempLike.getPostId());
         }
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getUserId() == userId) {
-                list.get(i).setIsSelf(1);
-            }
             if (postIdList.contains(list.get(i).getPostId())) {
                 list.get(i).setIsLike(1);
             }
@@ -227,5 +224,12 @@ public class PostServiceImpl implements PostService {
         return list;
     }
 
-
+    public ResultModel queryLikeByUserId(long userId) {
+        List<Like> reList= likeDao.queryUserLikeByUserId(userId);
+        if (reList.size() == 0) {
+            return new ResultModel(ResultStatus.FAILURE, reList);
+        } else {
+            return new ResultModel(ResultStatus.SUCCESS, reList);
+        }
+    }
 }

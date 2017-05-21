@@ -53,7 +53,7 @@
         WHERE commentId =#{commentId}
     </update>
 
-    <select id="queryUnReadCommentByPostid" parameterType="long" resultMap="commentResultMap">
+    <select id="queryUnReadCommentByUserId" parameterType="long" resultMap="commentResultMap">
         SELECT c.commentId,c.content,c.postId,c.like_count,c.create_time,
         u1.userId,
         u1.avatarUrl,
@@ -62,10 +62,19 @@
         u2.avatarUrl as to_avatarUrl,
         u2.nickName as to_nickName
         FROM comment c
+        INNER JOIN post ON  c.postId = post.postId
         INNER JOIN user u1 ON c.from_userId =u1.userId
         INNER JOIN user u2 ON c.to_userId =u2.userId
-        WHERE c.from_userId =#{userId} AND is_read = 0
+        WHERE post.userId =#{userId} AND is_read = 0
     </select>
+
+    <select id="queryUnReadCountCommentByUserId" parameterType="long" resultType="int">
+        SELECT count(1)
+        FROM comment c
+        INNER JOIN post ON  c.postId = post.postId
+        WHERE post.userId =#{userId} AND is_read = 0
+    </select>
+
 
     <update id="updateCommentByIsRead" parameterType="java.util.List">
         UPDATE comment SET is_read =1 WHERE commentId IN (
@@ -74,6 +83,7 @@
         </foreach>
         )
     </update>
+
     <delete id="delComment" parameterType="Long">
         DELETE FROM comment WHERE commentId= #{commentId}
     </delete>

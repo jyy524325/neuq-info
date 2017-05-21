@@ -11,8 +11,6 @@ public class Like {
     private Date createTime;
     private User toUser;
     private User fromUser;
-    private String content;
-
     public Like() {
     }
 
@@ -61,13 +59,6 @@ public class Like {
         this.fromUser = fromUser;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     @Override
     public String toString() {
@@ -77,7 +68,6 @@ public class Like {
                 ", createTime=" + createTime +
                 ", toUser=" + toUser +
                 ", fromUser=" + fromUser +
-                ", content='" + content + '\'' +
                 '}';
     }
 }
