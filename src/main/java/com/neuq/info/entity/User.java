@@ -183,9 +183,7 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         User user = (User) o;
-
         if (gender != user.gender) return false;
         if (openId != null ? !openId.equals(user.openId) : user.openId != null) return false;
         if (avatarUrl != null ? !avatarUrl.equals(user.avatarUrl) : user.avatarUrl != null) return false;

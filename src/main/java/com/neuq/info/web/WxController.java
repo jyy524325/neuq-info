@@ -139,7 +139,7 @@ public class WxController {
                 return rtnParam(ErrorStatus.insertuserinfo_wrong, null);
             }
         }else {
-            if(user.equals(user1)){
+            if(!user.equals(user1)){
                 if(userService.updateUser(user1)==0){
                     return rtnParam(ErrorStatus.updateuserinfo_wrong, null);
                 }
