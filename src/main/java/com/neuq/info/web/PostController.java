@@ -86,6 +86,7 @@ public class PostController {
         Long userId = (Long) request.getAttribute("userId");
         ResultModel resultModel = postService.queryPostByUserId(userId);
         return resultModel;
+
     }
 
 
@@ -162,7 +163,7 @@ public class PostController {
     public ResultModel deletePost(@PathVariable("postId") long postId, HttpServletRequest request) {
 
         Long userId = (Long) request.getAttribute("userId");
-        ResultModel resultModel = postService.queryLikeByUserId(userId);
+        ResultModel resultModel = postService.deletePost(postId,userId);
         return resultModel;
     }
 

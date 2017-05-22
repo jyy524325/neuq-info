@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Created by lihang on 2017/4/23.
  */
 public interface UserService {
-    public User queryUserByOpenId(String openid);
-    public int updateUser(User user);
-    public int insertUser(User user);
-    public User decodeUserInfo(String encryptedData,String iv,String sessionKey);
+     User queryUserByOpenId(String openid);
+     int updateUser(User user);
+     int insertUser(User user);
+     User decodeUserInfo(String encryptedData,String iv,String sessionKey);
 
 
 }
