@@ -14,12 +14,21 @@ public class Like {
     private Date createTime;
     private User toUser;
     private User fromUser;
+    private String content;
     public Like() {
     }
 
     public Like(long postId, long userId) {
         this.postId = postId;
         this.userId = userId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public long getPostId() {
@@ -63,7 +72,6 @@ public class Like {
         this.fromUser = fromUser;
     }
 
-
     @Override
     public String toString() {
         return "Like{" +
@@ -72,6 +80,7 @@ public class Like {
                 ", createTime=" + createTime +
                 ", toUser=" + toUser +
                 ", fromUser=" + fromUser +
+                ", content='" + content + '\'' +
                 '}';
     }
 }

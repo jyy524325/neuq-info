@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.bouncycastle.asn1.x500.style.RFC4519Style.l;
 import static org.bouncycastle.asn1.x500.style.RFC4519Style.o;
 
 /**
@@ -226,6 +227,13 @@ public class PostServiceImpl implements PostService {
 
     public ResultModel queryLikeByUserId(long userId) {
         List<Like> reList= likeDao.queryUserLikeByUserId(userId);
+        for (int i=0;i<reList.size();i++){
+            String content=reList.get(i).getContent();
+            if(content.length()>25){
+                content=content.substring(0,25)+"...";
+                reList.get(i).setContent(content);
+            }
+        }
         if (reList.size() == 0) {
             return new ResultModel(ResultStatus.NO_MORE_DATA);
         } else {

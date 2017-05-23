@@ -17,7 +17,7 @@
         <result property="nickName" column="nickName"/>
     </resultMap>
     <select id="queryUserLikeByUserId" parameterType="long" resultType="Like">
-    SELECT ul.postId,ul.userId,ul.create_time,post.content,post.postId
+    SELECT ul.postId,ul.userId,ul.create_time,post.content
       FROM user_like_post ul
       INNER JOIN post ON ul.postId=post.postId
       WHERE ul.userId =#{userId}
