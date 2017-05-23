@@ -1,5 +1,8 @@
 package com.neuq.info.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.neuq.info.common.format.CustomDateSerializer;
+
 import java.util.Date;
 
 /**
@@ -35,6 +38,7 @@ public class Like {
         this.userId = userId;
     }
 
+    @JsonSerialize(using = CustomDateSerializer.class)
     public Date getCreateTime() {
         return createTime;
     }
