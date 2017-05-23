@@ -84,7 +84,7 @@ public class PostController {
     public ResultModel queryLikeByUserId(HttpServletRequest request) {
 
         Long userId = (Long) request.getAttribute("userId");
-        ResultModel resultModel = postService.queryPostByUserId(userId);
+        ResultModel resultModel = postService.queryLikeByUserId(userId);
         return resultModel;
 
     }

@@ -21,55 +21,6 @@ import java.net.URLConnection;
  */
 public class HttpUtil {
 
-    public String httpGet(String uri){
-        CloseableHttpClient httpClient= HttpClients.createDefault();
-        HttpGet httpget = new HttpGet(uri);
-        CloseableHttpResponse httpResponse=null;
-        try {
-            httpResponse=httpClient.execute(httpget);
-            int code=httpResponse.getStatusLine().getStatusCode();
-            if(code>=200 &&code<300){
-                return EntityUtils.toString(httpResponse.getEntity());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                httpResponse.close();
-                httpClient.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-    public static String httpPost(String url, String params){
-        String result = null;
-        CloseableHttpClient httpClient=null;
-        CloseableHttpResponse response=null;
-
-        try {
-            httpClient= HttpClients.createDefault();
-            HttpPost httpPost = new HttpPost(url);
-            httpPost.addHeader("Content-type","application/x-www-form-urlencoded; charset=utf-8");
-            httpPost.setEntity(new StringEntity(params, "UTF-8"));
-            response = httpClient.execute(httpPost);
-            int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode == HttpStatus.SC_OK) {
-                // Read the response body
-                result = EntityUtils.toString(response.getEntity(),"UTF-8");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            try {
-                response.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
-    }
     /**
      * 向指定URL发送GET方法的请求
      *
