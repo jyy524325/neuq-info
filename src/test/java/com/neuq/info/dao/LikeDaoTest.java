@@ -25,7 +25,7 @@ public class LikeDaoTest {
     @Test
     public void queryUserLikeByUserId() throws Exception {
         List<Like> result = likeDao.queryUserLikeByUserId(1000L);
-        System.out.println(result.size());
+        System.out.println(result);
     }
 
     @Test
