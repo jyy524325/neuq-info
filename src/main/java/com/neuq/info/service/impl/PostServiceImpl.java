@@ -227,7 +227,7 @@ public class PostServiceImpl implements PostService {
     public ResultModel queryLikeByUserId(long userId) {
         List<Like> reList= likeDao.queryUserLikeByUserId(userId);
         if (reList.size() == 0) {
-            return new ResultModel(ResultStatus.FAILURE, reList);
+            return new ResultModel(ResultStatus.NO_MORE_DATA);
         } else {
             return new ResultModel(ResultStatus.SUCCESS, reList);
         }
